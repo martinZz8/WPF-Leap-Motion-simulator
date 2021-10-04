@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+//Caliburn Micro
+using Caliburn.Micro;
+
+//ViewModels
+using WPF_Leap_Motion_simulator.ViewModels;
 
 // System Diagnostics for Trace.WriteLine() function
 using System.Diagnostics;
@@ -24,27 +22,39 @@ using WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener;
 
 namespace WPF_Leap_Motion_simulator
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window, ILeapEventDelegate
+    public class Bootstrapper: BootstrapperBase, ILeapEventDelegate
     {
         private Controller controller;
         private LeapEventListener listener;
         private Boolean isClosing = false;
 
-        public MainWindow()
+        private ShellViewModel shellViewModel;
+
+        public Bootstrapper()
         {
-            InitializeComponent();
+            Initialize();
             controller = new Controller();
             listener = new LeapEventListener(this);
             controller.AddListener(listener);
+            shellViewModel = IoC.Get<ShellViewModel>();
+        }
+
+        protected override void OnStartup(object sender, StartupEventArgs e)
+        {
+            DisplayRootViewFor<ShellViewModel>();
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            isClosing = true;
+            controller.RemoveListener(listener);
+            controller.Dispose();
         }
 
         delegate void LeapEventDelegate(string EventName);
         public void LeapEventNotification(string EventName)
         {
-            if (CheckAccess())
+            if (Application.Current.CheckAccess())
             {
                 switch (EventName)
                 {
@@ -83,7 +93,7 @@ namespace WPF_Leap_Motion_simulator
             }
             else
             {
-                Dispatcher.Invoke(new LeapEventDelegate(LeapEventNotification), new object[] { EventName });
+                Application.Current.Dispatcher.Invoke(new LeapEventDelegate(LeapEventNotification), new object[] { EventName });
             }
         }
 
@@ -100,17 +110,17 @@ namespace WPF_Leap_Motion_simulator
         {
             //this.displayID.Content = frame.Id.ToString();
             //this.displayTimestamp.Content = frame.Timestamp.ToString();
-            displayFPS.Text = frame.CurrentFramesPerSecond.ToString();
             //this.displayIsValid.Content = frame.IsValid.ToString();
             //this.displayGestureCount.Content = frame.Gestures().Count.ToString();
             //this.displayImageCount.Content = frame.Images.Count.ToString();
-        }
 
-        void MainWindow_Closing(object sender, EventArgs e)
-        {
-            isClosing = true;
-            controller.RemoveListener(listener);
-            controller.Dispose();
+
+            //displayFPS.Text = frame.CurrentFramesPerSecond.ToString();
+
+
+            //TO CHANGE
+            shellViewModel.FPSCounter = frame.CurrentFramesPerSecond.ToString();
+            Console.WriteLine(shellViewModel.FPSCounter);
         }
     }
 }
