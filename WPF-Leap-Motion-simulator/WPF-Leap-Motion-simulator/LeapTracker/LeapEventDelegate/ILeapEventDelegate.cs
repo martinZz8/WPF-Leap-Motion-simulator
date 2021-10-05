@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventDelegate
+namespace WPF_Leap_Motion_simulator.LeapTracker
 {
     public interface ILeapEventDelegate
     {
-        void LeapEventNotification(string EventName);
+        void LeapEventNotification(LeapEventTypes EventType);
     }
 }

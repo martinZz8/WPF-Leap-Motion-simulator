@@ -5,10 +5,7 @@ using System.Text;
 using Leap;
 using System.Threading;
 
-//LeapEventDelegate
-using WPF_Leap_Motion_simulator.LeapTracker.LeapEventDelegate;
-
-namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
+namespace WPF_Leap_Motion_simulator.LeapTracker
 {
     public class LeapEventListener : Listener
     {
@@ -22,8 +19,9 @@ namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
         public override void OnInit(Controller controller)
         {
             Console.WriteLine("Initialized");
-            eventDelegate.LeapEventNotification("onInit");
+            eventDelegate.LeapEventNotification(LeapEventTypes.onInit);
         }
+
         public override void OnConnect(Controller controller)
         {
             controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE);
@@ -33,8 +31,20 @@ namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
             controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP);
 
             Console.WriteLine("Connected");
-            eventDelegate.LeapEventNotification("onConnect");
+            eventDelegate.LeapEventNotification(LeapEventTypes.onConnect);
         }
+
+        public override void OnExit(Controller controller)
+        {
+            Console.WriteLine("Exited");
+            eventDelegate.LeapEventNotification(LeapEventTypes.onExit);
+        }
+        public override void OnDisconnect(Controller controller)
+        {
+            Console.WriteLine("Disconnected");
+            eventDelegate.LeapEventNotification(LeapEventTypes.onDisconnect);
+        }
+
         public override void OnFrame(Controller controller)
         {
             //Processing code of latest acquired frame
@@ -55,18 +65,8 @@ namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
             //}
             
 
-            eventDelegate.LeapEventNotification("onFrame");
+            eventDelegate.LeapEventNotification(LeapEventTypes.onFrame);
             //Thread.Sleep(1000);
-        }
-        public override void OnExit(Controller controller)
-        {
-            Console.WriteLine("Exited");
-            eventDelegate.LeapEventNotification("onExit");
-        }
-        public override void OnDisconnect(Controller controller)
-        {
-            Console.WriteLine("Disconnected");
-            eventDelegate.LeapEventNotification("onDisconnect");
         }
 
         private void GestureDetection(GestureList gesture_list)
@@ -79,19 +79,19 @@ namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
                 {
                     case Gesture.GestureType.TYPE_CIRCLE:
                         gd = true;
-                        eventDelegate.LeapEventNotification("onCircleGestureDetected");
+                        eventDelegate.LeapEventNotification(LeapEventTypes.onCircleGestureDetected);
                         break;
                     case Gesture.GestureType.TYPE_SWIPE:
                         gd = true;
-                        eventDelegate.LeapEventNotification("onSwipeGestureDetected");
+                        eventDelegate.LeapEventNotification(LeapEventTypes.onSwipeGestureDetected);
                         break;
                     case Gesture.GestureType.TYPE_SCREEN_TAP:
                         gd = true;
-                        eventDelegate.LeapEventNotification("onScreenTapGestureDetected");
+                        eventDelegate.LeapEventNotification(LeapEventTypes.onScreenTapGestureDetected);
                         break;
                     case Gesture.GestureType.TYPE_KEY_TAP:
                         gd = true;
-                        eventDelegate.LeapEventNotification("onKeyTapGestureDetected");
+                        eventDelegate.LeapEventNotification(LeapEventTypes.onKeyTapGestureDetected);
                         break;
                     default:
                         //Handle unrecognized gestures
@@ -101,7 +101,7 @@ namespace WPF_Leap_Motion_simulator.LeapTracker.LeapEventListener
 
             if (!gd)
             {
-                eventDelegate.LeapEventNotification("onNoGestureDetected");
+                eventDelegate.LeapEventNotification(LeapEventTypes.onNoGestureDetected);
             }
                 
         }
