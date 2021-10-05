@@ -22,7 +22,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             set
             {
                 _FPSCounter = value;
-                Console.WriteLine("Chaninging to:", value);
+                Console.WriteLine("Changing to: " + value);
                 NotifyOfPropertyChange(() => FPSCounter);
             }
         }

@@ -117,10 +117,9 @@ namespace WPF_Leap_Motion_simulator
 
             //displayFPS.Text = frame.CurrentFramesPerSecond.ToString();
 
-
             //TO CHANGE
             shellViewModel.FPSCounter = frame.CurrentFramesPerSecond.ToString();
-            Console.WriteLine(shellViewModel.FPSCounter);
+            //Console.WriteLine("FPS from obj: "+shellViewModel.FPSCounter);
         }
     }
 }

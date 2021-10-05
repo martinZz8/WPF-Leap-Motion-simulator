@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock
-            Text="{Binding Path=FPSCounter, Mode=OneTime}"
+            Text="{Binding Path=FPSCounter, Mode=OneWay}"
             Grid.Column="1"
             Grid.Row="1"
             Width="60"
