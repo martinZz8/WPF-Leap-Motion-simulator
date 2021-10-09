@@ -18,7 +18,7 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ShellViewModel: Caliburn.Micro.Screen, ILeapEventDelegate
+    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate
     {
         //-- LeapMotion variables --
         private Controller controller;
@@ -34,6 +34,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             controller = new Controller();
             listener = new LeapEventListener(this);
             controller.AddListener(listener);
+            ActivateItem(new MenuViewModel());
         }
 
         //Method, that's fired when window closes
@@ -111,7 +112,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             //displayFPS.Text = frame.CurrentFramesPerSecond.ToString();
 
             //Writing the fps number on the screen
-            FPSCounter = frame.CurrentFramesPerSecond.ToString();
+            FPSCounter = ((int)frame.CurrentFramesPerSecond).ToString();
         }
 
         //-- Window properties and methods --
@@ -128,6 +129,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 Console.WriteLine("Changing to: " + value);
                 NotifyOfPropertyChange(() => FPSCounter);
             }
+        }
+
+        public string ProgramVersion
+        {
+            get
+            {
+                return "version 1.0";
+            }
+        }
+
+        public void LoadReceiveTheParcelScreen()
+        {
+            //ActivateItem(new ReceiveTheParcelViewModel());
         }
     }
 }
