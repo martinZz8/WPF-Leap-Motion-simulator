@@ -53,6 +53,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             isClosing = true;
             controller.RemoveListener(listener);
             controller.Dispose();
+            _eventAggregator.Unsubscribe(this);
             base.OnDeactivate(close);
         }
 

@@ -22,6 +22,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _eventAggregator.Subscribe(this);
         }
 
+        protected override void OnDeactivate(bool close)
+        {
+            _eventAggregator.Unsubscribe(this);
+            base.OnDeactivate(close);
+        }
+
         // -- Methods --
         public void LoadMenuView()
         {
