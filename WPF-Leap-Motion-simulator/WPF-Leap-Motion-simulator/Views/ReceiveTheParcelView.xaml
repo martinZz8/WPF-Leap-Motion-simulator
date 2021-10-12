@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="green">
+             Background="Blue">
     <Grid>
-            
+        <Button
+            x:Name="LoadMenuView"
+            Height="30"
+            FontSize="15"
+            FontWeight="Bold"
+        >
+            Menu
+        </Button>
     </Grid>
 </UserControl>

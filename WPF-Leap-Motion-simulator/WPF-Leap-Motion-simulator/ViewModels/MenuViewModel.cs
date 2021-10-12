@@ -13,7 +13,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
     {
         private IEventAggregator _eventAggregator;
 
-        // Variables of the window
+        //-- Variables of this window --
         private string _testInput;
 
         public MenuViewModel(IEventAggregator eventAggregator)
@@ -22,11 +22,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _eventAggregator.Subscribe(this);
         }
 
+        //-- Properties --
         public string TestInput
         {
             get
-            { 
-                return _testInput; 
+            {
+                return _testInput;
             }
             set
             {
@@ -39,6 +40,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 });
                 NotifyOfPropertyChange(() => TestInput);
             }
+        }
+
+        // -- Methods --
+        public void LoadReceiveTheParcelView()
+        {
+            _eventAggregator.PublishOnUIThread(new MenuButtonClick
+            {
+                Name = "receiveTheParcel"
+            });
         }
     }
 }

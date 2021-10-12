@@ -38,12 +38,13 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
         {
+            _FPSCounter = 0.ToString();
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
             controller = new Controller();
             listener = new LeapEventListener(this);
             controller.AddListener(listener);
-            ActivateItem(new MenuViewModel(eventAggregator));
+            ActivateItem(new MenuViewModel(_eventAggregator));
         }
 
         //Method, that's fired when window closes
@@ -147,6 +148,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        //-- Properties --
         public string TestInput
         {
             get
@@ -161,12 +163,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        public void LoadReceiveTheParcelScreen()
-        {
-            //ActivateItem(new ReceiveTheParcelViewModel());
-        }
-
-        // Handle change of inputs
+        //-- Handle change of inputs --
         public void Handle(InputField message)
         {
             // TO DO
@@ -177,11 +174,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        // Handle change of button clicks
+        //-- Handle change of button clicks --
         public void Handle(MenuButtonClick message)
         {
             // TO DO
-            throw new NotImplementedException();
+            if (message.Name == "receiveTheParcel")
+            {
+                ActivateItem(new ReceiveTheParcelViewModel(_eventAggregator));
+            }
+            else if (message.Name == "menu")
+            {
+                ActivateItem(new MenuViewModel(_eventAggregator));
+            }
         }
     }
 }
