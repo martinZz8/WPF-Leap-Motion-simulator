@@ -6,6 +6,7 @@ using System.Windows;
 
 //Caliburn Micro
 using Caliburn.Micro;
+using WPF_Leap_Motion_simulator.Models;
 
 // System Diagnostics for Trace.WriteLine() function
 using System.Diagnostics;
@@ -18,32 +19,40 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate
+    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate, IHandle<InputField>, IHandle<MenuButtonClick>
     {
         //-- LeapMotion variables --
         private Controller controller;
         private LeapEventListener listener;
         private Boolean isClosing = false;
 
-        //-- Window variables --
+        //-- Event Aggregator --
+        private readonly IEventAggregator _eventAggregator;
+
+        //-- Whole window variables --
         private string _FPSCounter;
 
+        //-- Menu window variables --
+        private string _testInput;
+
         //-- Constructor --
-        public ShellViewModel()
+        public ShellViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
             controller = new Controller();
             listener = new LeapEventListener(this);
             controller.AddListener(listener);
-            ActivateItem(new MenuViewModel());
+            ActivateItem(new MenuViewModel(eventAggregator));
         }
 
         //Method, that's fired when window closes
         protected override void OnDeactivate(bool close)
         {
-            base.OnDeactivate(close);
             isClosing = true;
             controller.RemoveListener(listener);
             controller.Dispose();
+            base.OnDeactivate(close);
         }
 
         // -- Leap motion delegate and methods --
@@ -116,6 +125,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
 
         //-- Window properties and methods --
+        public string ProgramVersion
+        {
+            get
+            {
+                return "version 1.0";
+            }
+        }
+
         public string FPSCounter
         {
             get
@@ -126,22 +143,45 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             set
             {
                 _FPSCounter = value;
-                Console.WriteLine("Changing to: " + value);
                 NotifyOfPropertyChange(() => FPSCounter);
             }
         }
 
-        public string ProgramVersion
+        public string TestInput
         {
             get
             {
-                return "version 1.0";
+                return _testInput;
+            }
+
+            set
+            {
+                _testInput = value;
+                NotifyOfPropertyChange(() => TestInput);
             }
         }
 
         public void LoadReceiveTheParcelScreen()
         {
             //ActivateItem(new ReceiveTheParcelViewModel());
+        }
+
+        // Handle change of inputs
+        public void Handle(InputField message)
+        {
+            // TO DO
+            if(message.Name == "testInput")
+            {
+                Console.WriteLine("Input chaneged to: "+ message.Value);
+                TestInput = message.Value;
+            }
+        }
+
+        // Handle change of button clicks
+        public void Handle(MenuButtonClick message)
+        {
+            // TO DO
+            throw new NotImplementedException();
         }
     }
 }

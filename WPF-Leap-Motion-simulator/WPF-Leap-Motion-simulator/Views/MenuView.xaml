@@ -6,32 +6,68 @@
              xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="blue">
+             >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
+        <!-- Middle content -->
+        <Grid
+            Grid.Row="0"
+            Grid.Column="1"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Background -->
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="3"
+            >
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.6"/>
+                </StackPanel.Background>
+
+                <StackPanel.Effect>
+                    <BlurEffect Radius="5" KernelType="Gaussian"/>
+                </StackPanel.Effect>
+            </StackPanel>
+
+            <!-- Elements of view -->
+            <StackPanel
             Grid.Row="1"
             Grid.Column="1"
         >
-            <Button
-                x:Name="LoadReceiveTheParcelView"
-                Height="30"
-                FontSize="15"
-                FontWeight="Bold"
-            >
-                Odbierz przesyłkę
-            </Button>
-        </StackPanel>
+                <Button
+                    x:Name="LoadReceiveTheParcelView"
+                    Height="30"
+                    FontSize="15"
+                    FontWeight="Bold"
+                >
+                    Odbierz przesyłkę
+                </Button>
+                <TextBox
+                    x:Name="TestInput"
+                />
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

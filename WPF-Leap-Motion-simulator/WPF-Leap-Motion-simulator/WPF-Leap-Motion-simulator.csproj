@@ -78,6 +78,8 @@
     <Compile Include="LeapTracker\LeapEventDelegate\ILeapEventDelegate.cs" />
     <Compile Include="LeapTracker\LeapEventListener\LeapEventListener.cs" />
     <Compile Include="LeapTracker\LeapEventTypes\LeapEventTypes.cs" />
+    <Compile Include="Models\InputField.cs" />
+    <Compile Include="Models\MenuButtonClick.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ReceiveTheParcelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
@@ -115,9 +117,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\MenuView.xaml">
       <SubType>Designer</SubType>
@@ -131,6 +131,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\background1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

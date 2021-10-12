@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
         mc:Ignorable="d"
-        Title="Leap Motion Simulator" Height="450" Width="800"
+        Title="Leap Motion Simulator" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
+        Background="#f1b938"
         >
+    <!--xmlns:cal="http://www.caliburnproject.org"-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -54,7 +56,7 @@
             </StackPanel>
 
             <TextBlock
-                Text="Parcel locker"
+                Text="Paczkomat"
                 Grid.Row="0"
                 Grid.Column="1"
                 FontSize="14"
@@ -64,20 +66,21 @@
         </Grid>
 
         <!-- Row 2 -->
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+            <Image Stretch="None" Source="../Assets/background1.jpg" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <ContentControl 
                 Grid.Row="0"
-                Grid.Column="1"
+                Grid.Column="0"
                 x:Name="ActiveItem"
             />
         </Grid>

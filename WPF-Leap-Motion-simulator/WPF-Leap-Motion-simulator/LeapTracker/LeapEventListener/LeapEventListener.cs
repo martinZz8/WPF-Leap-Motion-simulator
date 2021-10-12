@@ -49,13 +49,13 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
         {
             //Processing code of latest acquired frame
             Frame frame = controller.Frame();
-            Console.WriteLine("----------Frame id: " + frame.Id.ToString() + "----------------");
-            Console.WriteLine("Frame timestamp: " + frame.Timestamp.ToString());
-            Console.WriteLine("Current FPS: " + frame.CurrentFramesPerSecond.ToString());
-            Console.WriteLine("Is valid: " + frame.IsValid.ToString());
-            Console.WriteLine("Frame gestures count: " + frame.Gestures().Count.ToString());
-            Console.WriteLine("Images count: " + frame.Images.Count.ToString());
-            Console.Write("\n\n");
+            //Console.WriteLine("----------Frame id: " + frame.Id.ToString() + "----------------");
+            //Console.WriteLine("Frame timestamp: " + frame.Timestamp.ToString());
+            //Console.WriteLine("Current FPS: " + frame.CurrentFramesPerSecond.ToString());
+            //Console.WriteLine("Is valid: " + frame.IsValid.ToString());
+            //Console.WriteLine("Frame gestures count: " + frame.Gestures().Count.ToString());
+            //Console.WriteLine("Images count: " + frame.Images.Count.ToString());
+            //Console.Write("\n\n");
             GestureDetection(frame.Gestures());
 
             //TO DELETE
@@ -72,7 +72,7 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
         private void GestureDetection(GestureList gesture_list)
         {
             bool gd = false;
-            Console.WriteLine("HH Gesture length: \n" + gesture_list.Count);
+            //Console.WriteLine("HH Gesture length: " + gesture_list.Count);
             foreach (Gesture gesture in gesture_list)
             {
                 switch (gesture.Type)
