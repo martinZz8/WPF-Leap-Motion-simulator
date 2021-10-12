@@ -37,7 +37,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                Console.WriteLine("ICH: " + value);
                 _testInput = value;
                 _eventAggregator.PublishOnUIThread(new InputField
                 {
