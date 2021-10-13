@@ -24,13 +24,14 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
 
         public override void OnConnect(Controller controller)
         {
-            controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE);
-            controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f);
-            controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE);
-            controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP);
-            controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP);
+            controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
+            controller.Config.SetFloat("Gesture.Circle.MinRadius", 10.0f); //40.0f
+            controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE, true);
+            controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP, true);
+            controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP, true);
+            controller.Config.Save();
 
-            Console.WriteLine("Connected");
+            //Console.WriteLine("Connected");
             eventDelegate.LeapEventNotification(LeapEventTypes.onConnect);
         }
 
@@ -57,22 +58,27 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
             //Console.WriteLine("Images count: " + frame.Images.Count.ToString());
             //Console.Write("\n\n");
             GestureDetection(frame.Gestures());
+            if (controller.IsGestureEnabled(Gesture.GestureType.TYPE_SWIPE))
+            {
+                //Console.WriteLine("SWIPE is enabled\n");
+            }
 
             //TO DELETE
             //if(frame.Fingers.Count > 0)
             //{
             //    Console.WriteLine("Finger one: " +frame.Fingers[0].Bone(Bone.BoneType.TYPE_DISTAL).Length.ToString());
             //}
-            
 
             eventDelegate.LeapEventNotification(LeapEventTypes.onFrame);
-            //Thread.Sleep(1000);
         }
 
         private void GestureDetection(GestureList gesture_list)
         {
             bool gd = false;
-            //Console.WriteLine("HH Gesture length: " + gesture_list.Count);
+            if(gesture_list.Count > 0)
+            {
+                Console.WriteLine("Gesture length: " + gesture_list.Count);
+            }
             foreach (Gesture gesture in gesture_list)
             {
                 switch (gesture.Type)
@@ -87,10 +93,12 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
                         break;
                     case Gesture.GestureType.TYPE_SCREEN_TAP:
                         gd = true;
+                        Console.WriteLine("GESTURE TYPE_SCREEN_TAP");
                         eventDelegate.LeapEventNotification(LeapEventTypes.onScreenTapGestureDetected);
                         break;
                     case Gesture.GestureType.TYPE_KEY_TAP:
                         gd = true;
+                        Console.WriteLine("GESTURE TYPE_KEY_TAP");
                         eventDelegate.LeapEventNotification(LeapEventTypes.onKeyTapGestureDetected);
                         break;
                     default:
