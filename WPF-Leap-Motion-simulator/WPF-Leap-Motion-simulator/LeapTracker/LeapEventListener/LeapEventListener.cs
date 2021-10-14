@@ -86,10 +86,12 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
                     case Gesture.GestureType.TYPE_CIRCLE:
                         gd = true;
                         eventDelegate.LeapEventNotification(LeapEventTypes.onCircleGestureDetected);
+                        Console.WriteLine("GESTURE TYPE_CIRCLE");
                         break;
                     case Gesture.GestureType.TYPE_SWIPE:
                         gd = true;
                         eventDelegate.LeapEventNotification(LeapEventTypes.onSwipeGestureDetected);
+                        Console.WriteLine("GESTURE TYPE_SCREEN_SWIPE");
                         break;
                     case Gesture.GestureType.TYPE_SCREEN_TAP:
                         gd = true;
