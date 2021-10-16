@@ -16,6 +16,7 @@ using Leap;
 
 //LeapTracker
 using WPF_Leap_Motion_simulator.LeapTracker;
+using System.Windows.Controls;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
@@ -31,6 +32,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         //-- Whole window variables --
         private string _FPSCounter;
+        private Cursor _Cursor;
 
         //-- Menu window variables --
         private string _testInput;
@@ -38,12 +40,28 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
         {
+            // Setting FPS Counter to 0
             _FPSCounter = 0.ToString();
+
+            // Setting default values of the cursor
+            _Cursor = new Cursor
+            {
+                IsVisible = true,
+                PositionX = 0,
+                PositionZ = 0
+            };
+            NotifyOfPropertyChange(() => ActualCursor);
+
+            // Setting Event Aggregator
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
+
+            // Initializing controller with LeapEventListener object
             controller = new Controller();
             listener = new LeapEventListener(this);
             controller.AddListener(listener);
+
+            // Activate the Menu window, as first window
             ActivateItem(new MenuViewModel(_eventAggregator));
         }
 
@@ -106,11 +124,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         void connectHandler()
         {
-            controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE);
-            controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f);
-            controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE);
-            controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP);
-            controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP);
+            controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
+            controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f); //40.0f
+            controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE, true);
+            controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP, true);
+            controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP, true);
+            controller.Config.Save();
         }
 
         void newFrameHandler(Leap.Frame frame)
@@ -124,9 +143,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             //Writing the fps number on the screen
             FPSCounter = ((int)frame.CurrentFramesPerSecond).ToString();
+
+            //Saving the position of the cursor
+            savePositionOfTheCursor(frame);
         }
 
-        //-- Window properties and methods --
+        //-- Window Properties --
         public string ProgramVersion
         {
             get
@@ -149,7 +171,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        //-- Properties --
         public string TestInput
         {
             get
@@ -164,13 +185,21 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Cursor ActualCursor
+        {
+            get
+            {
+                return _Cursor;
+            }
+        }
+
         //-- Handle change of inputs --
         public void Handle(InputField message)
         {
             // TO DO
             if(message.Name == "testInput")
             {
-                Console.WriteLine("Input chaneged to: "+ message.Value);
+                Console.WriteLine("Input changed to: " + message.Value);
                 TestInput = message.Value;
             }
         }
@@ -187,6 +216,91 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 ActivateItem(new MenuViewModel(_eventAggregator));
             }
+        }
+
+        //-- Private methods --
+        private void savePositionOfTheCursor(Leap.Frame frame)
+        {
+            bool trackedIndexFinger = false;
+            HandList hands = frame.Hands;
+            foreach (Hand hand in hands)
+            {
+                if (hand.IsRight)
+                {
+                    FingerList fingers = hand.Fingers;
+                    foreach (Finger finger in fingers)
+                    {
+                        if (finger.Type == Finger.FingerType.TYPE_INDEX)
+                        {
+                            Bone distalBone = finger.Bone(Bone.BoneType.TYPE_DISTAL);
+                            Leap.Vector centerOfTheBone = distalBone.Center;
+                            trackedIndexFinger = true;
+                            setCursorPosition(centerOfTheBone);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            if (!trackedIndexFinger)
+            {
+                hideCursor();
+            }
+        }
+        private void setCursorPosition(Leap.Vector fingerPosition)
+        {
+            // TO DO - Calculate properly the position of the cursor
+            Window mainWindow = Application.Current.MainWindow;
+            double windowHeight = mainWindow.ActualHeight;
+            double windowWidth = mainWindow.ActualWidth;
+
+            double centerHeight = windowHeight / 2;
+            double centerWidth = windowWidth / 2d;
+
+            double cursorSensibility = 2;
+            double offsetX = centerWidth + fingerPosition.x* cursorSensibility;
+            double offsetZ = centerHeight + fingerPosition.z* cursorSensibility;
+
+            // check if values are not over the window
+            double maxLeft = _Cursor.CursorRadius;
+            double maxRight = windowWidth - _Cursor.CursorRadius;
+            double maxTop = _Cursor.CursorRadius;
+            double maxBottom = windowHeight - _Cursor.CursorRadius;
+
+            if (offsetX < maxLeft)
+            {
+                offsetX = maxLeft;
+            }
+            else if(offsetX > maxRight)
+            {
+                offsetX = maxRight;
+            }
+
+            if (offsetZ < maxTop)
+            {
+                offsetZ = maxTop;
+            }
+            else if (offsetZ > maxBottom)
+            {
+                offsetZ = maxBottom;
+            }
+
+            // Setting cursor object fields
+            _Cursor.PositionX = offsetX;
+            _Cursor.PositionZ = offsetZ;
+            _Cursor.IsVisible = true;
+            NotifyOfPropertyChange(() => ActualCursor);
+
+            Console.WriteLine($"X: {_Cursor.PositionX}\tZ: {_Cursor.PositionZ}");
+        }
+
+        private void hideCursor()
+        {
+            _Cursor.PositionX = 0f;
+            _Cursor.PositionZ = 0f;
+            _Cursor.IsVisible = false;
+            NotifyOfPropertyChange(() => ActualCursor);
         }
     }
 }

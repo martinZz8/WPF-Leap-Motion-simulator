@@ -9,7 +9,7 @@ using WPF_Leap_Motion_simulator.Models;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ReceiveTheParcelViewModel: Screen
+    public class ReceiveTheParcelViewModel: Screen
     {
         private IEventAggregator _eventAggregator;
 

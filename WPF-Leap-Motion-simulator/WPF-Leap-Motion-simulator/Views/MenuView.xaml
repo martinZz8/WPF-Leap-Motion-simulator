@@ -53,9 +53,9 @@
 
             <!-- Elements of view -->
             <StackPanel
-            Grid.Row="1"
-            Grid.Column="1"
-        >
+                Grid.Row="1"
+                Grid.Column="1"
+            >
                 <Button
                     x:Name="LoadReceiveTheParcelView"
                     Height="30"

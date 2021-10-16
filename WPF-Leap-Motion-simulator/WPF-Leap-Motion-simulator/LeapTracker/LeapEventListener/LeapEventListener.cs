@@ -22,16 +22,17 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
             eventDelegate.LeapEventNotification(LeapEventTypes.onInit);
         }
 
+        // OnConnect is after OnInit
         public override void OnConnect(Controller controller)
         {
             controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
-            controller.Config.SetFloat("Gesture.Circle.MinRadius", 10.0f); //40.0f
+            controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f); //40.0f
             controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE, true);
             controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP, true);
             controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP, true);
             controller.Config.Save();
 
-            //Console.WriteLine("Connected");
+            Console.WriteLine("Connected");
             eventDelegate.LeapEventNotification(LeapEventTypes.onConnect);
         }
 
@@ -105,6 +106,7 @@ namespace WPF_Leap_Motion_simulator.LeapTracker
                         break;
                     default:
                         //Handle unrecognized gestures
+                        Console.WriteLine("unrecognized gesture");
                         break;
                 }
             }

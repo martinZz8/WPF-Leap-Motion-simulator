@@ -47,6 +47,7 @@
       <HintPath>.\LeapCSharp.NET4.0.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -78,8 +79,9 @@
     <Compile Include="LeapTracker\LeapEventDelegate\ILeapEventDelegate.cs" />
     <Compile Include="LeapTracker\LeapEventListener\LeapEventListener.cs" />
     <Compile Include="LeapTracker\LeapEventTypes\LeapEventTypes.cs" />
-    <Compile Include="Models\InputField.cs" />
-    <Compile Include="Models\MenuButtonClick.cs" />
+    <Compile Include="Models\AppElements\Cursor.cs" />
+    <Compile Include="Models\HandleClasses\InputField.cs" />
+    <Compile Include="Models\HandleClasses\MenuButtonClick.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ReceiveTheParcelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

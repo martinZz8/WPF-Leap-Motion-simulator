@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="Leap Motion Simulator" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         Background="#f1b938"
         >
-    <!--xmlns:cal="http://www.caliburnproject.org"-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -24,6 +24,21 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+
+        <!-- Elements on the top of the app -->
+        <Canvas
+            Panel.ZIndex="100"
+        >
+            <Ellipse
+                
+                Width="18"
+                Height="18"
+                Fill="Red"
+                Canvas.Left="{Binding Path=ActualCursor.PositionX, Mode=OneWay}"
+                Canvas.Top="{Binding Path=ActualCursor.PositionZ, Mode=OneWay}"
+                Visibility="{Binding Path=ActualCursor.getVisibilityType, Mode=OneWay}"
+            />
+        </Canvas>
 
         <!-- Row 1-->
         <Grid Grid.Row="1" Grid.Column="1">
