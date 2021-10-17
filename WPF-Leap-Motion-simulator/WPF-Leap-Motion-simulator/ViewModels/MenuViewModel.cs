@@ -5,11 +5,16 @@ using System.Text;
 
 //Caliburn Micro
 using Caliburn.Micro;
+
+// Models
 using WPF_Leap_Motion_simulator.Models;
+
+//Leap Tracker
+using WPF_Leap_Motion_simulator.LeapTracker;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    public class MenuViewModel: Screen
+    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>
     {
         private IEventAggregator _eventAggregator;
 
@@ -38,7 +43,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             set
             {
                 _testInput = value;
-                _eventAggregator.PublishOnUIThread(new InputField
+                _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Name = "testInput",
                     Value = _testInput
@@ -50,10 +55,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         // -- Methods --
         public void LoadReceiveTheParcelView()
         {
-            _eventAggregator.PublishOnUIThread(new MenuButtonClick
+            _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
             {
                 Name = "receiveTheParcel"
             });
+        }
+
+        // Handle cursor hand gesture
+        public void Handle(HandleCursorHandGesture message)
+        {
+            if(message.GestrueType == LeapGestureTypes.KeyTap)
+            {
+                Console.WriteLine("I'm here!!");
+                //LoadReceiveTheParcelView();
+            }
         }
     }
 }

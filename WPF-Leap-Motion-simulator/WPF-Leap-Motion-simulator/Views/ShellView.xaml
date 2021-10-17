@@ -30,14 +30,47 @@
             Panel.ZIndex="100"
         >
             <Ellipse
-                
-                Width="18"
-                Height="18"
+                Width="{Binding Path=ActualCursor.GetCursorSize, Mode=OneWay}"
+                Height="{Binding Path=ActualCursor.GetCursorSize, Mode=OneWay}"
                 Fill="Red"
+                Opacity="0.9"
                 Canvas.Left="{Binding Path=ActualCursor.PositionX, Mode=OneWay}"
                 Canvas.Top="{Binding Path=ActualCursor.PositionZ, Mode=OneWay}"
-                Visibility="{Binding Path=ActualCursor.getVisibilityType, Mode=OneWay}"
-            />
+                Visibility="{Binding Path=ActualCursor.GetVisibilityType, Mode=OneWay}"
+            >
+                <Ellipse.Effect>
+                    <BlurEffect Radius="3" KernelType="Gaussian"/>
+                </Ellipse.Effect>
+            </Ellipse>
+
+            <!-- Test -->
+            <Ellipse
+                x:Name="testEllipse"
+                Width="{Binding Path=ActualCursor.GetCursorTapSize, Mode=OneWay}"
+                Height="{Binding Path=ActualCursor.GetCursorTapSize, Mode=OneWay}"
+                Fill="White"
+                Canvas.Left="{Binding Path=ActualCursor.TapPositionX, Mode=OneWay}"
+                Canvas.Top="{Binding Path=ActualCursor.TapPositionZ, Mode=OneWay}"
+            >
+                <Ellipse.Effect>
+                    <BlurEffect Radius="7" KernelType="Gaussian"/>
+                </Ellipse.Effect>
+
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Ellipse.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation
+                                    Storyboard.TargetName="testEllipse" 
+                                    Storyboard.TargetProperty="Opacity"
+                                    From="0.7" To="0.0" Duration="0:0:1.3"
+                                    AutoReverse="False"
+                                />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+            </Ellipse>
         </Canvas>
 
         <!-- Row 1-->

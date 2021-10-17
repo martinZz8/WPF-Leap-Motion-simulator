@@ -20,7 +20,7 @@ using System.Windows.Controls;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate, IHandle<InputField>, IHandle<MenuButtonClick>
+    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleMenuButtonClick>
     {
         //-- LeapMotion variables --
         private Controller controller;
@@ -48,7 +48,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 IsVisible = true,
                 PositionX = 0,
-                PositionZ = 0
+                PositionZ = 0,
+                CursorRadius = 9,
+                CursorSensibility = 2
             };
             NotifyOfPropertyChange(() => ActualCursor);
 
@@ -84,7 +86,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 switch (EventType)
                 {
                     case LeapEventTypes.onInit:
-                        Debug.WriteLine("Init");
+                        
                         break;
                     case LeapEventTypes.onConnect:
                         connectHandler();
@@ -94,25 +96,30 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                             newFrameHandler(controller.Frame());
                         break;
                     case LeapEventTypes.onExit:
-                        Debug.WriteLine("Exit");
+                        
                         break;
                     case LeapEventTypes.onDisconnect:
-                        Debug.WriteLine("Disconnected");
+                        
                         break;
                     case LeapEventTypes.onCircleGestureDetected:
-                        Debug.WriteLine("circleGestureDetected");
+                        
                         break;
                     case LeapEventTypes.onSwipeGestureDetected:
-                        Debug.WriteLine("swipeGestureDetected");
+                        
                         break;
                     case LeapEventTypes.onScreenTapGestureDetected:
-                        Debug.WriteLine("screenTapGestureDetected");
+                        
                         break;
                     case LeapEventTypes.onKeyTapGestureDetected:
-                        Debug.WriteLine("keyTapGestureDetected");
+                        _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
+                        {
+                            CoordX = _Cursor.PositionX,
+                            CoordZ = _Cursor.PositionZ,
+                            GestrueType = LeapGestureTypes.KeyTap
+                        });
                         break;
                     case LeapEventTypes.onNoGestureDetected:
-                        Debug.WriteLine("noGestureDetected");
+                        
                         break;
                 }
             }
@@ -194,7 +201,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
 
         //-- Handle change of inputs --
-        public void Handle(InputField message)
+        public void Handle(HandleInputField message)
         {
             // TO DO
             if(message.Name == "testInput")
@@ -205,7 +212,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
 
         //-- Handle change of button clicks --
-        public void Handle(MenuButtonClick message)
+        public void Handle(HandleMenuButtonClick message)
         {
             // TO DO
             if (message.Name == "receiveTheParcel")
@@ -258,33 +265,32 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             double centerHeight = windowHeight / 2;
             double centerWidth = windowWidth / 2d;
 
-            double cursorSensibility = 2;
-            double offsetX = centerWidth + fingerPosition.x* cursorSensibility;
-            double offsetZ = centerHeight + fingerPosition.z* cursorSensibility;
+            double offsetX = centerWidth + fingerPosition.x * _Cursor.CursorSensibility;
+            double offsetZ = centerHeight + fingerPosition.z * _Cursor.CursorSensibility;
 
             // check if values are not over the window
-            double maxLeft = _Cursor.CursorRadius;
-            double maxRight = windowWidth - _Cursor.CursorRadius;
-            double maxTop = _Cursor.CursorRadius;
-            double maxBottom = windowHeight - _Cursor.CursorRadius;
+            //double maxLeft = 0;
+            //double maxRight = windowWidth - _Cursor.CursorRadius*3.7;
+            //double maxTop = 0;
+            //double maxBottom = windowHeight - _Cursor.CursorRadius*5.8;
 
-            if (offsetX < maxLeft)
-            {
-                offsetX = maxLeft;
-            }
-            else if(offsetX > maxRight)
-            {
-                offsetX = maxRight;
-            }
+            //if (offsetX < maxLeft)
+            //{
+            //    offsetX = maxLeft;
+            //}
+            //else if(offsetX > maxRight)
+            //{
+            //    offsetX = maxRight;
+            //}
 
-            if (offsetZ < maxTop)
-            {
-                offsetZ = maxTop;
-            }
-            else if (offsetZ > maxBottom)
-            {
-                offsetZ = maxBottom;
-            }
+            //if (offsetZ < maxTop)
+            //{
+            //    offsetZ = maxTop;
+            //}
+            //else if (offsetZ > maxBottom)
+            //{
+            //    offsetZ = maxBottom;
+            //}
 
             // Setting cursor object fields
             _Cursor.PositionX = offsetX;
@@ -292,7 +298,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _Cursor.IsVisible = true;
             NotifyOfPropertyChange(() => ActualCursor);
 
-            Console.WriteLine($"X: {_Cursor.PositionX}\tZ: {_Cursor.PositionZ}");
+            //Console.WriteLine($"X: {_Cursor.PositionX}\tZ: {_Cursor.PositionZ}");
         }
 
         private void hideCursor()

@@ -5,9 +5,8 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    class InputField
+    class HandleMenuButtonClick
     {
         public string Name { get; set; }
-        public string Value { get; set; }
     }
 }

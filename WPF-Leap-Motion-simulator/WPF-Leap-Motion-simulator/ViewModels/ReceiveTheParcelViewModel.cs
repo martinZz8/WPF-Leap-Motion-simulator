@@ -9,7 +9,7 @@ using WPF_Leap_Motion_simulator.Models;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    public class ReceiveTheParcelViewModel: Screen
+    class ReceiveTheParcelViewModel: Screen
     {
         private IEventAggregator _eventAggregator;
 
@@ -31,7 +31,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         // -- Methods --
         public void LoadMenuView()
         {
-            _eventAggregator.PublishOnUIThread(new MenuButtonClick
+            _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
             {
                 Name = "menu"
             });
