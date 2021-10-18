@@ -88,7 +88,6 @@
     <Compile Include="Models\HandleClasses\HandleCursorHandGesture.cs" />
     <Compile Include="Models\HandleClasses\HandleInputField.cs" />
     <Compile Include="Models\HandleClasses\HandleMenuButtonClick.cs" />
-    <Compile Include="StaticClasses\DialogEventAggregatorProvider.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ReceiveTheParcelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

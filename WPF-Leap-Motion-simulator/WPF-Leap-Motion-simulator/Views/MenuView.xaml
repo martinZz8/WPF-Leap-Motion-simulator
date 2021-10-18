@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              d:DesignHeight="450" d:DesignWidth="800"
              >
     <Grid>
@@ -56,8 +57,9 @@
                 Grid.Row="1"
                 Grid.Column="1"
             >
+                <!--x:Name="LoadReceiveTheParcelView"-->
                 <Button
-                    x:Name="LoadReceiveTheParcelView"
+                    cal:Message.Attach="[Event Click] = [Action LoadReceiveTheParcelView]"
                     Height="30"
                     FontSize="15"
                     FontWeight="Bold"

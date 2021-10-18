@@ -12,12 +12,9 @@ using WPF_Leap_Motion_simulator.Models;
 // Leap Tracker
 using WPF_Leap_Motion_simulator.LeapTracker;
 
-// Static Classes
-using WPF_Leap_Motion_simulator.StaticClasses;
-
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleSendButtonData>
+    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>
     {
         private IEventAggregator _eventAggregator;
 
@@ -28,7 +25,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
-            //DialogEventAggregatorProvider.eventAggregator.Subscribe(this);
         }
 
         protected override void OnDeactivate(bool close)
@@ -71,21 +67,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             if(message.GestrueType == LeapGestureTypes.KeyTap)
             {
                 Console.WriteLine("I'm here!!");
-                DialogEventAggregatorProvider.eventAggregator.Publish(
-                    new HandleRequestButtonData { ButtonType = ButtonTypes.RECEIVE_THE_PARCEL },
-                    action => { }
-                );
                 //LoadReceiveTheParcelView();
-            }
-        }
-
-        // Handle SendButtonData
-        public void Handle(HandleSendButtonData message)
-        {
-            List<ButtonData> buttonList = message.ButtonList;
-            if(buttonList.Count > 0)
-            {
-                Console.WriteLine("First element's X in buttonList: " + buttonList[0].RelativePositionX);
             }
         }
     }
