@@ -81,9 +81,14 @@
     <Compile Include="LeapTracker\LeapEventTypes\LeapEventTypes.cs" />
     <Compile Include="LeapTracker\LeapEventTypes\LeapGestureTypes.cs" />
     <Compile Include="Models\AppElements\Cursor.cs" />
+    <Compile Include="Models\ComplexClasses\ButtonData.cs" />
+    <Compile Include="Models\HandleClasses\ButtonData\ButtonTypes.cs" />
+    <Compile Include="Models\HandleClasses\ButtonData\HandleRequestButtonData.cs" />
+    <Compile Include="Models\HandleClasses\ButtonData\HandleSendButtonData.cs" />
     <Compile Include="Models\HandleClasses\HandleCursorHandGesture.cs" />
     <Compile Include="Models\HandleClasses\HandleInputField.cs" />
     <Compile Include="Models\HandleClasses\HandleMenuButtonClick.cs" />
+    <Compile Include="StaticClasses\DialogEventAggregatorProvider.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ReceiveTheParcelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

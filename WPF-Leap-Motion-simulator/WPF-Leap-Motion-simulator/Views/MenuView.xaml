@@ -17,7 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <!-- Middle content -->
         <Grid
             Grid.Row="0"
