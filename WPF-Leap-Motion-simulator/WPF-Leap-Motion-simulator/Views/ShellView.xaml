@@ -13,18 +13,33 @@
         Background="#f1b938"
         >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10-->
+        <!--OLD VERSION-->
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10px"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10-->
+            <ColumnDefinition Width="10px"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10-->
+            <RowDefinition Height="10px"/>
+            <RowDefinition Height="19px"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="13px"/>
+            <RowDefinition Height="10px"/>
+        </Grid.RowDefinitions>-->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10px-->
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10px-->
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10px-->
             <RowDefinition Height="{Binding Path=WindowHeaderSize, Mode=OneWay}"/> <!--19px | auto-->
             <RowDefinition Height="*"/>
             <RowDefinition Height="{Binding Path=WindowFooterSize, Mode=OneWay}"/> <!--13px | auto-->
-            <RowDefinition Height="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10-->
+            <RowDefinition Height="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10px-->
         </Grid.RowDefinitions>
 
         <!-- Elements on the top of the app -->

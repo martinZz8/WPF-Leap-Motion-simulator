@@ -5,10 +5,8 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    public enum ButtonTypes
+    class HandleWindowHeight
     {
-        RECEIVE_THE_PARCEL,
-        GO_MENU,
-        GO_RECEIVE_THE_PARCEL
+        public double WindowHeight { get; set; }
     }
 }

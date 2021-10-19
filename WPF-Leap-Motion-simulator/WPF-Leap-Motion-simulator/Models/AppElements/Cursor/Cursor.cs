@@ -16,7 +16,6 @@ namespace WPF_Leap_Motion_simulator.Models
         private double _cursorTapSizeAddition = 5;
 
         // Properties
-
         public double PositionX
         {
             get

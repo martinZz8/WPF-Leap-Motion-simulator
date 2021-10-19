@@ -74,7 +74,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             controller.AddListener(listener);
 
             // Activate the Menu window, as first window
-            ActivateItem(new MenuViewModel(_eventAggregator));
+            ActivateItem(new MenuViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
         }
 
         //Method, that's fired when window closes
@@ -121,19 +121,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onKeyTapGestureDetected:
-                        _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
+                        if(_Cursor.IsVisible)
                         {
-                            CursorPositionX = _Cursor.PositionX,
-                            CursorPositionY = _Cursor.PositionY,
-                            CursorRadius = _Cursor.PositionY,
-                            GestrueType = LeapGestureTypes.KeyTap,
-                            PaddingTop = WindowBorderSize + WindowHeaderSize,
-                            PaddingRight = 0,
-                            PaddingBottom = WindowBorderSize + WindowFooterSize,
-                            PaddingLeft = 0,
-                            WindowWidth = WindowWidth,
-                            WindowHeight = WindowHeight
-                        });
+                            _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
+                            {
+                                CursorPositionX = _Cursor.PositionX,
+                                CursorPositionY = _Cursor.PositionY,
+                                CursorRadius = _Cursor.CursorRadius,
+                                GestrueType = LeapGestureTypes.KeyTap,
+                                PaddingTop = WindowBorderSize + WindowHeaderSize,
+                                PaddingRight = 0,
+                                PaddingBottom = WindowBorderSize + WindowFooterSize,
+                                PaddingLeft = 0,
+                                WindowWidth = WindowWidth,
+                                WindowHeight = WindowHeight
+                            });
+                        }
                         break;
                     case LeapEventTypes.onNoGestureDetected:
                         
@@ -184,6 +187,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 _windowWidth = value;
                 NotifyOfPropertyChange(() => WindowWidth);
+                _eventAggregator.PublishOnUIThread(new HandleWindowWidth
+                {
+                    WindowWidth = WindowWidth
+                });
             }
         }
 
@@ -198,6 +205,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 _windowHeight = value;
                 NotifyOfPropertyChange(() => WindowHeight);
+                _eventAggregator.PublishOnUIThread(new HandleWindowHeight
+                {
+                    WindowHeight = WindowHeight
+                });
             }
         }
 
@@ -304,11 +315,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             // TO DO
             if (message.Name == "receiveTheParcel")
             {
-                ActivateItem(new ReceiveTheParcelViewModel(_eventAggregator));
+                ActivateItem(new ReceiveTheParcelViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
             }
             else if (message.Name == "menu")
             {
-                ActivateItem(new MenuViewModel(_eventAggregator));
+                ActivateItem(new MenuViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
             }
         }
 
@@ -342,6 +353,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 hideCursor();
             }
         }
+
         private void setCursorPosition(Leap.Vector fingerPosition)
         {
             // -- OLD VERSION OF ACQUIRING WINDOW WIDHT AND HEIGHT
@@ -385,7 +397,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _Cursor.IsVisible = true;
             NotifyOfPropertyChange(() => ActualCursor);
 
-            Console.WriteLine($"X: {_Cursor.PositionX}\tY: {_Cursor.PositionY}");
+            //Console.WriteLine($"X: {_Cursor.PositionX}\tY: {_Cursor.PositionY}");
         }
 
         private void hideCursor()

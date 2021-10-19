@@ -5,8 +5,8 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    public class HandleRequestButtonData
+    class HandleWindowWidth
     {
-        public ButtonTypes ButtonType { get; set; }
+        public double WindowWidth { get; set; }
     }
 }

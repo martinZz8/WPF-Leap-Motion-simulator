@@ -16,7 +16,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Variables of this window --
 
 
-        public ReceiveTheParcelViewModel(IEventAggregator eventAggregator)
+        public ReceiveTheParcelViewModel(IEventAggregator eventAggregator, double windowWidth, double windowHeight, double windowPaddingTop)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
