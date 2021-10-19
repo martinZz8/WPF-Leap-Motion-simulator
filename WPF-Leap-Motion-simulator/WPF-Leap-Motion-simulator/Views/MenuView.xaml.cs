@@ -22,17 +22,17 @@ namespace WPF_Leap_Motion_simulator.Views
         public MenuView()
         {
             InitializeComponent();
-            this.Loaded += OnControlLoaded;
+            //this.Loaded += OnControlLoaded;
         }
 
-        private void OnControlLoaded(object sender, RoutedEventArgs e)
-        {
-            // Test code
-            Console.WriteLine("Loaded");
-            //Point relativePoint = LoadReceiveTheParcelView.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
-            //Console.WriteLine("Point X:" + relativePoint.X + " Point Y: " + relativePoint.Y);
-
-            // here i don;t know what to do to pass data to viewModel - do something else
-        }
+        //private void OnControlLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    // Test code
+        //    Console.WriteLine("Loaded");
+        //    Point relativePoint = LoadReceiveTheParcelView.TransformToAncestor(Application.Current.MainWindow).Transform(new Point(0, 0));
+        //    Console.WriteLine("Point X:" + relativePoint.X + " Point Y: " + relativePoint.Y);
+        //
+        //    // here I don't know what to do to pass data to viewModel - do something else
+        //}
     }
 }

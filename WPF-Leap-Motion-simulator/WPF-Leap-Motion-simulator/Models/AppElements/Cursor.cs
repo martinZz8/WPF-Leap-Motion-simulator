@@ -9,7 +9,7 @@ namespace WPF_Leap_Motion_simulator.Models
     {
         // Fields
         private double _positionX;
-        private double _positionZ;
+        private double _positionY;
         private bool _isVisible;
         private double _cursorRadius = 9;
         private double _cursorSensibility = 1;
@@ -30,16 +30,16 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
-        public double PositionZ
+        public double PositionY
         {
             get
             {
-                return _positionZ;
+                return _positionY;
             }
 
             set
             {
-                _positionZ = value;
+                _positionY = value;
             }
         }
 
@@ -116,16 +116,16 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
-        public double TapPositionZ
+        public double TapPositionY
         {
             get
             {
-                return _positionZ - (_cursorTapSizeAddition / 2);
+                return _positionY - (_cursorTapSizeAddition / 2);
             }
         }
 
         // Methods
-        public bool areCoordsInCursor(double x, double z)
+        public bool areCoordsInCursor(double x, double y)
         {
             // Check if cursor is visible - if not, coords cannot be inside the cursor
             if (!_isVisible)
@@ -134,12 +134,12 @@ namespace WPF_Leap_Motion_simulator.Models
             }
 
             double centerX = _positionX + _cursorRadius;
-            double centerZ = _positionZ + _cursorRadius;
+            double centerY = _positionY + _cursorRadius;
 
             double absDiffX = Math.Abs(x - centerX);
-            double absDiffZ = Math.Abs(z - centerZ);
+            double absDiffY = Math.Abs(y - centerY);
 
-            if ((absDiffX > _cursorRadius) && (absDiffZ > _cursorRadius))
+            if ((absDiffX > _cursorRadius) && (absDiffY > _cursorRadius))
             {
                 return false;
             }

@@ -31,6 +31,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private readonly IEventAggregator _eventAggregator;
 
         //-- Whole window variables --
+        private double _windowWidth;
+        private double _windowHeight;
+        private double _windowBorderSize;
+        private double _windowHeaderSize;
+        private double _windowFooterSize;
         private string _FPSCounter;
         private Cursor _Cursor;
 
@@ -40,15 +45,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
         {
-            // Setting FPS Counter to 0
-            _FPSCounter = 0.ToString();
+            // Setting initial window variables
+            _windowHeight = 720;
+            _windowWidth = 1280;
+            _windowBorderSize = 10;
+            _windowHeaderSize = 19;
+            _windowFooterSize = 13;
+            _FPSCounter = 0.ToString(); // Setting FPS Counter to 0
 
             // Setting default values of the cursor
             _Cursor = new Cursor
             {
                 IsVisible = true,
                 PositionX = 0,
-                PositionZ = 0,
+                PositionY = 0,
                 CursorRadius = 9,
                 CursorSensibility = 2
             };
@@ -113,9 +123,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     case LeapEventTypes.onKeyTapGestureDetected:
                         _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
                         {
-                            CoordX = _Cursor.PositionX,
-                            CoordZ = _Cursor.PositionZ,
-                            GestrueType = LeapGestureTypes.KeyTap
+                            CursorPositionX = _Cursor.PositionX,
+                            CursorPositionY = _Cursor.PositionY,
+                            CursorRadius = _Cursor.PositionY,
+                            GestrueType = LeapGestureTypes.KeyTap,
+                            PaddingTop = WindowBorderSize + WindowHeaderSize,
+                            PaddingRight = 0,
+                            PaddingBottom = WindowBorderSize + WindowFooterSize,
+                            PaddingLeft = 0,
+                            WindowWidth = WindowWidth,
+                            WindowHeight = WindowHeight
                         });
                         break;
                     case LeapEventTypes.onNoGestureDetected:
@@ -156,6 +173,76 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
 
         //-- Window Properties --
+        public double WindowWidth
+        {
+            get
+            {
+                return _windowWidth;
+            }
+
+            set
+            {
+                _windowWidth = value;
+                NotifyOfPropertyChange(() => WindowWidth);
+            }
+        }
+
+        public double WindowHeight
+        {
+            get
+            {
+                return _windowHeight;
+            }
+
+            set
+            {
+                _windowHeight = value;
+                NotifyOfPropertyChange(() => WindowHeight);
+            }
+        }
+
+        public double WindowBorderSize
+        {
+            get
+            {
+                return _windowBorderSize;
+            }
+
+            set
+            {
+                _windowBorderSize = value;
+                NotifyOfPropertyChange(() => WindowBorderSize);
+            }
+        }
+
+        public double WindowHeaderSize
+        {
+            get
+            {
+                return _windowHeaderSize;
+            }
+
+            set
+            {
+                _windowHeaderSize = value;
+                NotifyOfPropertyChange(() => WindowHeaderSize);
+            }
+        }
+
+        public double WindowFooterSize
+        {
+            get
+            {
+                return _windowFooterSize;
+            }
+
+            set
+            {
+                _windowHeaderSize = value;
+                NotifyOfPropertyChange(() => WindowFooterSize);
+            }
+        }
+
         public string ProgramVersion
         {
             get
@@ -257,16 +344,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
         private void setCursorPosition(Leap.Vector fingerPosition)
         {
-            // TO DO - Calculate properly the position of the cursor
-            Window mainWindow = Application.Current.MainWindow;
-            double windowHeight = mainWindow.ActualHeight;
-            double windowWidth = mainWindow.ActualWidth;
+            // -- OLD VERSION OF ACQUIRING WINDOW WIDHT AND HEIGHT
+            //Window mainWindow = Application.Current.MainWindow;
+            //double windowHeight = mainWindow.ActualHeight;
+            //double windowWidth = mainWindow.ActualWidth;
 
-            double centerHeight = windowHeight / 2;
-            double centerWidth = windowWidth / 2d;
+            double centerHeight = WindowHeight / 2;
+            double centerWidth = WindowWidth / 2d;
 
             double offsetX = centerWidth + fingerPosition.x * _Cursor.CursorSensibility;
-            double offsetZ = centerHeight + fingerPosition.z * _Cursor.CursorSensibility;
+            double offsetY = centerHeight + fingerPosition.z * _Cursor.CursorSensibility;
 
             // check if values are not over the window
             //double maxLeft = 0;
@@ -294,17 +381,17 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             // Setting cursor object fields
             _Cursor.PositionX = offsetX;
-            _Cursor.PositionZ = offsetZ;
+            _Cursor.PositionY = offsetY;
             _Cursor.IsVisible = true;
             NotifyOfPropertyChange(() => ActualCursor);
 
-            //Console.WriteLine($"X: {_Cursor.PositionX}\tZ: {_Cursor.PositionZ}");
+            Console.WriteLine($"X: {_Cursor.PositionX}\tY: {_Cursor.PositionY}");
         }
 
         private void hideCursor()
         {
             _Cursor.PositionX = 0f;
-            _Cursor.PositionZ = 0f;
+            _Cursor.PositionY = 0f;
             _Cursor.IsVisible = false;
             NotifyOfPropertyChange(() => ActualCursor);
         }
