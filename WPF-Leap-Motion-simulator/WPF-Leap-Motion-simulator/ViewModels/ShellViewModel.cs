@@ -74,7 +74,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             controller.AddListener(listener);
 
             // Activate the Menu window, as first window
-            ActivateItem(new MenuViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
+            ActivateItem(new MenuViewModel(
+                _eventAggregator,
+                new TDOWindowSize {
+                    WindowWidth = WindowWidth,
+                    WindowHeight = WindowHeight
+                },
+                new TDOWindowPadding {
+                    PaddingTop = WindowBorderSize + WindowHeaderSize,
+                    PaddingRight = WindowBorderSize,
+                    PaddingBottom = WindowBorderSize + WindowFooterSize,
+                    PaddingLeft = WindowBorderSize
+                }
+            ));
         }
 
         //Method, that's fired when window closes
@@ -315,11 +327,37 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             // TO DO
             if (message.Name == "receiveTheParcel")
             {
-                ActivateItem(new ReceiveTheParcelViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
+                ActivateItem(new ReceiveTheParcelViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
             }
             else if (message.Name == "menu")
             {
-                ActivateItem(new MenuViewModel(_eventAggregator, WindowWidth, WindowHeight, WindowBorderSize + WindowHeaderSize));
+                ActivateItem(new MenuViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
             }
         }
 

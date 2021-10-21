@@ -88,6 +88,8 @@
     <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowHeight.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowWidth.cs" />
+    <Compile Include="Models\TDO\TDOWindowPadding.cs" />
+    <Compile Include="Models\TDO\TDOWindowSize.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\ReceiveTheParcelViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />

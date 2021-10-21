@@ -99,8 +99,8 @@ namespace WPF_Leap_Motion_simulator.Models
             double cursorCenterX = relativeCursor.PositionX + relativeCursor.CursorRadius;
             double cursorCenterY = relativeCursor.PositionY + relativeCursor.CursorRadius;
 
-            //Console.WriteLine("CCY: "+ cursorCenterY+" PT: "+ PaddingTopY+" PB: "+ (PaddingTopY + Height));
-            //Console.WriteLine("CCX: " + cursorCenterX + " PL: " + PaddingLeftX + " PR: " + (PaddingLeftX + Width));
+            Console.WriteLine("CCY: "+ cursorCenterY+" PT: "+ PaddingTopY+" PB: "+ (PaddingTopY + Height));
+            Console.WriteLine("CCX: " + cursorCenterX + " PL: " + PaddingLeftX + " PR: " + (PaddingLeftX + Width));
             if (PaddingTopY <= cursorCenterY && PaddingTopY+Height >= cursorCenterY)
             {
                 if (PaddingLeftX <= cursorCenterX && PaddingLeftX+Width >= cursorCenterX)

@@ -21,19 +21,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private IEventAggregator _eventAggregator;
 
         // -- Variables of the main window --
-        private readonly double mainWindowPaddingTop;
+        private readonly TDOWindowPadding mainWindowPadding;
 
         //-- Variables of this window --
         private double[] _gridColumnMultipliers;
         private List<Button> _buttons;
         private string _testInput;
 
-        public MenuViewModel(IEventAggregator eventAggregator, double windowWidth, double windowHeight, double windowPaddingTop)
+        public MenuViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
 
-            mainWindowPaddingTop = windowPaddingTop;
+            mainWindowPadding = windowPadding;
             _gridColumnMultipliers = new double[] { 1.5, 5, 1.5 };
 
             double standardButtonWidth = 140;
@@ -42,8 +42,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardButtonWidth,
                     Height = 30,
-                    PaddingLeftX = ((windowWidth*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = (windowHeight-windowPaddingTop)*0.3,
+                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
+                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop)*0.3,
                     Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
                     Title = "Odbierz przesyłkę"
                 },
@@ -51,8 +51,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardButtonWidth,
                     Height = 30,
-                    PaddingLeftX = ((windowWidth*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = (windowHeight-windowPaddingTop)*0.3 + 30 + 20,
+                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
+                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop)*0.3 + 30 + 20,
                     Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
                     Title = "Nadaj przesyłkę"
                 }
@@ -189,7 +189,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             foreach (Button button in _buttons)
             {
-                button.PaddingLeftX = ((message.WindowWidth * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+                button.PaddingLeftX = (((message.WindowWidth- mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
             }
 
             NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
@@ -200,10 +200,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         public void Handle(HandleWindowHeight message)
         {
             Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
-            buttonReceiveTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPaddingTop) * 0.3;
+            buttonReceiveTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop) * 0.3;
 
             Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL);
-            buttonSendTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPaddingTop) * 0.3 + buttonReceiveTheParcel.Height + 20;
+            buttonSendTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop) * 0.3 + buttonReceiveTheParcel.Height + 20;
 
             NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
             NotifyOfPropertyChange(() => GetSendTheParcelButton);
