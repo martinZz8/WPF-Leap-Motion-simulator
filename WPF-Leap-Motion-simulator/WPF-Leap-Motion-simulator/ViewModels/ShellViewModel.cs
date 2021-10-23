@@ -30,6 +30,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Event Aggregator --
         private readonly IEventAggregator _eventAggregator;
 
+        //-- Global options --
+        private Boolean _isRightHandACursor;
+
         //-- Whole window variables --
         private double _windowWidth;
         private double _windowHeight;
@@ -39,12 +42,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private string _FPSCounter;
         private Cursor _Cursor;
 
+        //-- Keyboard variables --
+        private Keyboard _keyboard;
+
         //-- Menu window variables --
         private string _testInput;
 
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
         {
+            // Setting default global options
+            _isRightHandACursor = true;
+
             // Setting initial window variables
             _windowHeight = 720;
             _windowWidth = 1280;
@@ -63,6 +72,17 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 CursorSensibility = 2
             };
             NotifyOfPropertyChange(() => ActualCursor);
+
+            //Setting default value for the keyboard
+            _keyboard = GetNewKeyboard(KeyboardTypes.NUMERIC);
+            Console.WriteLine("PosX1:" + _keyboard.PositionX);
+            Console.WriteLine("PosY1:" + _keyboard.PositionY);
+            NotifyOfPropertyChange(() => ActualKeyboard);
+
+            foreach (Key key in _keyboard.Keys)
+            {
+                Console.WriteLine("Type:" + key.Type + "\tPX:" + key.PositionX + "\tPY:" + key.PositionY);
+            }
 
             // Setting Event Aggregator
             _eventAggregator = eventAggregator;
@@ -133,7 +153,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onKeyTapGestureDetected:
-                        if(_Cursor.IsVisible)
+                        //TO DELETE
+                        _keyboard.IsVisible = true;
+                        NotifyOfPropertyChange(() => ActualKeyboard);
+
+                        if (_Cursor.IsVisible)
                         {
                             _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
                             {
@@ -142,9 +166,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                                 CursorRadius = _Cursor.CursorRadius,
                                 GestrueType = LeapGestureTypes.KeyTap,
                                 PaddingTop = WindowBorderSize + WindowHeaderSize,
-                                PaddingRight = 0,
+                                PaddingRight = WindowBorderSize,
                                 PaddingBottom = WindowBorderSize + WindowFooterSize,
-                                PaddingLeft = 0,
+                                PaddingLeft = WindowBorderSize,
                                 WindowWidth = WindowWidth,
                                 WindowHeight = WindowHeight
                             });
@@ -187,6 +211,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             savePositionOfTheCursor(frame);
         }
 
+        //-- Global options Properties --
+        public Boolean IsRightHandACursor
+        {
+            get
+            {
+                return _isRightHandACursor;
+            }
+
+            set
+            {
+                _isRightHandACursor = value;
+            }
+        }
+
         //-- Window Properties --
         public double WindowWidth
         {
@@ -199,6 +237,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 _windowWidth = value;
                 NotifyOfPropertyChange(() => WindowWidth);
+
+                _keyboard = GetNewKeyboard(_keyboard.Type, _keyboard.IsVisible);
+                NotifyOfPropertyChange(() => ActualKeyboard);
+
                 _eventAggregator.PublishOnUIThread(new HandleWindowWidth
                 {
                     WindowWidth = WindowWidth
@@ -217,6 +259,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 _windowHeight = value;
                 NotifyOfPropertyChange(() => WindowHeight);
+
+                _keyboard = GetNewKeyboard(_keyboard.Type, _keyboard.IsVisible);
+                NotifyOfPropertyChange(() => ActualKeyboard);
+
                 _eventAggregator.PublishOnUIThread(new HandleWindowHeight
                 {
                     WindowHeight = WindowHeight
@@ -310,6 +356,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Keyboard ActualKeyboard
+        {
+            get
+            {
+                return _keyboard;
+            }
+        }
+
         //-- Handle change of inputs --
         public void Handle(HandleInputField message)
         {
@@ -368,7 +422,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             HandList hands = frame.Hands;
             foreach (Hand hand in hands)
             {
-                if (hand.IsRight)
+                if ((hand.IsRight && _isRightHandACursor) || (hand.IsLeft && !_isRightHandACursor))
                 {
                     FingerList fingers = hand.Fingers;
                     foreach (Finger finger in fingers)
@@ -444,6 +498,80 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _Cursor.PositionY = 0f;
             _Cursor.IsVisible = false;
             NotifyOfPropertyChange(() => ActualCursor);
+        }
+
+        private Keyboard GetNewKeyboard(KeyboardTypes keyboardType, Boolean isVisible = false)
+        {
+            double width = (WindowWidth - (WindowBorderSize * 2)) * 5 / 8;
+            double height = 250;
+            double positionX = (WindowWidth - (WindowBorderSize * 2)) * 1.5 / 8;
+            double positionY = WindowHeight - (WindowBorderSize*2 + WindowHeaderSize + WindowFooterSize + height);
+            double keyWidth = 70;
+            double keyHeight = 43;
+
+            if (keyboardType == KeyboardTypes.NUMERIC)
+            {
+                // Create key scheme
+                double paddingBetween = 10;
+                List<Key> keys = KeyScheme.CreateNumericKeyboardKeyScheme(
+                    new TDOPosition
+                    {
+                        PositionX = positionX,
+                        PositionY = positionY
+                    },
+                    width,
+                    height,
+                    keyWidth,
+                    keyHeight,
+                    paddingBetween
+                );
+
+                return new NumericKeyboard
+                {
+                    Type = KeyboardTypes.NUMERIC,
+                    IsVisible = isVisible,
+                    Width = width,
+                    Height = height,
+                    PositionX = positionX,
+                    PositionY = positionY,
+                    Keys = keys
+                };
+            }
+            else if (keyboardType == KeyboardTypes.LETTER)
+            {
+                height = 300;
+                keyWidth = 30;
+                keyHeight = 30;
+                positionY = WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + height);
+
+                // Create key scheme
+                double paddingBetween = 10;
+                List<Key> keys = KeyScheme.CreateLetterKeyboardKeyScheme(
+                    new TDOPosition
+                    {
+                        PositionX = positionX,
+                        PositionY = positionY
+                    },
+                    width,
+                    height,
+                    keyWidth,
+                    keyHeight,
+                    paddingBetween
+                );
+
+                return new LetterKeyboard
+                {
+                    Type = KeyboardTypes.LETTER,
+                    IsVisible = isVisible,
+                    Width = width,
+                    Height = height,
+                    PositionX = positionX,
+                    PositionY = positionY,
+                    Keys = keys
+                };
+            }
+
+            return null;
         }
     }
 }

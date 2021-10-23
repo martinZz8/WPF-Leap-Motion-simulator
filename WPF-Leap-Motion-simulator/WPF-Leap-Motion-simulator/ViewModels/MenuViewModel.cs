@@ -168,7 +168,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 Cursor relativeCursor = new Cursor
                 {
                     CursorRadius = message.CursorRadius,
-                    PositionX = message.CursorPositionX - mainWindowPadding.PaddingLeft - ((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
+                    PositionX = message.CursorPositionX - message.PaddingLeft - ((message.WindowWidth - message.PaddingLeft - message.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
                     PositionY = message.CursorPositionY - message.PaddingTop
                 };
 
