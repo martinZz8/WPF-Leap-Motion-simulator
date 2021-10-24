@@ -5,9 +5,8 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    class HandleInputField
+    class HandleReceiveTheParcelButtonClick
     {
-        public InputTypes Type { get; set; }
-        public string Value { get; set; }
+        public string Name { get; set; }
     }
 }

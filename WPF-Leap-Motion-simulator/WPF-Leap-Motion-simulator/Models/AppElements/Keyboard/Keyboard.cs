@@ -414,6 +414,14 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public Key PropKeyDelete
+        {
+            get
+            {
+                return GetKey(KeyTypes.DELETE);
+            }
+        }
+
         //-- Methods --
         public Key GetKey(KeyTypes keyType)
         {

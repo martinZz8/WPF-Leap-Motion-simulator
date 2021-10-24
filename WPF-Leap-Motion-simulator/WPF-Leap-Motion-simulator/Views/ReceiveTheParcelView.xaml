@@ -4,17 +4,83 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             Background="Blue">
+             >
     <Grid>
-        <Button
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Path=GetGridFirstColumnMultiplier, Mode=OneWay}"/> <!--1.5*-->
+            <ColumnDefinition Width="{Binding Path=GetGridSecondColumnMultiplier, Mode=OneWay}"/> <!--5*-->
+            <ColumnDefinition Width="{Binding Path=GetGridThirdColumnMultiplier, Mode=OneWay}"/> <!--1.5*-->
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Middle content -->
+        <Grid
+            Grid.Row="0"
+            Grid.Column="1"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Background -->
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+            >
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.6"/>
+                </StackPanel.Background>
+
+                <StackPanel.Effect>
+                    <BlurEffect Radius="5" KernelType="Gaussian"/>
+                </StackPanel.Effect>
+            </StackPanel>
+
+            <!-- Elements of view -->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+            >
+                <TextBox
+                    x:Name="PropSMSCodeInput"
+                    Width="{Binding Path=GetSMSCodeInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetSMSCodeInput.Height, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetSMSCodeInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetSMSCodeInput.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadMenuView]"
+                    Width="{Binding Path=GetMenuButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetMenuButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetMenuButton.Title, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetMenuButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetMenuButton.PaddingTopY, Mode=OneWay}"
+                />
+            </Canvas>
+        </Grid>
+        
+        <!--<Button
             x:Name="LoadMenuView"
             Height="30"
             FontSize="15"
             FontWeight="Bold"
         >
             Menu
-        </Button>
+        </Button>-->
     </Grid>
 </UserControl>

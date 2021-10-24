@@ -5,9 +5,10 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    class HandleInputField
+    enum InputTypes
     {
-        public InputTypes Type { get; set; }
-        public string Value { get; set; }
+        NO_INPUT,
+        RECEIVE_SMS_CODE,
+        RECEIVE_PHONE_NUMBER
     }
 }

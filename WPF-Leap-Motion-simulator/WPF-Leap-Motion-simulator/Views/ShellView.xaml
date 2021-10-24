@@ -169,27 +169,6 @@
                     Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
                     Background="Blue"
                 >
-                    <!--TEST-->
-                    <Grid
-                        Canvas.Left="0"
-                        Canvas.Top="0"
-                    >
-                        <Rectangle
-                            Width="25"
-                            Height="25"
-                            Fill="White"
-                            Opacity="0.7"
-                            Stroke="Black"
-                            StrokeThickness="1.5"
-                        />
-                        <TextBlock
-                            Text="55"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            FontWeight="Bold"
-                         />
-                    </Grid>
-
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKey1.PositionX, Mode=OneWay}"  
                         Canvas.Top="{Binding Path=ActualKeyboard.PropKey1.PositionY, Mode=OneWay}"
@@ -207,6 +186,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -226,6 +206,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -245,6 +226,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -264,6 +246,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -283,6 +266,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -302,6 +286,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -321,6 +306,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -340,6 +326,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -359,6 +346,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
                     </Grid>
                     <Grid
@@ -378,7 +366,584 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Center"
                             FontWeight="Bold"
+                            FontSize="20"
                          />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyDelete.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyDelete.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyDelete.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyDelete.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <Image
+                            Source="../Assets/left-arrow.png"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Width="{Binding Path=ActualKeyboard.PropKeyDelete.SmallWidth, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyDelete.SmallHeight, Mode=OneWay}"
+                        />
+                    </Grid>
+                </Canvas>
+            </Canvas>
+
+            <!--Render letter keyboard-->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+                Visibility="{Binding Path=ActualKeyboard.GetLetterKeyboardVisibilityType, Mode=OneWay}"
+            >
+                <Canvas
+                    Canvas.Left="{Binding Path=ActualKeyboard.PositionX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=ActualKeyboard.PositionY, Mode=OneWay}"
+                    Width="{Binding Path=ActualKeyboard.Width, Mode=OneWay}"
+                    Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
+                    Background="Blue"
+                >
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyQ.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyQ.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyQ.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyQ.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                         />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyQ.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyW.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyW.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyW.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyW.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                         />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyW.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyE.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyE.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyE.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyE.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyE.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyR.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyR.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyR.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyR.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyR.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyT.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyT.PositionY, Mode=OneWay}"    
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyT.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyT.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyT.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyY.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyY.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyY.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyY.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyY.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyU.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyU.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyU.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyU.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyU.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyI.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyI.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyI.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyI.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyI.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyO.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyO.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyO.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyO.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyO.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyP.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyP.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyP.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyP.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyP.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyA.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyA.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyA.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyA.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyA.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyS.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyS.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyS.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyS.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyS.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyD.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyD.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyD.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyD.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyD.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyF.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyF.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyF.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyF.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyF.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyG.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyG.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyG.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyG.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyG.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyH.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyH.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyH.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyH.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyH.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyJ.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyJ.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyJ.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyJ.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyJ.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyK.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyK.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyK.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyK.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyK.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyL.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyL.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyL.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyL.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyL.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyZ.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyZ.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyZ.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyZ.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyZ.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyX.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyX.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyX.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyX.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyX.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyC.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyC.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyC.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyC.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyC.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyV.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyV.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyV.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyV.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyV.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyB.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyB.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyB.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyB.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyB.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyN.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyN.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyN.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyN.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyN.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyM.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyM.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyM.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyM.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyM.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyDelete.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyDelete.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyDelete.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyDelete.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="Black"
+                            StrokeThickness="1.5"
+                        />
+                        <Image
+                            Source="../Assets/left-arrow.png"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Width="{Binding Path=ActualKeyboard.PropKeyDelete.SmallWidth, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyDelete.SmallHeight, Mode=OneWay}"
+                        />
                     </Grid>
                 </Canvas>
             </Canvas>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Globalization;
 using System.Windows;
 
-//Caliburn Micro
+// Caliburn Micro
 using Caliburn.Micro;
 
 // Models
@@ -26,7 +26,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Variables of this window --
         private double[] _gridColumnMultipliers;
         private List<Button> _buttons;
-        private string _testInput;
 
         public MenuViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
         {
@@ -36,24 +35,26 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             mainWindowPadding = windowPadding;
             _gridColumnMultipliers = new double[] { 1.5, 5, 1.5 };
 
-            double standardButtonWidth = 140;
+            double standardButtonWidth = 200;
+            double standardButtonHeight = 100;
+
             _buttons = new List<Button> {
                 new Button
                 {
                     Width = standardButtonWidth,
-                    Height = 30,
+                    Height = standardButtonHeight,
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop)*0.3,
+                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15,
                     Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
                     Title = "Odbierz przesyłkę"
                 },
                 new Button
                 {
                     Width = standardButtonWidth,
-                    Height = 30,
+                    Height = standardButtonHeight,
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop)*0.3 + 30 + 20,
-                    Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
+                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15 + standardButtonHeight + 20,
+                    Type = ButtonTypes.VIEW_SEND_THE_PARCEL,
                     Title = "Nadaj przesyłkę"
                 }
             };
@@ -102,23 +103,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 return "1*";
             }
         }
-        public string TestInput
-        {
-            get
-            {
-                return _testInput;
-            }
-            set
-            {
-                _testInput = value;
-                _eventAggregator.PublishOnUIThread(new HandleInputField
-                {
-                    Name = "testInput",
-                    Value = _testInput
-                });
-                NotifyOfPropertyChange(() => TestInput);
-            }
-        }
 
         public double GridColumnTotalDenominator
         {
@@ -159,6 +143,31 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         }
 
+        // Handle window width change
+        public void Handle(HandleWindowWidth message)
+        {
+            foreach (Button button in _buttons)
+            {
+                button.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+            }
+
+            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
+            NotifyOfPropertyChange(() => GetSendTheParcelButton);
+        }
+
+        // Handle window height change
+        public void Handle(HandleWindowHeight message)
+        {
+            Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
+            buttonReceiveTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.15;
+
+            Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL);
+            buttonSendTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.15 + buttonReceiveTheParcel.Height + 20;
+
+            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
+            NotifyOfPropertyChange(() => GetSendTheParcelButton);
+        }
+
         // Handle cursor hand gesture
         public void Handle(HandleCursorHandGesture message)
         {
@@ -182,31 +191,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 // TO DO - check other buttons in this view
                 
             }
-        }
-
-        // Handle window width change
-        public void Handle(HandleWindowWidth message)
-        {
-            foreach (Button button in _buttons)
-            {
-                button.PaddingLeftX = (((message.WindowWidth- mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
-            }
-
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
-            NotifyOfPropertyChange(() => GetSendTheParcelButton);
-        }
-
-        // Handle window height change
-        public void Handle(HandleWindowHeight message)
-        {
-            Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
-            buttonReceiveTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop) * 0.3;
-
-            Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL);
-            buttonSendTheParcel.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop) * 0.3 + buttonReceiveTheParcel.Height + 20;
-
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
-            NotifyOfPropertyChange(() => GetSendTheParcelButton);
         }
     }
 }

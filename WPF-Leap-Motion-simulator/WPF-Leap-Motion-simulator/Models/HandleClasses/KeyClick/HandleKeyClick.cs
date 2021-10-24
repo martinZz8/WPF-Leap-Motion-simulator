@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    class HandleInputField
+    class HandleKeyClick
     {
-        public InputTypes Type { get; set; }
-        public string Value { get; set; }
+        public KeyTypes KeyType { get; set; }
+        public string keyToAdd { get; set; }
     }
 }

@@ -16,7 +16,8 @@ namespace WPF_Leap_Motion_simulator.Models
             double keyboardHeight,
             double keyWidth,
             double keyHeight,
-            double paddingBetween
+            double paddingBetween,
+            double extraSpaceTop = 0
          ) {
             List<List<KeyScheme>> numericKeyScheme = new List<List<KeyScheme>>
             {
@@ -80,7 +81,12 @@ namespace WPF_Leap_Motion_simulator.Models
                     {
                         Type = KeyTypes.NUMBER_0,
                         Value = "0"
-                    }
+                    },
+                    new KeyScheme
+                    {
+                        Type = KeyTypes.DELETE,
+                        Value = "DEL"
+                    },
                 }
             };
 
@@ -89,7 +95,8 @@ namespace WPF_Leap_Motion_simulator.Models
                 keyboardWidth,
                 keyWidth,
                 keyHeight,
-                paddingBetween
+                paddingBetween,
+                extraSpaceTop
             );
         }
 
@@ -99,7 +106,8 @@ namespace WPF_Leap_Motion_simulator.Models
             double keyboardHeight,
             double keyWidth,
             double keyHeight,
-            double paddingBetween
+            double paddingBetween,
+            double extraSpaceTop = 0
         ) {
             List<List<KeyScheme>> letterKeyScheme = new List<List<KeyScheme>>
             {
@@ -107,32 +115,64 @@ namespace WPF_Leap_Motion_simulator.Models
                 {
                     new KeyScheme
                     {
-                        Type = KeyTypes.LETTER_A,
-                        Value = "A"
+                        Type = KeyTypes.LETTER_Q,
+                        Value = "Q"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_B,
-                        Value = "B"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_C,
-                        Value = "C"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_D,
-                        Value = "D"
+                        Type = KeyTypes.LETTER_W,
+                        Value = "W"
                     },
                     new KeyScheme {
                         Type = KeyTypes.LETTER_E,
                         Value = "E"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_F,
-                        Value = "F"
+                        Type = KeyTypes.LETTER_R,
+                        Value = "R"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_T,
+                        Value = "T"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_Y,
+                        Value = "Y"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_U,
+                        Value = "U"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_I,
+                        Value = "I"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_O,
+                        Value = "O"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_P,
+                        Value = "P"
                     }
                 },
                 new List<KeyScheme>
                 {
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_A,
+                        Value = "A"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_S,
+                        Value = "S"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_D,
+                        Value = "D"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.LETTER_F,
+                        Value = "F"
+                    },
                     new KeyScheme {
                         Type = KeyTypes.LETTER_G,
                         Value = "G"
@@ -140,10 +180,6 @@ namespace WPF_Leap_Motion_simulator.Models
                     new KeyScheme {
                         Type = KeyTypes.LETTER_H,
                         Value = "H"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_I,
-                        Value = "I"
                     },
                     new KeyScheme {
                         Type = KeyTypes.LETTER_J,
@@ -161,66 +197,37 @@ namespace WPF_Leap_Motion_simulator.Models
                 new List<KeyScheme>
                 {
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_M,
-                        Value = "M"
+                        Type = KeyTypes.LETTER_Z,
+                        Value = "Z"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_N,
-                        Value = "N"
+                        Type = KeyTypes.LETTER_X,
+                        Value = "X"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_O,
-                        Value = "O"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_P,
-                        Value = "P"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_Q,
-                        Value = "Q"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_R,
-                        Value = "R"
-                    }
-                },
-                new List<KeyScheme>
-                {
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_S,
-                        Value = "S"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_T,
-                        Value = "T"
-                    },
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_U,
-                        Value = "U"
+                        Type = KeyTypes.LETTER_C,
+                        Value = "C"
                     },
                     new KeyScheme {
                         Type = KeyTypes.LETTER_V,
                         Value = "V"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_W,
-                        Value = "W"
+                        Type = KeyTypes.LETTER_B,
+                        Value = "B"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_X,
-                        Value = "X"
-                    }
-                },
-                new List<KeyScheme>
-                {
-                    new KeyScheme {
-                        Type = KeyTypes.LETTER_Y,
-                        Value = "Y"
+                        Type = KeyTypes.LETTER_N,
+                        Value = "N"
                     },
                     new KeyScheme {
-                        Type = KeyTypes.LETTER_Z,
-                        Value = "Z"
+                        Type = KeyTypes.LETTER_M,
+                        Value = "M"
+                    },
+                    new KeyScheme
+                    {
+                        Type = KeyTypes.DELETE,
+                        Value = "DEL"
                     }
                 }
             };
@@ -230,7 +237,8 @@ namespace WPF_Leap_Motion_simulator.Models
                 keyboardWidth,
                 keyWidth,
                 keyHeight,
-                paddingBetween
+                paddingBetween,
+                extraSpaceTop
             );
         }
 
@@ -240,7 +248,8 @@ namespace WPF_Leap_Motion_simulator.Models
             double keyboardWidth,
             double keyWidth,
             double keyHeight,
-            double paddingBetween
+            double paddingBetween,
+            double extraSpaceTop
          ) {
             int outerLoopIndex = 0;
             List<Key> keysToRet = new List<Key>();
@@ -250,7 +259,7 @@ namespace WPF_Leap_Motion_simulator.Models
                 int numberOfItemsInRow = rowScheme.Count;
                 double rowWidth = ((numberOfItemsInRow - 1) * paddingBetween) + (numberOfItemsInRow * keyWidth);
                 //double rowHeight = keyHeight + ((outerLoopIndex != 0 && outerLoopIndex != numericKeyScheme.Count-1) ? paddingBetween : 0);
-                double paddingTop = (keyHeight * outerLoopIndex) + (paddingBetween * outerLoopIndex);
+                double paddingTop = (keyHeight * outerLoopIndex) + (paddingBetween * outerLoopIndex) + extraSpaceTop;
                 double basePaddingLeft = (keyboardWidth - rowWidth) / 2;
 
                 int innerLoopIndex = 0;

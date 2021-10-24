@@ -94,14 +94,42 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public double SmallWidth
+        {
+            get
+            {
+                double smallWidth = _width - 10;
+                if (smallWidth <= 0)
+                {
+                    smallWidth = 1;
+                }
+
+                return smallWidth;
+            }
+        }
+
+        public double SmallHeight
+        {
+            get
+            {
+                double smallHeight = _height - 10;
+                if(smallHeight <= 0)
+                {
+                    smallHeight = 1;
+                }
+
+                return smallHeight;
+            }
+        }
+
         //-- Methods --
         public Boolean IsCursorInsideTheKey(Cursor relativeCursor)
         {
             double cursorCenterX = relativeCursor.PositionX + relativeCursor.CursorRadius;
             double cursorCenterY = relativeCursor.PositionY + relativeCursor.CursorRadius;
 
-            Console.WriteLine("CCY: " + cursorCenterY + " PT: " + PositionY + " PB: " + (PositionY + Height));
-            Console.WriteLine("CCX: " + cursorCenterX + " PL: " + PositionX + " PR: " + (PositionX + Width));
+            //Console.WriteLine("CCY: " + cursorCenterY + " PT: " + PositionY + " PB: " + (PositionY + Height));
+            //Console.WriteLine("CCX: " + cursorCenterX + " PL: " + PositionX + " PR: " + (PositionX + Width));
             if (PositionY <= cursorCenterY && PositionY + Height >= cursorCenterY)
             {
                 if (PositionX <= cursorCenterX && PositionX + Width >= cursorCenterX)

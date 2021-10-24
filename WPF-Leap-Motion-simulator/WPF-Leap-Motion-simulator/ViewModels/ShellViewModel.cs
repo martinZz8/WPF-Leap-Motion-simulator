@@ -20,7 +20,8 @@ using System.Windows.Controls;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ShellViewModel: Caliburn.Micro.Conductor<object>, ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleMenuButtonClick>
+    class ShellViewModel: Caliburn.Micro.Conductor<object>,
+        ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleMenuButtonClick>, IHandle<HandleReceiveTheParcelButtonClick>, IHandle<HandleKeyboardChange>
     {
         //-- LeapMotion variables --
         private Controller controller;
@@ -46,7 +47,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private Keyboard _keyboard;
 
         //-- Menu window variables --
-        private string _testInput;
+
+        //-- ReceiveTheParcel window variables --
+        private string _reveiveSMSCode;
 
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
@@ -69,20 +72,13 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 PositionX = 0,
                 PositionY = 0,
                 CursorRadius = 9,
-                CursorSensibility = 2
+                CursorSensibility = 2.5
             };
             NotifyOfPropertyChange(() => ActualCursor);
 
             //Setting default value for the keyboard
             _keyboard = GetNewKeyboard(KeyboardTypes.NUMERIC);
-            Console.WriteLine("PosX1:" + _keyboard.PositionX);
-            Console.WriteLine("PosY1:" + _keyboard.PositionY);
             NotifyOfPropertyChange(() => ActualKeyboard);
-
-            foreach (Key key in _keyboard.Keys)
-            {
-                Console.WriteLine("Type:" + key.Type + "\tPX:" + key.PositionX + "\tPY:" + key.PositionY);
-            }
 
             // Setting Event Aggregator
             _eventAggregator = eventAggregator;
@@ -153,10 +149,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onKeyTapGestureDetected:
-                        //TO DELETE
-                        _keyboard.IsVisible = true;
-                        NotifyOfPropertyChange(() => ActualKeyboard);
-
                         if (_Cursor.IsVisible)
                         {
                             _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
@@ -170,9 +162,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                                 PaddingBottom = WindowBorderSize + WindowFooterSize,
                                 PaddingLeft = WindowBorderSize,
                                 WindowWidth = WindowWidth,
-                                WindowHeight = WindowHeight
+                                WindowHeight = WindowHeight,
+                                IsKeyboardVisible = _keyboard.IsVisible
                             });
                         }
+
+                        CheckKeyboardKeyClick();
                         break;
                     case LeapEventTypes.onNoGestureDetected:
                         
@@ -334,20 +329,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        public string TestInput
-        {
-            get
-            {
-                return _testInput;
-            }
-
-            set
-            {
-                _testInput = value;
-                NotifyOfPropertyChange(() => TestInput);
-            }
-        }
-
         public Cursor ActualCursor
         {
             get
@@ -368,10 +349,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         public void Handle(HandleInputField message)
         {
             // TO DO
-            if(message.Name == "testInput")
+            if(message.Type == InputTypes.RECEIVE_SMS_CODE)
             {
                 Console.WriteLine("Input changed to: " + message.Value);
-                TestInput = message.Value;
+                _reveiveSMSCode = message.Value;
             }
         }
 
@@ -396,11 +377,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     }
                 ));
             }
-            else if (message.Name == "menu")
+        }
+
+        public void Handle(HandleReceiveTheParcelButtonClick message)
+        {
+            if (message.Name == "menu")
             {
+                _reveiveSMSCode = "";
+
                 ActivateItem(new MenuViewModel(
                     _eventAggregator,
-                    new TDOWindowSize {
+                    new TDOWindowSize
+                    {
                         WindowWidth = WindowWidth,
                         WindowHeight = WindowHeight
                     },
@@ -412,6 +400,41 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+            }
+        }
+
+        // Handle change of keyboard
+        public void Handle(HandleKeyboardChange message)
+        {
+            if (message.IsRestoreDefault)
+            {
+                Console.WriteLine("Here XD 1");
+                _keyboard = GetNewKeyboard(KeyboardTypes.NUMERIC, false);
+                NotifyOfPropertyChange(() => ActualKeyboard);
+            }
+            else
+            {
+                if (message.Type == _keyboard.Type)
+                {
+                    Console.WriteLine("Here XD 2");
+                    if (message.IsToggle || message.IsVisible != _keyboard.IsVisible)
+                    {
+                        _keyboard.IsVisible = !_keyboard.IsVisible;
+                        NotifyOfPropertyChange(() => ActualKeyboard);
+                    }
+                }
+                else //new type
+                {
+                    Console.WriteLine("Here XD 3");
+                    Boolean isVisibleToSet = message.IsVisible;
+                    if (message.IsToggle) //types doesn't matches and we want to toggle keyboard, so we have to render new keyboard
+                    {
+                        isVisibleToSet = true;
+                    }
+
+                    _keyboard = GetNewKeyboard(message.Type, isVisibleToSet);
+                    NotifyOfPropertyChange(() => ActualKeyboard);
+                }
             }
         }
 
@@ -488,8 +511,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _Cursor.PositionY = offsetY;
             _Cursor.IsVisible = true;
             NotifyOfPropertyChange(() => ActualCursor);
-
-            //Console.WriteLine($"X: {_Cursor.PositionX}\tY: {_Cursor.PositionY}");
         }
 
         private void hideCursor()
@@ -503,11 +524,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private Keyboard GetNewKeyboard(KeyboardTypes keyboardType, Boolean isVisible = false)
         {
             double width = (WindowWidth - (WindowBorderSize * 2)) * 5 / 8;
-            double height = 250;
+            double height = 300;
             double positionX = (WindowWidth - (WindowBorderSize * 2)) * 1.5 / 8;
             double positionY = WindowHeight - (WindowBorderSize*2 + WindowHeaderSize + WindowFooterSize + height);
-            double keyWidth = 70;
-            double keyHeight = 43;
+            double keyWidth = 75;
+            double keyHeight = 57;
 
             if (keyboardType == KeyboardTypes.NUMERIC)
             {
@@ -539,9 +560,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             else if (keyboardType == KeyboardTypes.LETTER)
             {
-                height = 300;
-                keyWidth = 30;
-                keyHeight = 30;
+                height = 250;
+                keyWidth = 67;
+                keyHeight = 60;
                 positionY = WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + height);
 
                 // Create key scheme
@@ -572,6 +593,35 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
 
             return null;
+        }
+
+        private void CheckKeyboardKeyClick()
+        {
+            if (_keyboard.IsVisible)
+            {
+                // Creting cursor object, that has values relative to the content bar (the black box)
+                Cursor relativeCursor = new Cursor
+                {
+                    CursorRadius = _Cursor.CursorRadius,
+                    PositionX = _Cursor.PositionX - WindowBorderSize - ((WindowWidth - WindowBorderSize * 2) * 1.5 / 8),
+                    PositionY = _Cursor.PositionY - (WindowBorderSize + WindowHeaderSize) - (WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + _keyboard.Height))
+                };
+
+                //double positionX = (WindowWidth - (WindowBorderSize * 2)) * 1.5 / 8;
+                //double positionY = WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + height);
+
+                _keyboard.Keys.ForEach(key =>
+                {
+                    if (key.IsCursorInsideTheKey(relativeCursor))
+                    {
+                        _eventAggregator.PublishOnUIThread(new HandleKeyClick
+                        {
+                            KeyType = key.Type,
+                            keyToAdd = key.Value
+                        });
+                    }
+                });
+            }
         }
     }
 }
