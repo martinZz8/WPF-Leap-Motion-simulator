@@ -408,7 +408,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             if (message.IsRestoreDefault)
             {
-                Console.WriteLine("Here XD 1");
                 _keyboard = GetNewKeyboard(KeyboardTypes.NUMERIC, false);
                 NotifyOfPropertyChange(() => ActualKeyboard);
             }
@@ -416,7 +415,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 if (message.Type == _keyboard.Type)
                 {
-                    Console.WriteLine("Here XD 2");
                     if (message.IsToggle || message.IsVisible != _keyboard.IsVisible)
                     {
                         _keyboard.IsVisible = !_keyboard.IsVisible;
@@ -425,7 +423,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
                 else //new type
                 {
-                    Console.WriteLine("Here XD 3");
                     Boolean isVisibleToSet = message.IsVisible;
                     if (message.IsToggle) //types doesn't matches and we want to toggle keyboard, so we have to render new keyboard
                     {

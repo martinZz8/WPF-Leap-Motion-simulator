@@ -215,18 +215,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     if(!message.IsKeyboardVisible)
                     {
-                        Console.WriteLine("Here1");
                         _focusedInput = inputSMSCode.Type;
                     }
                     else
                     {
-                        Console.WriteLine("Here2");
                         _focusedInput = InputTypes.NO_INPUT;
                     }
                     
                     _eventAggregator.PublishOnUIThread(new HandleKeyboardChange
                     {
-                        Type = KeyboardTypes.LETTER,
+                        Type = KeyboardTypes.NUMERIC,
                         IsToggle = true
                     });
                 }
