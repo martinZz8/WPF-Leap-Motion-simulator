@@ -167,7 +167,7 @@
                     Canvas.Top="{Binding Path=ActualKeyboard.PositionY, Mode=OneWay}"
                     Width="{Binding Path=ActualKeyboard.Width, Mode=OneWay}"
                     Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
-                    Background="Blue"
+                    
                 >
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKey1.PositionX, Mode=OneWay}"  
@@ -403,7 +403,7 @@
                     Canvas.Top="{Binding Path=ActualKeyboard.PositionY, Mode=OneWay}"
                     Width="{Binding Path=ActualKeyboard.Width, Mode=OneWay}"
                     Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
-                    Background="Blue"
+                    
                 >
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKeyQ.PositionX, Mode=OneWay}"  

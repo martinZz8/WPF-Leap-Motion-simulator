@@ -49,7 +49,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Menu window variables --
 
         //-- ReceiveTheParcel window variables --
-        private string _reveiveSMSCode;
+        private string _receiveSMSCode;
+        private string _receivePhoneNumber;
 
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
@@ -162,8 +163,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                                 PaddingBottom = WindowBorderSize + WindowFooterSize,
                                 PaddingLeft = WindowBorderSize,
                                 WindowWidth = WindowWidth,
-                                WindowHeight = WindowHeight,
-                                IsKeyboardVisible = _keyboard.IsVisible
+                                WindowHeight = WindowHeight
                             });
                         }
 
@@ -351,8 +351,13 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             // TO DO
             if(message.Type == InputTypes.RECEIVE_SMS_CODE)
             {
-                Console.WriteLine("Input changed to: " + message.Value);
-                _reveiveSMSCode = message.Value;
+                Console.WriteLine("ReceiveSMSCodeInput changed to: " + message.Value);
+                _receiveSMSCode = message.Value;
+            }
+            else if (message.Type == InputTypes.RECEIVE_PHONE_NUMBER)
+            {
+                Console.WriteLine("ReceivePhoneNumberInput changed to: " + message.Value);
+                _receivePhoneNumber = message.Value;
             }
         }
 
@@ -383,7 +388,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             if (message.Name == "menu")
             {
-                _reveiveSMSCode = "";
+                _receiveSMSCode = "";
+                _receivePhoneNumber = "";
 
                 ActivateItem(new MenuViewModel(
                     _eventAggregator,
@@ -415,16 +421,27 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 if (message.Type == _keyboard.Type)
                 {
-                    if (message.IsToggle || message.IsVisible != _keyboard.IsVisible)
+                    if (!message.IsInputChange)
                     {
-                        _keyboard.IsVisible = !_keyboard.IsVisible;
-                        NotifyOfPropertyChange(() => ActualKeyboard);
+                        if (message.IsToggle || message.IsVisible != _keyboard.IsVisible)
+                        {
+                            _keyboard.IsVisible = !_keyboard.IsVisible;
+                            NotifyOfPropertyChange(() => ActualKeyboard);
+                        }
+                    }
+                    else
+                    {
+                        if(!_keyboard.IsVisible)
+                        {
+                            _keyboard.IsVisible = true;
+                            NotifyOfPropertyChange(() => ActualKeyboard);
+                        }
                     }
                 }
                 else //new type
                 {
                     Boolean isVisibleToSet = message.IsVisible;
-                    if (message.IsToggle) //types doesn't matches and we want to toggle keyboard, so we have to render new keyboard
+                    if (message.IsToggle || message.IsInputChange) //types doesn't matches and we want to toggle keyboard or we change the input, so we have to render new keyboard
                     {
                         isVisibleToSet = true;
                     }
@@ -596,7 +613,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             if (_keyboard.IsVisible)
             {
-                // Creting cursor object, that has values relative to the content bar (the black box)
+                // Creting cursor object, that has values relative to the keyboard bar
                 Cursor relativeCursor = new Cursor
                 {
                     CursorRadius = _Cursor.CursorRadius,

@@ -8,13 +8,14 @@ namespace WPF_Leap_Motion_simulator.Models
     class HandleKeyboardChange
     {
         //-- Fields --
-        private Boolean _isVisible = false;
-        private Boolean _isToggle = false;
-        private Boolean _isRestoreDefault = false;
+        private bool _isVisible = false; //3rd place
+        private bool _isToggle = false; //3rd place
+        private bool _isInputChange = false; //2nd place
+        private bool _isRestoreDefault = false; //1st place
 
         //-- Properties --
         public KeyboardTypes Type { get; set; }
-        public Boolean IsVisible {
+        public bool IsVisible {
             get
             {
                 return _isVisible;
@@ -25,7 +26,7 @@ namespace WPF_Leap_Motion_simulator.Models
                 _isVisible = value;
             }
         }
-        public Boolean IsToggle {
+        public bool IsToggle {
             get
             {
                 return _isToggle;
@@ -37,7 +38,20 @@ namespace WPF_Leap_Motion_simulator.Models
             } 
         }
 
-        public Boolean IsRestoreDefault
+        public bool IsInputChange
+        {
+            get
+            {
+                return _isInputChange;
+            }
+
+            set
+            {
+                _isInputChange = value;
+            }
+        }
+
+        public bool IsRestoreDefault
         {
             get
             {

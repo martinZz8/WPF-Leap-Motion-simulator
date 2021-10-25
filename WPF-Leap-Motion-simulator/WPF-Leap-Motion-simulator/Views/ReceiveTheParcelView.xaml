@@ -61,6 +61,16 @@
                     Canvas.Left="{Binding Path=GetSMSCodeInput.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetSMSCodeInput.PaddingTopY, Mode=OneWay}"
                 />
+                <TextBox
+                    x:Name="PropPhoneNumberInput"
+                    Width="{Binding Path=GetPhoneNumberInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPhoneNumberInput.Height, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetPhoneNumberInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPhoneNumberInput.PaddingTopY, Mode=OneWay}"
+                />
                 <Button
                     cal:Message.Attach="[Event Click] = [Action LoadMenuView]"
                     Width="{Binding Path=GetMenuButton.Width, Mode=OneWay}"

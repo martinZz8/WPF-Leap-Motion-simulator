@@ -20,6 +20,5 @@ namespace WPF_Leap_Motion_simulator.Models
         public double PaddingLeft { get; set; }
         public double WindowWidth { get; set; }
         public double WindowHeight { get; set; }
-        public Boolean IsKeyboardVisible { get; set; }
     }
 }
