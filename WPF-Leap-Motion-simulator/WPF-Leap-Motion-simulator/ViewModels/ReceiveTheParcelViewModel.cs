@@ -24,9 +24,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         //-- Variables of this window --
         private double[] _gridColumnMultipliers;
+        private List<Label> _labels;
         private List<Button> _buttons;
         private List<Input> _inputs;
         private InputTypes _focusedInput;
+
+        private readonly double standardLabelHeight = 14;
+        private readonly double standardLabelMarginTop = 5;
+        private readonly double standardInputWidth = 200;
+        private readonly double standardInputHeight = 50;
+        private readonly double standardInputMarginTop = 20;
+        private readonly double standardButtonWidth = 200;
+        private readonly double standardButtonHeight = 100;
+        private readonly double standardButtonMarginLeft = 20;
 
         public ReceiveTheParcelViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
         {
@@ -37,8 +47,36 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _gridColumnMultipliers = new double[] { 1.5, 5, 1.5 };
             _focusedInput = InputTypes.NO_INPUT;
 
-            double standardInputWidth = 200;
-            double standardInputHeight = 50;
+            double paddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardInputWidth) / 2;
+            double basicPaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.08;
+
+            _labels = new List<Label>
+            {
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY,
+                    FontSize = 13,
+                    FontWeight = "Bold",
+                    TextColor = "#f1b938",
+                    Type = LabelTypes.RECEIVE_SMS_CODE,
+                    Value = "Kod SMS"
+                },
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop,
+                    FontSize = 13,
+                    FontWeight = "Bold",
+                    TextColor = "#f1b938",
+                    Type = LabelTypes.RECEIVE_PHONE_NUMBER,
+                    Value = "Numer telefonu"
+                }
+            };
 
             _inputs = new List<Input>
             {
@@ -46,8 +84,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardInputWidth)/2,
-                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY + standardLabelHeight + standardLabelMarginTop,
                     Type = InputTypes.RECEIVE_SMS_CODE,
                     Value = ""
                 },
@@ -55,15 +93,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardInputWidth)/2,
-                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15 + standardInputHeight + 20,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     Type = InputTypes.RECEIVE_PHONE_NUMBER,
                     Value = ""
                 },
             };
 
-            double standardButtonWidth = 200;
-            double standardButtonHeight = 100;
+            double buttonRowSize = standardInputWidth * 2 + standardButtonMarginLeft;
+            double basicButtonPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - buttonRowSize) / 2;
 
             _buttons = new List<Button>
             {
@@ -71,10 +109,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardButtonWidth,
                     Height = standardButtonHeight,
-                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15 + (standardInputHeight + 20)*2,
+                    PaddingLeftX = basicButtonPaddingLeft,
+                    PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
+                    Type = ButtonTypes.VIEW_SUCCESS_RECEIVE,
+                    Title = "Wyślij"
+                },
+                new Button
+                {
+                    Width = standardButtonWidth,
+                    Height = standardButtonHeight,
+                    PaddingLeftX = basicButtonPaddingLeft + standardButtonWidth + standardButtonMarginLeft,
+                    PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
                     Type = ButtonTypes.VIEW_MENU,
-                    Title = "Menu"
+                    Title = "Wróć"
                 }
             };
         }
@@ -171,6 +218,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Label GetSMSCodeLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.RECEIVE_SMS_CODE);
+            }
+        }
+
+        public Label GetPhoneNumberLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.RECEIVE_PHONE_NUMBER);
+            }
+        }
+
         public Input GetSMSCodeInput
         {
             get
@@ -184,6 +247,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 return _inputs.Find(input => input.Type == InputTypes.RECEIVE_PHONE_NUMBER);
+            }
+        }
+
+        public Button GetSuccessReceiveButton
+        {
+            get
+            {
+                return _buttons.Find(button => button.Type == ButtonTypes.VIEW_SUCCESS_RECEIVE);
             }
         }
 
@@ -202,13 +273,30 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             _eventAggregator.PublishOnUIThread(new HandleReceiveTheParcelButtonClick
             {
-                Name = "menu"
+                Type = ReceiveTheParcelButtonClickTypes.MENU
+            });
+        }
+
+        public void LoadSuccessReceiveView()
+        {
+            HideKeyboard();
+
+            _eventAggregator.PublishOnUIThread(new HandleReceiveTheParcelButtonClick
+            {
+                Type = ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE
             });
         }
 
         // Handle window width change
         public void Handle(HandleWindowWidth message)
         {
+            foreach(Label label in _labels)
+            {
+                label.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - label.Width) / 2;
+            }
+            NotifyOfPropertyChange(() => GetSMSCodeLabel);
+            NotifyOfPropertyChange(() => GetPhoneNumberLabel);
+
             foreach (Input input in _inputs)
             {
                 input.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - input.Width) / 2;
@@ -216,26 +304,45 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             NotifyOfPropertyChange(() => GetSMSCodeInput);
             NotifyOfPropertyChange(() => GetPhoneNumberInput);
 
+            double buttonRowSize = standardButtonMarginLeft;
             foreach (Button button in _buttons)
             {
-                button.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+                buttonRowSize += button.Width;
             }
+            double basicButtonPaddingLeft = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - buttonRowSize) / 2;
+
+            Button SuccessReceiveButton = GetSuccessReceiveButton;
+            SuccessReceiveButton.PaddingLeftX = basicButtonPaddingLeft;
+
+            Button MenuButton = GetMenuButton;
+            MenuButton.PaddingLeftX = basicButtonPaddingLeft + SuccessReceiveButton.Width + standardButtonMarginLeft;
+            NotifyOfPropertyChange(() => GetSuccessReceiveButton);
             NotifyOfPropertyChange(() => GetMenuButton);
         }
 
         // Handle window height change
         public void Handle(HandleWindowHeight message)
         {
+            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.08;
+
+            Label labelSMSCode = GetSMSCodeLabel;
+            labelSMSCode.PaddingTopY = basicPaddingTopY;
+            NotifyOfPropertyChange(() => GetSMSCodeLabel);
+
+            Label labelPhoneNumber = GetPhoneNumberLabel;
+            labelPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop;
+            NotifyOfPropertyChange(() => GetPhoneNumberLabel);
+
             Input inputSMSCode = GetSMSCodeInput;
-            inputSMSCode.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.15;
+            inputSMSCode.PaddingTopY = basicPaddingTopY + standardLabelHeight + standardLabelMarginTop;
             NotifyOfPropertyChange(() => GetSMSCodeInput);
 
             Input inputPhoneNumber = GetPhoneNumberInput;
-            inputPhoneNumber.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.15 + inputSMSCode.Height + 20;
+            inputPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2;
             NotifyOfPropertyChange(() => GetPhoneNumberInput);
 
             Button buttonMenu = GetMenuButton;
-            buttonMenu.PaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.15 + inputSMSCode.Height + inputPhoneNumber.Height + 20 * 2;
+            buttonMenu.PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop) * 2;
             NotifyOfPropertyChange(() => GetMenuButton);
         }
 
@@ -260,9 +367,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
                 // Checking if relativeCursor is inside any button in this view
                 Button buttonMenu = GetMenuButton;
+                Button buttonSuccessReceive = GetSuccessReceiveButton;
                 if (buttonMenu.IsCursorInsideTheButton(relativeCursor))
                 {
                     LoadMenuView();
+                }
+                else if (buttonSuccessReceive.IsCursorInsideTheButton(relativeCursor))
+                {
+                    LoadSuccessReceiveView();
                 }
 
                 // TO DO - check other buttons and inputs in this view
@@ -274,7 +386,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         public void Handle(HandleKeyClick message)
         {
             Input inputToChange = null;
-            bool hasValueChanged = false;
+            bool hasValueToBeChanged = false;
+            string newValue = "";
 
             // Checking which input is focused
             if (_focusedInput == InputTypes.RECEIVE_SMS_CODE)
@@ -286,7 +399,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 inputToChange = GetPhoneNumberInput;
             }
 
-            Console.WriteLine("Focused input type: "+ _focusedInput);
+            Console.WriteLine("Focused input type: " + _focusedInput);
             // Check which key is clicked and manage appropriate action, if there's a focus on any input
             if(inputToChange != null)
             {
@@ -310,34 +423,41 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     }
 
                     // Add key if validation is appropraiate
-                    if(canAddKey)
+                    if (canAddKey)
                     {
-                        inputToChange.Value += message.keyToAdd;
-                        hasValueChanged = true;
+                        // We don't change here inputToChange, because we want also to update value of the input in tje ShellViewModel
+                        // So we change the appropriate property of the input (wchich also changes the input value)
+                        //OLD - inputToChange.Value += message.keyToAdd;
+
+                        newValue = inputToChange.Value + message.keyToAdd;
+                        hasValueToBeChanged = true;
                     }
                 }
                 else
                 {
                     if (inputToChange.Value.Length > 0)
                     {
-                        inputToChange.Value = inputToChange.Value.Substring(0, inputToChange.Value.Length - 1);
-                        hasValueChanged = true;
+                        //OLD - inputToChange.Value = inputToChange.Value.Substring(0, inputToChange.Value.Length - 1);
+
+                        newValue = inputToChange.Value.Substring(0, inputToChange.Value.Length - 1);
+                        hasValueToBeChanged = true;
                     }
                 }
             }
 
             // Update the UI if any input has changed
-            if (hasValueChanged)
+            if (hasValueToBeChanged)
             {
-                if(inputToChange.Type == InputTypes.RECEIVE_SMS_CODE)
+                // Change the values and notify the proper properties
+                if (inputToChange.Type == InputTypes.RECEIVE_SMS_CODE)
                 {
-                    NotifyOfPropertyChange(() => GetSMSCodeInput);
+                    PropSMSCodeInput = newValue;
                     NotifyOfPropertyChange(() => PropSMSCodeInput);
                     Console.WriteLine("Change of sms input: " + GetSMSCodeInput.Value);
                 }
                 else if (inputToChange.Type == InputTypes.RECEIVE_PHONE_NUMBER)
                 {
-                    NotifyOfPropertyChange(() => GetPhoneNumberInput);
+                    PropPhoneNumberInput = newValue;
                     NotifyOfPropertyChange(() => PropPhoneNumberInput);
                     Console.WriteLine("Change of phone input: " + GetPhoneNumberInput.Value);
                 }

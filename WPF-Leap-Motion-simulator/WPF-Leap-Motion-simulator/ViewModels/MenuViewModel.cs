@@ -133,7 +133,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
             {
-                Name = "receiveTheParcel"
+                Type = MenuButtonClickTypes.RECEIVE_THE_PARCEL
             });
         }
 

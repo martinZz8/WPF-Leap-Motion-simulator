@@ -51,6 +51,17 @@
                 Grid.Row="0"
                 Grid.Column="0"
             >
+                <TextBlock
+                    Text="{Binding Path=GetSMSCodeLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetSMSCodeLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetSMSCodeLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetSMSCodeLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetSMSCodeLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetSMSCodeLabel.TextColor, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetSMSCodeLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetSMSCodeLabel.PaddingTopY, Mode=OneWay}"
+                />
                 <TextBox
                     x:Name="PropSMSCodeInput"
                     Width="{Binding Path=GetSMSCodeInput.Width, Mode=OneWay}"
@@ -61,6 +72,17 @@
                     Canvas.Left="{Binding Path=GetSMSCodeInput.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetSMSCodeInput.PaddingTopY, Mode=OneWay}"
                 />
+                <TextBlock
+                    Text="{Binding Path=GetPhoneNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetPhoneNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPhoneNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetPhoneNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetPhoneNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetPhoneNumberLabel.TextColor, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetPhoneNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPhoneNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
                 <TextBox
                     x:Name="PropPhoneNumberInput"
                     Width="{Binding Path=GetPhoneNumberInput.Width, Mode=OneWay}"
@@ -70,6 +92,16 @@
                     TextWrapping="Wrap"
                     Canvas.Left="{Binding Path=GetPhoneNumberInput.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetPhoneNumberInput.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadSuccessReceiveView]"
+                    Width="{Binding Path=GetSuccessReceiveButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetSuccessReceiveButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetSuccessReceiveButton.Title, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetSuccessReceiveButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetSuccessReceiveButton.PaddingTopY, Mode=OneWay}"
                 />
                 <Button
                     cal:Message.Attach="[Event Click] = [Action LoadMenuView]"

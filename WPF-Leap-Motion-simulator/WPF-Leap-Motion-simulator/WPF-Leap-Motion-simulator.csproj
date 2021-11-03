@@ -91,10 +91,14 @@
     <Compile Include="Models\AppElements\Keyboard\Key\KeyTypes.cs" />
     <Compile Include="Models\AppElements\Keyboard\LetterKeyboard.cs" />
     <Compile Include="Models\AppElements\Keyboard\NumericKeyboard.cs" />
-    <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick.cs" />
+    <Compile Include="Models\AppElements\Label\Label.cs" />
+    <Compile Include="Models\AppElements\Label\LabelTypes.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\MenuButtonClickTypes.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\HandleReceiveTheParcelButtonClick.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\ReceiveTheParcleButtonClickTypes.cs" />
     <Compile Include="Models\HandleClasses\HandGesture\HandleCursorHandGesture.cs" />
     <Compile Include="Models\HandleClasses\InputField\HandleInputField.cs" />
-    <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\HandleMenuButtonClick.cs" />
     <Compile Include="Models\HandleClasses\Keyboard\HandleKeyboardChange.cs" />
     <Compile Include="Models\HandleClasses\KeyClick\HandleKeyClick.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowHeight.cs" />

@@ -5,8 +5,10 @@ using System.Text;
 
 namespace WPF_Leap_Motion_simulator.Models
 {
-    class HandleReceiveTheParcelButtonClick
+    enum MenuButtonClickTypes
     {
-        public string Name { get; set; }
+        RECEIVE_THE_PARCEL,
+        SEND_THE_PARCEL,
+        OPTIONS
     }
 }

@@ -365,7 +365,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         public void Handle(HandleMenuButtonClick message)
         {
             // TO DO
-            if (message.Name == "receiveTheParcel")
+            if (message.Type == MenuButtonClickTypes.RECEIVE_THE_PARCEL)
             {
                 ActivateItem(new ReceiveTheParcelViewModel(
                     _eventAggregator,
@@ -386,7 +386,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         public void Handle(HandleReceiveTheParcelButtonClick message)
         {
-            if (message.Name == "menu")
+            if (message.Type == ReceiveTheParcelButtonClickTypes.MENU)
             {
                 _receiveSMSCode = "";
                 _receivePhoneNumber = "";
@@ -406,6 +406,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+            }
+            else if (message.Type == ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE)
+            {
+                // TO DO - activate the view for the success receive
+                Console.WriteLine("Here xDD");
             }
         }
 

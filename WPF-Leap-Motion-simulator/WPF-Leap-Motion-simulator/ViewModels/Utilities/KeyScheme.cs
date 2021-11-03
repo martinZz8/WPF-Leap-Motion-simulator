@@ -258,7 +258,6 @@ namespace WPF_Leap_Motion_simulator.Models
             {
                 int numberOfItemsInRow = rowScheme.Count;
                 double rowWidth = ((numberOfItemsInRow - 1) * paddingBetween) + (numberOfItemsInRow * keyWidth);
-                //double rowHeight = keyHeight + ((outerLoopIndex != 0 && outerLoopIndex != numericKeyScheme.Count-1) ? paddingBetween : 0);
                 double paddingTop = (keyHeight * outerLoopIndex) + (paddingBetween * outerLoopIndex) + extraSpaceTop;
                 double basePaddingLeft = (keyboardWidth - rowWidth) / 2;
 
