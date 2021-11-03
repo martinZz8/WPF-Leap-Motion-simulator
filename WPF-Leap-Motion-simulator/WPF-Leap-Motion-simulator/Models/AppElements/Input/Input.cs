@@ -14,6 +14,11 @@ namespace WPF_Leap_Motion_simulator.Models
         private double _height = 10;
         private InputTypes _type = InputTypes.NO_INPUT;
         private string _value = "";
+        private bool _isFocused = false;
+        private string _backgroundColor = "#fdf7e7";
+        private string _foregroundColor = "#000000";
+        private string _borderColor = "#4d4d4d";
+        private string _focusedBorderColor = "#f1b938";
 
         // Properties
         public double PaddingLeftX
@@ -86,6 +91,103 @@ namespace WPF_Leap_Motion_simulator.Models
             set
             {
                 _value = value;
+            }
+        }
+
+        public bool IsFocused
+        {
+            get
+            {
+                return _isFocused;
+            }
+
+            set
+            {
+                _isFocused = value;
+            }
+        }
+
+        public string BackgroundColor
+        {
+            get
+            {
+                return _backgroundColor;
+            }
+
+            set
+            {
+                _backgroundColor = value;
+            }
+        }
+
+        public string ForegroundColor
+        {
+            get
+            {
+                return _foregroundColor;
+            }
+
+            set
+            {
+                _foregroundColor = value;
+            }
+        }
+
+        public string BorderColor
+        {
+            get
+            {
+                return _borderColor;
+            }
+
+            set
+            {
+                _borderColor = value;
+            }
+        }
+
+        public string FocusedBorderColor
+        {
+            get
+            {
+                return _focusedBorderColor;
+            }
+
+            set
+            {
+                _focusedBorderColor = value;
+            }
+        }
+
+        public string GetBackgroundColor
+        {
+            get
+            {
+                return _backgroundColor;
+            }
+        }
+
+        public string GetForegroundColor
+        {
+            get
+            {
+                return _foregroundColor;
+            }
+        }
+
+        public string GetBorderColor
+        {
+            get
+            {
+                if (!_isFocused)
+                {
+                    return _borderColor;
+                }
+                else
+                {
+                    return _focusedBorderColor;
+                }
+                
             }
         }
 

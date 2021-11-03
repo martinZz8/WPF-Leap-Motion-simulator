@@ -14,6 +14,61 @@
         WindowStartupLocation="CenterScreen"
         Background="#f1b938"
         >
+    <Window.Resources>
+        <!--Style for button-->
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#4d4d4d" />
+            <Setter Property="Foreground" Value="#f1b938" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="BorderBrush" Value="#999999"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border
+                            CornerRadius="5"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="3"
+                        >
+                            <ContentPresenter x:Name="contentPresenter" 
+                                ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                Content="{TemplateBinding Content}" 
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Margin="{TemplateBinding Padding}" 
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#f1b938" />
+                                <Setter Property="Foreground" Value="#4d4d4d" />
+                                <Setter Property="BorderBrush" Value="#f8dea0" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="BorderBrush" Value="OrangeRed" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--Style for input-->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#fdf7e7" />
+            <Setter Property="Foreground" Value="#000000" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="BorderBrush" Value="#4d4d4d" />
+            <Setter Property="BorderThickness" Value="2"/>
+            
+        </Style>
+    </Window.Resources>
+    
     <Grid>
         <!--OLD VERSION-->
         <!--<Grid.ColumnDefinitions>
@@ -167,7 +222,6 @@
                     Canvas.Top="{Binding Path=ActualKeyboard.PositionY, Mode=OneWay}"
                     Width="{Binding Path=ActualKeyboard.Width, Mode=OneWay}"
                     Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
-                    
                 >
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKey1.PositionX, Mode=OneWay}"  
@@ -178,7 +232,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey1.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey1.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                          />
                         <TextBlock
@@ -198,7 +252,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey2.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey2.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                          />
                         <TextBlock
@@ -218,7 +272,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey3.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey3.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -238,7 +292,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey4.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey4.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -258,7 +312,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey5.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey5.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -278,7 +332,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey6.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey6.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -298,7 +352,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey7.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey7.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -318,7 +372,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey8.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey8.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -338,7 +392,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey9.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey9.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -358,7 +412,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKey0.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKey0.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -378,7 +432,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyDelete.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyDelete.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <Image
@@ -403,7 +457,6 @@
                     Canvas.Top="{Binding Path=ActualKeyboard.PositionY, Mode=OneWay}"
                     Width="{Binding Path=ActualKeyboard.Width, Mode=OneWay}"
                     Height="{Binding Path=ActualKeyboard.Height, Mode=OneWay}"
-                    
                 >
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKeyQ.PositionX, Mode=OneWay}"  
@@ -414,7 +467,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyQ.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyQ.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                          />
                         <TextBlock
@@ -434,7 +487,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyW.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyW.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                          />
                         <TextBlock
@@ -454,7 +507,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyE.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyE.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -474,7 +527,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyR.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyR.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -494,7 +547,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyT.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyT.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -514,7 +567,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyY.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyY.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -534,7 +587,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyU.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyU.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -554,7 +607,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyI.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyI.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -574,7 +627,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyO.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyO.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -594,7 +647,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyP.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyP.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -614,7 +667,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyA.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyA.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -634,7 +687,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyS.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyS.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -654,7 +707,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyD.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyD.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -674,7 +727,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyF.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyF.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -694,7 +747,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyG.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyG.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -714,7 +767,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyH.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyH.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -734,7 +787,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyJ.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyJ.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -754,7 +807,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyK.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyK.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -774,7 +827,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyL.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyL.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -794,7 +847,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyZ.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyZ.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -814,7 +867,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyX.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyX.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -834,7 +887,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyC.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyC.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -854,7 +907,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyV.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyV.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -874,7 +927,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyB.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyB.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -894,7 +947,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyN.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyN.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -914,7 +967,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyM.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyM.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <TextBlock
@@ -934,7 +987,7 @@
                             Height="{Binding Path=ActualKeyboard.PropKeyDelete.Height, Mode=OneWay}"
                             Fill="White"
                             Opacity="0.7"
-                            Stroke="Black"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyDelete.GetBorderColor, Mode=OneWay}"
                             StrokeThickness="1.5"
                         />
                         <Image

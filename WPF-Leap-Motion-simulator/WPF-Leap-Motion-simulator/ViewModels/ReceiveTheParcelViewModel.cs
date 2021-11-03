@@ -15,7 +15,7 @@ using WPF_Leap_Motion_simulator.Models;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class ReceiveTheParcelViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleKeyClick>
+    class ReceiveTheParcelViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleKeyClick>, IHandle<HandleCrusorMove>
     {
         private IEventAggregator _eventAggregator;
 
@@ -87,7 +87,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = paddingLeftX,
                     PaddingTopY = basicPaddingTopY + standardLabelHeight + standardLabelMarginTop,
                     Type = InputTypes.RECEIVE_SMS_CODE,
-                    Value = ""
+                    Value = "",
+                    IsFocused = false
                 },
                 new Input
                 {
@@ -96,7 +97,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = paddingLeftX,
                     PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     Type = InputTypes.RECEIVE_PHONE_NUMBER,
-                    Value = ""
+                    Value = "",
+                    IsFocused = false
                 },
             };
 
@@ -112,7 +114,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = basicButtonPaddingLeft,
                     PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
                     Type = ButtonTypes.VIEW_SUCCESS_RECEIVE,
-                    Title = "Wyślij"
+                    Title = "Wyślij",
+                    IsHovered = false
                 },
                 new Button
                 {
@@ -121,7 +124,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = basicButtonPaddingLeft + standardButtonWidth + standardButtonMarginLeft,
                     PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
                     Type = ButtonTypes.VIEW_MENU,
-                    Title = "Wróć"
+                    Title = "Wróć",
+                    IsHovered = false
                 }
             };
         }
@@ -187,7 +191,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                GetSMSCodeInput.Value = value;
+                //Remove spaces from input (in case it's written from keyboard)
+                string valToSet = value.Replace(" ", "");
+                GetSMSCodeInput.Value = valToSet;
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.RECEIVE_SMS_CODE,
@@ -207,7 +213,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                GetPhoneNumberInput.Value = value;
+                //Remove dashes from input (in case it's written from keyboard)
+                string valToSet = value.Replace("-", "");
+                GetPhoneNumberInput.Value = valToSet;
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.RECEIVE_PHONE_NUMBER,
@@ -401,7 +409,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             Console.WriteLine("Focused input type: " + _focusedInput);
             // Check which key is clicked and manage appropriate action, if there's a focus on any input
-            if(inputToChange != null)
+            if (inputToChange != null)
             {
                 if (message.KeyType != KeyTypes.DELETE)
                 {
@@ -482,19 +490,40 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             // Check if cursor is inside the input
             if (input.IsCursorInsideTheInput(relativeCursor))
             {
+                // Toggle focus of the input
+                input.IsFocused = !input.IsFocused;
+
                 // Check the type of input and set appropriate value to variable keyboardTypeToSet
                 if(input.Type == InputTypes.RECEIVE_SMS_CODE)
                 {
                     keyboardTypeToSet = KeyboardTypes.NUMERIC;
+                    NotifyOfPropertyChange(() => GetSMSCodeInput);
                 }
                 else if (input.Type == InputTypes.RECEIVE_PHONE_NUMBER)
                 {
                     keyboardTypeToSet = KeyboardTypes.NUMERIC; // TO CHANGE - TO NUMERIC
+                    NotifyOfPropertyChange(() => GetPhoneNumberInput);
                 }
                 
                 // Check the previous and actual type of focused input
                 if (_focusedInput != input.Type)
                 {
+                    //Toggle the provious focused input
+                    if (_focusedInput != InputTypes.NO_INPUT)
+                    {
+                        Input prevFocusedInput = _inputs.Find(fInput => fInput.Type == _focusedInput);
+                        prevFocusedInput.IsFocused = !prevFocusedInput.IsFocused;
+                        if (_focusedInput == InputTypes.RECEIVE_SMS_CODE)
+                        {
+                            NotifyOfPropertyChange(() => GetSMSCodeInput);
+                        }
+                        else if (_focusedInput == InputTypes.RECEIVE_PHONE_NUMBER)
+                        {
+                            NotifyOfPropertyChange(() => GetPhoneNumberInput);
+                        }
+                    }
+
+                    // Set flag to change the input and set new focused input
                     isInputChange = true;
                     _focusedInput = input.Type;
                 }
@@ -521,6 +550,34 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     });
                 }
             }
+        }
+
+        // Handle cursor move
+        public void Handle(HandleCrusorMove message)
+        {
+            // Creting cursor object, that has values relative to the content bar (the black box)
+            Cursor relativeCursor = new Cursor
+            {
+                CursorRadius = message.CursorRadius,
+                PositionX = message.CursorPositionX - message.PaddingLeft - ((message.WindowWidth - message.PaddingLeft - message.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
+                PositionY = message.CursorPositionY - message.PaddingTop
+            };
+
+            // Checking if relativeCursor is inside any button in this view
+            foreach (Button button in _buttons)
+            {
+                if (button.IsCursorInsideTheButton(relativeCursor))
+                {
+                    button.IsHovered = true;
+                }
+                else
+                {
+                    button.IsHovered = false;
+                }
+            }
+
+            NotifyOfPropertyChange(() => GetSuccessReceiveButton);
+            NotifyOfPropertyChange(() => GetMenuButton);
         }
     }
 }

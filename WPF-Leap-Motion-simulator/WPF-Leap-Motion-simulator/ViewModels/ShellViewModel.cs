@@ -202,8 +202,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             //Writing the fps number on the screen
             FPSCounter = ((int)frame.CurrentFramesPerSecond).ToString();
 
-            //Saving the position of the cursor
+            //Saving the position of the cursor and sending this data to other components
             savePositionOfTheCursor(frame);
+
+            //Check if cursor hovers any key
+            CheckKeyboardKeyHover();
         }
 
         //-- Global options Properties --
@@ -410,7 +413,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             else if (message.Type == ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE)
             {
                 // TO DO - activate the view for the success receive
-                Console.WriteLine("Here xDD");
+                Console.WriteLine("Here - TO DO");
             }
         }
 
@@ -501,29 +504,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             double offsetX = centerWidth + fingerPosition.x * _Cursor.CursorSensibility;
             double offsetY = centerHeight + fingerPosition.z * _Cursor.CursorSensibility;
 
-            // check if values are not over the window
-            //double maxLeft = 0;
-            //double maxRight = windowWidth - _Cursor.CursorRadius*3.7;
-            //double maxTop = 0;
-            //double maxBottom = windowHeight - _Cursor.CursorRadius*5.8;
-
-            //if (offsetX < maxLeft)
-            //{
-            //    offsetX = maxLeft;
-            //}
-            //else if(offsetX > maxRight)
-            //{
-            //    offsetX = maxRight;
-            //}
-
-            //if (offsetZ < maxTop)
-            //{
-            //    offsetZ = maxTop;
-            //}
-            //else if (offsetZ > maxBottom)
-            //{
-            //    offsetZ = maxBottom;
-            //}
+            // Send data of the cursor position, if both values (PositionX and PositionY) changes
+            if((_Cursor.PositionX != offsetX) && (_Cursor.PositionY != offsetY))
+            {
+                _eventAggregator.PublishOnUIThread(new HandleCrusorMove
+                {
+                    CursorPositionX = offsetX,
+                    CursorPositionY = offsetY,
+                    CursorRadius = _Cursor.CursorRadius,
+                    PaddingTop = WindowBorderSize + WindowHeaderSize,
+                    PaddingRight = WindowBorderSize,
+                    PaddingBottom = WindowBorderSize + WindowFooterSize,
+                    PaddingLeft = WindowBorderSize,
+                    WindowWidth = WindowWidth,
+                    WindowHeight = WindowHeight
+                });
+            }
 
             // Setting cursor object fields
             _Cursor.PositionX = offsetX;
@@ -640,6 +636,36 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         });
                     }
                 });
+            }
+        }
+
+        private void CheckKeyboardKeyHover()
+        {
+            // Checking logic
+            if (_keyboard.IsVisible)
+            {
+                // Creting cursor object, that has values relative to the keyboard bar
+                Cursor relativeCursor = new Cursor
+                {
+                    CursorRadius = _Cursor.CursorRadius,
+                    PositionX = _Cursor.PositionX - WindowBorderSize - ((WindowWidth - WindowBorderSize * 2) * 1.5 / 8),
+                    PositionY = _Cursor.PositionY - (WindowBorderSize + WindowHeaderSize) - (WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + _keyboard.Height))
+                };
+
+                for (int i = 0; i < _keyboard.Keys.Count; i++)
+                {
+                    Key key = _keyboard.Keys[i];
+                    if (key.IsCursorInsideTheKey(relativeCursor))
+                    {
+                        key.IsHovered = true;
+                    }
+                    else
+                    {
+                        key.IsHovered = false;
+                    }
+                }
+
+                NotifyOfPropertyChange(() => ActualKeyboard);
             }
         }
     }

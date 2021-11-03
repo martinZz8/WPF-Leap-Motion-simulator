@@ -14,6 +14,9 @@ namespace WPF_Leap_Motion_simulator.Models
         private double _height;
         private KeyTypes _type;
         private string _value;
+        private bool _isHovered;
+        private string _borderColor = "#000000";
+        private string _hoveredBorderColor = "#f1b938";
 
         //-- Properties --
         public double PositionX
@@ -91,6 +94,60 @@ namespace WPF_Leap_Motion_simulator.Models
             set
             {
                 _value = value;
+            }
+        }
+
+        public bool IsHovered
+        {
+            get
+            {
+                return _isHovered;
+            }
+
+            set
+            {
+                _isHovered = value;
+            }
+        }
+
+        public string BorderColor
+        {
+            get
+            {
+                return _borderColor;
+            }
+
+            set
+            {
+                _borderColor = value;
+            }
+        }
+
+        public string HoveredBorderColor
+        {
+            get
+            {
+                return _hoveredBorderColor;
+            }
+
+            set
+            {
+                _hoveredBorderColor = value;
+            }
+        }
+
+        public string GetBorderColor
+        {
+            get
+            {
+                if (!_isHovered)
+                {
+                    return _borderColor;
+                }
+                else
+                {
+                    return _hoveredBorderColor;
+                }
             }
         }
 

@@ -16,7 +16,7 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>
+    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleCrusorMove>
     {
         private IEventAggregator _eventAggregator;
 
@@ -46,7 +46,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
                     PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15,
                     Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
-                    Title = "Odbierz przesyłkę"
+                    Title = "Odbierz przesyłkę",
+                    IsHovered = false
                 },
                 new Button
                 {
@@ -55,7 +56,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
                     PaddingTopY = (windowSize.WindowHeight-windowPadding.PaddingTop-windowPadding.PaddingBottom)*0.15 + standardButtonHeight + 20,
                     Type = ButtonTypes.VIEW_SEND_THE_PARCEL,
-                    Title = "Nadaj przesyłkę"
+                    Title = "Nadaj przesyłkę",
+                    IsHovered = false
                 }
             };
         }
@@ -191,6 +193,34 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 // TO DO - check other buttons in this view
                 
             }
+        }
+
+        // Handle cursor move
+        public void Handle(HandleCrusorMove message)
+        {
+            // Creting cursor object, that has values relative to the content bar (the black box)
+            Cursor relativeCursor = new Cursor
+            {
+                CursorRadius = message.CursorRadius,
+                PositionX = message.CursorPositionX - message.PaddingLeft - ((message.WindowWidth - message.PaddingLeft - message.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
+                PositionY = message.CursorPositionY - message.PaddingTop
+            };
+
+            // Checking if relativeCursor is inside any button in this view
+            foreach(Button button in _buttons)
+            {
+                if (button.IsCursorInsideTheButton(relativeCursor))
+                {
+                    button.IsHovered = true;
+                }
+                else
+                {
+                    button.IsHovered = false;
+                }
+            }
+
+            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
+            NotifyOfPropertyChange(() => GetSendTheParcelButton);
         }
     }
 }

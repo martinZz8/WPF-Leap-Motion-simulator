@@ -97,6 +97,7 @@
     <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\HandleReceiveTheParcelButtonClick.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\ReceiveTheParcleButtonClickTypes.cs" />
     <Compile Include="Models\HandleClasses\HandGesture\HandleCursorHandGesture.cs" />
+    <Compile Include="Models\HandleClasses\HandleCursorMove\HandleCrusorMove.cs" />
     <Compile Include="Models\HandleClasses\InputField\HandleInputField.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\HandleMenuButtonClick.cs" />
     <Compile Include="Models\HandleClasses\Keyboard\HandleKeyboardChange.cs" />
