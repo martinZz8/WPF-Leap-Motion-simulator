@@ -33,7 +33,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private readonly double standardButtonWidth = 200;
         private readonly double standardButtonHeight = 100;
 
-        public SuccessReceiveViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
+        public SuccessReceiveViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding, string parcelCode)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
@@ -41,7 +41,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             mainWindowPadding = windowPadding;
             _gridColumnMultipliers = new double[] { 1.5, 5, 1.5 };
 
-            double basicPaddingTop = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.26;
+            double basicPaddingTop = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.22;
+            double labelPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardLabelWidth) / 2;
 
             _labels = new List<Label>
             {
@@ -49,13 +50,25 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardLabelWidth,
                     Height = standardLabelHeight,
-                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardLabelWidth)/2,
+                    PaddingLeftX = labelPaddingLeft,
                     PaddingTopY = basicPaddingTop,
                     FontSize = 20,
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
-                    Type = LabelTypes.SUCCESS_RECEIVE_INFO,
-                    Value = "Odbierz paczkę z otworzonej skrytki i potwierdź odbiór"
+                    Type = LabelTypes.SUCCESS_RECEIVE_PARCEL_CODE,
+                    Value = $"Kod paczki: {StringFormat.CovertToCodeFormat(parcelCode)}"
+                },
+                new Label
+                {
+                    Width = standardLabelWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = labelPaddingLeft,
+                    PaddingTopY = basicPaddingTop + standardLabelHeight + standardLabelMarginTop,
+                    FontSize = 20,
+                    FontWeight = "Bold",
+                    TextColor = "#f1b938",
+                    Type = LabelTypes.SUCCESS_RECEIVE_MESSAGE,
+                    Value = "Odbierz paczkę z otworzonej skrytki i potwierdź odbiór."
                 }
             };
 
@@ -65,7 +78,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardButtonWidth,
                     Height = standardButtonHeight,
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = basicPaddingTop + standardLabelHeight + standardLabelMarginTop,
+                    PaddingTopY = basicPaddingTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     Type = ButtonTypes.VIEW_MENU,
                     Title = "Kończymy na dziś",
                     IsHovered = false
@@ -125,11 +138,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        public Label GetInfoLabel
+        public Label GetParcelCodeLabel
         {
             get
             {
-                return _labels.Find(label => label.Type == LabelTypes.SUCCESS_RECEIVE_INFO);
+                return _labels.Find(label => label.Type == LabelTypes.SUCCESS_RECEIVE_PARCEL_CODE);
+            }
+        }
+
+        public Label GetMessageLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.SUCCESS_RECEIVE_MESSAGE);
             }
         }
 
@@ -157,7 +178,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 label.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - label.Width) / 2;
             }
-            NotifyOfPropertyChange(() => GetInfoLabel);
+            NotifyOfPropertyChange(() => GetParcelCodeLabel);
+            NotifyOfPropertyChange(() => GetMessageLabel);
 
             Button MenuButton = GetMenuButton;
             MenuButton.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - MenuButton.Width) / 2;
@@ -167,14 +189,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         // Handle window height change
         public void Handle(HandleWindowHeight message)
         {
-            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.26;
+            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.22;
 
-            Label labelInfo = GetInfoLabel;
-            labelInfo.PaddingTopY = basicPaddingTopY;
-            NotifyOfPropertyChange(() => GetInfoLabel);
+            Label labelParcelCode = GetParcelCodeLabel;
+            labelParcelCode.PaddingTopY = basicPaddingTopY;
+            NotifyOfPropertyChange(() => GetParcelCodeLabel);
+
+            Label labelMessage = GetMessageLabel;
+            labelMessage.PaddingTopY = basicPaddingTopY + labelParcelCode.Height + standardLabelMarginTop;
+            NotifyOfPropertyChange(() => GetMessageLabel);
 
             Button buttonMenu = GetMenuButton;
-            buttonMenu.PaddingTopY = basicPaddingTopY + labelInfo.Height + standardLabelMarginTop;
+            buttonMenu.PaddingTopY = basicPaddingTopY + labelParcelCode.Height + labelMessage.Height + standardLabelMarginTop*2;
             NotifyOfPropertyChange(() => GetMenuButton);
         }
 

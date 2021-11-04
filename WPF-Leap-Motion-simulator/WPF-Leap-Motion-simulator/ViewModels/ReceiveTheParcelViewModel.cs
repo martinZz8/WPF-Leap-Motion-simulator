@@ -359,12 +359,37 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         public void LoadSuccessReceiveView()
         {
-            HideKeyboard();
+            // Trun on live validation of the inputs
+            _isLiveValidation = true;
 
-            _eventAggregator.PublishOnUIThread(new HandleReceiveTheParcelButtonClick
+            // Validate inputs
+            bool canSubmit = true;
+            // Validate SMS Code
+            if (GetSMSCodeInput.Value.Length != 6)
             {
-                Type = ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE
-            });
+                canSubmit = false;
+                GetErrorSMSCodeLabel.IsVisible = true;
+                NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
+            }
+
+            // Validate Phone Number
+            if (GetPhoneNumberInput.Value.Length != 9)
+            {
+                canSubmit = false;
+                GetErrorPhoneNumberLabel.IsVisible = true;
+                NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
+            }
+
+            // If validation is successful, hide the keyboard and change the view
+            if (canSubmit)
+            {
+                HideKeyboard();
+
+                _eventAggregator.PublishOnUIThread(new HandleReceiveTheParcelButtonClick
+                {
+                    Type = ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE
+                });
+            }
         }
 
         // Handle window width change
@@ -471,32 +496,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
                 else if (buttonSuccessReceive.IsCursorInsideTheButton(relativeCursor))
                 {
-                    // Trun on live validation of the inputs
-                    _isLiveValidation = true;
-
-                    // Validate inputs
-                    bool canSubmit = true;
-                    // Validate SMS Code
-                    if (GetSMSCodeInput.Value.Length != 6)
-                    {
-                        canSubmit = false;
-                        GetErrorSMSCodeLabel.IsVisible = true;
-                        NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
-                    }
-
-                    // Validate Phone Number
-                    if (GetPhoneNumberInput.Value.Length != 9)
-                    {
-                        canSubmit = false;
-                        GetErrorPhoneNumberLabel.IsVisible = true;
-                        NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
-                    }
-
-                    // If validation is successful, change the view
-                    if (canSubmit)
-                    {
-                        LoadSuccessReceiveView();
-                    }
+                    LoadSuccessReceiveView();
                 }
             }
         }

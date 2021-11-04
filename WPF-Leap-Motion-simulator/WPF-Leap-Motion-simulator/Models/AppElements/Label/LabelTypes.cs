@@ -12,6 +12,7 @@ namespace WPF_Leap_Motion_simulator.Models
         RECEIVE_PHONE_NUMBER,
         RECEIVE_ERROR_SMS_CODE,
         RECEIVE_ERROR_PHONE_NUMBER,
-        SUCCESS_RECEIVE_INFO
+        SUCCESS_RECEIVE_PARCEL_CODE,
+        SUCCESS_RECEIVE_MESSAGE
     }
 }

@@ -52,16 +52,28 @@
                 Grid.Column="0"
             >
                 <TextBlock
-                    Text="{Binding Path=GetInfoLabel.Value, Mode=OneWay}"
-                    Width="{Binding Path=GetInfoLabel.Width, Mode=OneWay}"
-                    Height="{Binding Path=GetInfoLabel.Height, Mode=OneWay}"
-                    FontSize="{Binding Path=GetInfoLabel.FontSize, Mode=OneWay}"
-                    FontWeight="{Binding Path=GetInfoLabel.FontWeight, Mode=OneWay}"
-                    Foreground="{Binding Path=GetInfoLabel.TextColor, Mode=OneWay}"
+                    Text="{Binding Path=GetParcelCodeLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetParcelCodeLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetParcelCodeLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetParcelCodeLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetParcelCodeLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetParcelCodeLabel.TextColor, Mode=OneWay}"
                     TextWrapping="Wrap"
                     TextAlignment="Center"
-                    Canvas.Left="{Binding Path=GetInfoLabel.PaddingLeftX, Mode=OneWay}"
-                    Canvas.Top="{Binding Path=GetInfoLabel.PaddingTopY, Mode=OneWay}"
+                    Canvas.Left="{Binding Path=GetParcelCodeLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetParcelCodeLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetMessageLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetMessageLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetMessageLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetMessageLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetMessageLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetMessageLabel.TextColor, Mode=OneWay}"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    Canvas.Left="{Binding Path=GetMessageLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetMessageLabel.PaddingTopY, Mode=OneWay}"
                 />
                 <Button
                     cal:Message.Attach="[Event Click] = [Action LoadMenuView]"

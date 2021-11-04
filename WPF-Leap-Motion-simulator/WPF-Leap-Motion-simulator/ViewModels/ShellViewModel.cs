@@ -49,8 +49,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Menu window variables --
 
         //-- ReceiveTheParcel window variables --
-        private string _receiveSMSCode;
-        private string _receivePhoneNumber;
+        private string _receiveSMSCode = "";
+        private string _receivePhoneNumber = "";
 
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
@@ -437,7 +437,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingRight = WindowBorderSize,
                         PaddingBottom = WindowBorderSize + WindowFooterSize,
                         PaddingLeft = WindowBorderSize
-                    }
+                    },
+                    _receiveSMSCode
                 ));
             }
         }
