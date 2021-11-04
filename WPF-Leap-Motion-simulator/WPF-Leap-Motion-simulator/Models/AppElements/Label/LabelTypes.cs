@@ -9,6 +9,9 @@ namespace WPF_Leap_Motion_simulator.Models
     {
         NO_LABEL,
         RECEIVE_SMS_CODE,
-        RECEIVE_PHONE_NUMBER
+        RECEIVE_PHONE_NUMBER,
+        RECEIVE_ERROR_SMS_CODE,
+        RECEIVE_ERROR_PHONE_NUMBER,
+        SUCCESS_RECEIVE_INFO
     }
 }

@@ -76,6 +76,18 @@
                     Canvas.Top="{Binding Path=GetSMSCodeInput.PaddingTopY, Mode=OneWay}"
                 />
                 <TextBlock
+                    Text="{Binding Path=GetErrorSMSCodeLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorSMSCodeLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorSMSCodeLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorSMSCodeLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorSMSCodeLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorSMSCodeLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorSMSCodeLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorSMSCodeLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorSMSCodeLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
                     Text="{Binding Path=GetPhoneNumberLabel.Value, Mode=OneWay}"
                     Width="{Binding Path=GetPhoneNumberLabel.Width, Mode=OneWay}"
                     Height="{Binding Path=GetPhoneNumberLabel.Height, Mode=OneWay}"
@@ -98,6 +110,18 @@
                     TextWrapping="Wrap"
                     Canvas.Left="{Binding Path=GetPhoneNumberInput.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetPhoneNumberInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorPhoneNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorPhoneNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorPhoneNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorPhoneNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorPhoneNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorPhoneNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorPhoneNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorPhoneNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorPhoneNumberLabel.PaddingTopY, Mode=OneWay}"
                 />
                 <Button
                     cal:Message.Attach="[Event Click] = [Action LoadSuccessReceiveView]"

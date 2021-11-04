@@ -28,9 +28,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private List<Button> _buttons;
         private List<Input> _inputs;
         private InputTypes _focusedInput;
+        private bool _isLiveValidation = false;
 
-        private readonly double standardLabelHeight = 14;
-        private readonly double standardLabelMarginTop = 5;
+        private readonly double standardLabelHeight = 15;
+        private readonly double standardLabelMarginTop = 4;
         private readonly double standardInputWidth = 200;
         private readonly double standardInputHeight = 50;
         private readonly double standardInputMarginTop = 20;
@@ -48,7 +49,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             _focusedInput = InputTypes.NO_INPUT;
 
             double paddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardInputWidth) / 2;
-            double basicPaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.08;
+            double basicPaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.06;
 
             _labels = new List<Label>
             {
@@ -69,12 +70,38 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
                     PaddingLeftX = paddingLeftX,
-                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardLabelHeight + standardLabelMarginTop*2,
+                    FontSize = 11,
+                    FontWeight = "Bold",
+                    TextColor = "#f22929",
+                    Type = LabelTypes.RECEIVE_ERROR_SMS_CODE,
+                    Value = "Zły format kodu SMS",
+                    IsVisible = false
+                },
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     FontSize = 13,
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
                     Type = LabelTypes.RECEIVE_PHONE_NUMBER,
                     Value = "Numer telefonu"
+                },
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = paddingLeftX,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight*2 + standardInputMarginTop + standardLabelHeight*3 + standardLabelMarginTop*4,
+                    FontSize = 11,
+                    FontWeight = "Bold",
+                    TextColor = "#f22929",
+                    Type = LabelTypes.RECEIVE_ERROR_PHONE_NUMBER,
+                    Value = "Zły format numeru telefonu",
+                    IsVisible = false
                 }
             };
 
@@ -95,7 +122,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardInputHeight,
                     PaddingLeftX = paddingLeftX,
-                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
+                    PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*3,
                     Type = InputTypes.RECEIVE_PHONE_NUMBER,
                     Value = "",
                     IsFocused = false
@@ -104,6 +131,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             double buttonRowSize = standardInputWidth * 2 + standardButtonMarginLeft;
             double basicButtonPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - buttonRowSize) / 2;
+            double buttonPaddingTop = basicPaddingTopY + (standardInputHeight + standardInputMarginTop)*2 + (standardLabelHeight + standardLabelMarginTop)*4;
 
             _buttons = new List<Button>
             {
@@ -112,9 +140,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardButtonWidth,
                     Height = standardButtonHeight,
                     PaddingLeftX = basicButtonPaddingLeft,
-                    PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
+                    PaddingTopY = buttonPaddingTop,
                     Type = ButtonTypes.VIEW_SUCCESS_RECEIVE,
-                    Title = "Wyślij",
+                    Title = "Dalej",
                     IsHovered = false
                 },
                 new Button
@@ -122,7 +150,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardButtonWidth,
                     Height = standardButtonHeight,
                     PaddingLeftX = basicButtonPaddingLeft + standardButtonWidth + standardButtonMarginLeft,
-                    PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop)*2,
+                    PaddingTopY = buttonPaddingTop,
                     Type = ButtonTypes.VIEW_MENU,
                     Title = "Wróć",
                     IsHovered = false
@@ -201,6 +229,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 });
                 NotifyOfPropertyChange(() => GetSMSCodeInput);
                 NotifyOfPropertyChange(() => PropSMSCodeInput);
+
+                // Live validate if validation is turned on
+                if (_isLiveValidation)
+                {
+                    if (GetSMSCodeInput.Value.Length == 6)
+                    {
+                        GetErrorSMSCodeLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        GetErrorSMSCodeLabel.IsVisible = true;
+                    }
+                    NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
+                }
             }
         }
 
@@ -223,6 +265,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 });
                 NotifyOfPropertyChange(() => GetPhoneNumberInput);
                 NotifyOfPropertyChange(() => PropPhoneNumberInput);
+
+                // Live validate if validation is turned on
+                if (_isLiveValidation)
+                {
+                    if (GetPhoneNumberInput.Value.Length == 9)
+                    {
+                        GetErrorPhoneNumberLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        GetErrorPhoneNumberLabel.IsVisible = true;
+                    }
+                    NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
+                }
             }
         }
 
@@ -234,11 +290,27 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Label GetErrorSMSCodeLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.RECEIVE_ERROR_SMS_CODE);
+            }
+        }
+
         public Label GetPhoneNumberLabel
         {
             get
             {
                 return _labels.Find(label => label.Type == LabelTypes.RECEIVE_PHONE_NUMBER);
+            }
+        }
+
+        public Label GetErrorPhoneNumberLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.RECEIVE_ERROR_PHONE_NUMBER);
             }
         }
 
@@ -331,26 +403,43 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         // Handle window height change
         public void Handle(HandleWindowHeight message)
         {
-            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.08;
+            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.06;
 
+            // labels
             Label labelSMSCode = GetSMSCodeLabel;
             labelSMSCode.PaddingTopY = basicPaddingTopY;
             NotifyOfPropertyChange(() => GetSMSCodeLabel);
 
+            Label labelErrorSMSCode = GetErrorSMSCodeLabel;
+            labelErrorSMSCode.PaddingTopY = basicPaddingTopY + standardInputHeight + standardLabelHeight + standardLabelMarginTop * 2;
+            NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
+
             Label labelPhoneNumber = GetPhoneNumberLabel;
-            labelPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop;
+            labelPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2;
             NotifyOfPropertyChange(() => GetPhoneNumberLabel);
 
+            Label labelErrorPhoneNumber = GetErrorPhoneNumberLabel;
+            labelErrorPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight * 2 + standardInputMarginTop + standardLabelHeight * 3 + standardLabelMarginTop * 4;
+            NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
+
+            // inputs
             Input inputSMSCode = GetSMSCodeInput;
             inputSMSCode.PaddingTopY = basicPaddingTopY + standardLabelHeight + standardLabelMarginTop;
             NotifyOfPropertyChange(() => GetSMSCodeInput);
 
             Input inputPhoneNumber = GetPhoneNumberInput;
-            inputPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2;
+            inputPhoneNumber.PaddingTopY = basicPaddingTopY + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 3;
             NotifyOfPropertyChange(() => GetPhoneNumberInput);
 
+            // buttons
+            double buttonPaddingTop = basicPaddingTopY + (standardInputHeight + standardInputMarginTop) * 2 + (standardLabelHeight + standardLabelMarginTop) * 4;
+
+            Button SuccessReceiveButton = GetSuccessReceiveButton;
+            SuccessReceiveButton.PaddingTopY = buttonPaddingTop;
+            NotifyOfPropertyChange(() => GetSuccessReceiveButton);
+
             Button buttonMenu = GetMenuButton;
-            buttonMenu.PaddingTopY = basicPaddingTopY + (standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop) * 2;
+            buttonMenu.PaddingTopY = buttonPaddingTop;
             NotifyOfPropertyChange(() => GetMenuButton);
         }
 
@@ -382,11 +471,33 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
                 else if (buttonSuccessReceive.IsCursorInsideTheButton(relativeCursor))
                 {
-                    LoadSuccessReceiveView();
+                    // Trun on live validation of the inputs
+                    _isLiveValidation = true;
+
+                    // Validate inputs
+                    bool canSubmit = true;
+                    // Validate SMS Code
+                    if (GetSMSCodeInput.Value.Length != 6)
+                    {
+                        canSubmit = false;
+                        GetErrorSMSCodeLabel.IsVisible = true;
+                        NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
+                    }
+
+                    // Validate Phone Number
+                    if (GetPhoneNumberInput.Value.Length != 9)
+                    {
+                        canSubmit = false;
+                        GetErrorPhoneNumberLabel.IsVisible = true;
+                        NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
+                    }
+
+                    // If validation is successful, change the view
+                    if (canSubmit)
+                    {
+                        LoadSuccessReceiveView();
+                    }
                 }
-
-                // TO DO - check other buttons and inputs in this view
-
             }
         }
 

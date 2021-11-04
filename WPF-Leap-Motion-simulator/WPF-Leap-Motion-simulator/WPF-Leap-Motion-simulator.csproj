@@ -105,6 +105,7 @@
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowHeight.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowWidth.cs" />
     <Compile Include="Models\TDO\TDOPosition.cs" />
+    <Compile Include="ViewModels\SuccessReceiveViewModel.cs" />
     <Compile Include="ViewModels\Utilities\KeyScheme.cs" />
     <Compile Include="Models\TDO\TDOWindowPadding.cs" />
     <Compile Include="Models\TDO\TDOWindowSize.cs" />
@@ -120,6 +121,9 @@
     </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SuccessReceiveView.xaml.cs">
+      <DependentUpon>SuccessReceiveView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SuccessReceiveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

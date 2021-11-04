@@ -144,7 +144,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onSwipeGestureDetected:
-                        
+                        _eventAggregator.PublishOnUIThread(new HandleCursorHandGesture
+                        {
+                            CursorPositionX = _Cursor.PositionX,
+                            CursorPositionY = _Cursor.PositionY,
+                            CursorRadius = _Cursor.CursorRadius,
+                            GestrueType = LeapGestureTypes.Swipe,
+                            PaddingTop = WindowBorderSize + WindowHeaderSize,
+                            PaddingRight = WindowBorderSize,
+                            PaddingBottom = WindowBorderSize + WindowFooterSize,
+                            PaddingLeft = WindowBorderSize,
+                            WindowWidth = WindowWidth,
+                            WindowHeight = WindowHeight
+                        });
                         break;
                     case LeapEventTypes.onScreenTapGestureDetected:
                         
@@ -412,8 +424,21 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             else if (message.Type == ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE)
             {
-                // TO DO - activate the view for the success receive
-                Console.WriteLine("Here - TO DO");
+                ActivateItem(new SuccessReceiveViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
             }
         }
 

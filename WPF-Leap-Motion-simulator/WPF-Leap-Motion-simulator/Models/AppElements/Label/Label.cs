@@ -17,6 +17,7 @@ namespace WPF_Leap_Motion_simulator.Models
         private string _fontWeight = "Normal";
         private string _textColor = "Black";
         private LabelTypes _type = LabelTypes.NO_LABEL;
+        private bool _isVisible = true;
 
         // Properties
         public double PaddingLeftX
@@ -124,6 +125,34 @@ namespace WPF_Leap_Motion_simulator.Models
             set
             {
                 _type = value;
+            }
+        }
+
+        public bool IsVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = value;
+            }
+        }
+
+        public string GetVisibilityType
+        {
+            get
+            {
+                if (_isVisible)
+                {
+                    return "Visible";
+                }
+                else
+                {
+                    return "Hidden";
+                }
             }
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Globalization;
-using System.Windows;
 
 // Caliburn Micro
 using Caliburn.Micro;
@@ -16,7 +15,7 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class MenuViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleCrusorMove>
+    class SuccessReceiveViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleCrusorMove>
     {
         private IEventAggregator _eventAggregator;
 
@@ -26,12 +25,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Variables of this window --
         private double[] _gridColumnMultipliers;
         private List<Button> _buttons;
+        private List<Label> _labels;
 
+        private readonly double standardLabelHeight = 40;
+        private readonly double standardLabelWidth = 600;
+        private readonly double standardLabelMarginTop = 30;
         private readonly double standardButtonWidth = 200;
         private readonly double standardButtonHeight = 100;
-        private readonly double standardButtonMarginTop = 20;
 
-        public MenuViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
+        public SuccessReceiveViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
         {
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
@@ -39,7 +41,23 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             mainWindowPadding = windowPadding;
             _gridColumnMultipliers = new double[] { 1.5, 5, 1.5 };
 
-            double basicPaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.25;
+            double basicPaddingTop = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.26;
+
+            _labels = new List<Label>
+            {
+                new Label
+                {
+                    Width = standardLabelWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardLabelWidth)/2,
+                    PaddingTopY = basicPaddingTop,
+                    FontSize = 20,
+                    FontWeight = "Bold",
+                    TextColor = "#f1b938",
+                    Type = LabelTypes.SUCCESS_RECEIVE_INFO,
+                    Value = "Odbierz paczkę z otworzonej skrytki i potwierdź odbiór"
+                }
+            };
 
             _buttons = new List<Button> {
                 new Button
@@ -47,19 +65,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardButtonWidth,
                     Height = standardButtonHeight,
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = basicPaddingTopY,
-                    Type = ButtonTypes.VIEW_RECEIVE_THE_PARCEL,
-                    Title = "Odbierz przesyłkę",
-                    IsHovered = false
-                },
-                new Button
-                {
-                    Width = standardButtonWidth,
-                    Height = standardButtonHeight,
-                    PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
-                    PaddingTopY = basicPaddingTopY + standardButtonHeight + standardButtonMarginTop,
-                    Type = ButtonTypes.VIEW_SEND_THE_PARCEL,
-                    Title = "Nadaj przesyłkę",
+                    PaddingTopY = basicPaddingTop + standardLabelHeight + standardLabelMarginTop,
+                    Type = ButtonTypes.VIEW_MENU,
+                    Title = "Kończymy na dziś",
                     IsHovered = false
                 }
             };
@@ -76,7 +84,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             get
             {
-                if(_gridColumnMultipliers.Length >= 1)
+                if (_gridColumnMultipliers.Length >= 1)
                 {
                     return _gridColumnMultipliers[0].ToString(CultureInfo.GetCultureInfo("en-US")) + "*";
                 }
@@ -117,68 +125,63 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        public Button GetReceiveTheParcelButton
+        public Label GetInfoLabel
         {
             get
             {
-                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
+                return _labels.Find(label => label.Type == LabelTypes.SUCCESS_RECEIVE_INFO);
             }
         }
 
-        public Button GetSendTheParcelButton
+        public Button GetMenuButton
         {
             get
             {
-                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_SEND_THE_PARCEL);
+                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_MENU);
             }
         }
 
         // -- Methods --
-        public void LoadReceiveTheParcelView()
+        public void LoadMenuView()
         {
-            _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
+            _eventAggregator.PublishOnUIThread(new HandleReceiveTheParcelButtonClick
             {
-                Type = MenuButtonClickTypes.RECEIVE_THE_PARCEL
+                Type = ReceiveTheParcelButtonClickTypes.MENU
             });
-        }
-
-        public void LoadSendTheParcelView()
-        {
-            // TO DO - use publish in event aggrgator to change window to send parcle view
-
         }
 
         // Handle window width change
         public void Handle(HandleWindowWidth message)
         {
-            foreach (Button button in _buttons)
+            foreach (Label label in _labels)
             {
-                button.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+                label.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - label.Width) / 2;
             }
+            NotifyOfPropertyChange(() => GetInfoLabel);
 
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
-            NotifyOfPropertyChange(() => GetSendTheParcelButton);
+            Button MenuButton = GetMenuButton;
+            MenuButton.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - MenuButton.Width) / 2;
+            NotifyOfPropertyChange(() => GetMenuButton);
         }
 
         // Handle window height change
         public void Handle(HandleWindowHeight message)
         {
-            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.25;
+            double basicPaddingTopY = (message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom) * 0.26;
 
-            Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
-            buttonReceiveTheParcel.PaddingTopY = basicPaddingTopY;
+            Label labelInfo = GetInfoLabel;
+            labelInfo.PaddingTopY = basicPaddingTopY;
+            NotifyOfPropertyChange(() => GetInfoLabel);
 
-            Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL);
-            buttonSendTheParcel.PaddingTopY = basicPaddingTopY + buttonReceiveTheParcel.Height + standardButtonMarginTop;
-
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
-            NotifyOfPropertyChange(() => GetSendTheParcelButton);
+            Button buttonMenu = GetMenuButton;
+            buttonMenu.PaddingTopY = basicPaddingTopY + labelInfo.Height + standardLabelMarginTop;
+            NotifyOfPropertyChange(() => GetMenuButton);
         }
 
         // Handle cursor hand gesture
         public void Handle(HandleCursorHandGesture message)
         {
-            if(message.GestrueType == LeapGestureTypes.KeyTap)
+            if (message.GestrueType == LeapGestureTypes.KeyTap)
             {
                 // Creting cursor object, that has values relative to the content bar (the black box)
                 Cursor relativeCursor = new Cursor
@@ -189,14 +192,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 };
 
                 // Checking if relativeCursor is inside any button in this view
-                Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
-                if (buttonReceiveTheParcel.IsCursorInsideTheButton(relativeCursor))
+                Button buttonMenu = GetMenuButton;
+                if (buttonMenu.IsCursorInsideTheButton(relativeCursor))
                 {
-                    LoadReceiveTheParcelView();
+                    LoadMenuView();
                 }
-
-                // TO DO - check other buttons in this view
-                
+            }
+            else if (message.GestrueType == LeapGestureTypes.Swipe)
+            {
+                LoadMenuView();
             }
         }
 
@@ -212,7 +216,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             };
 
             // Checking if relativeCursor is inside any button in this view
-            foreach(Button button in _buttons)
+            foreach (Button button in _buttons)
             {
                 if (button.IsCursorInsideTheButton(relativeCursor))
                 {
@@ -224,8 +228,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
             }
 
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
-            NotifyOfPropertyChange(() => GetSendTheParcelButton);
+            NotifyOfPropertyChange(() => GetMenuButton);
         }
     }
 }
