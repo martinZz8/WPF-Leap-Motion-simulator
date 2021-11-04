@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
         xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
         Title="Leap Motion Simulator"
         Width="{Binding Path=WindowWidth, Mode=TwoWay}"
@@ -15,6 +17,16 @@
         Background="#f1b938"
         >
     <Window.Resources>
+        <!--Animation for cursor tap-->
+        <Storyboard x:Key="cursorTapElementAnimation">
+            <DoubleAnimation
+                Storyboard.TargetName="cursorTapElement" 
+                Storyboard.TargetProperty="Opacity"
+                From="0.9" To="0.0" Duration="0:0:0.5"
+                AutoReverse="False"
+            />
+        </Storyboard>
+        
         <!--Style for button-->
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#4d4d4d" />
@@ -65,10 +77,23 @@
             <Setter Property="FontSize" Value="15" />
             <Setter Property="BorderBrush" Value="#4d4d4d" />
             <Setter Property="BorderThickness" Value="2"/>
-            
         </Style>
     </Window.Resources>
     
+    <!--Binding the property with animation (for cursor tap)-->
+    <i:Interaction.Triggers>
+        <ei:DataTrigger
+            Binding="{Binding CursorTapAnimationStatus, Mode=OneWay}"
+            Value="ON"
+        >
+            <ei:ControlStoryboardAction
+                Storyboard="{StaticResource cursorTapElementAnimation}"     
+                ControlStoryboardOption="Play"
+            />
+        </ei:DataTrigger>
+    </i:Interaction.Triggers>
+    
+    <!--Main layout-->
     <Grid>
         <!--OLD VERSION-->
         <!--<Grid.ColumnDefinitions>
@@ -103,11 +128,13 @@
         <Canvas
             Panel.ZIndex="100"
         >
+            <!--Cursor-->
             <Ellipse
                 Width="{Binding Path=ActualCursor.GetCursorSize, Mode=OneWay}"
                 Height="{Binding Path=ActualCursor.GetCursorSize, Mode=OneWay}"
                 Fill="Red"
                 Opacity="0.9"
+                Panel.ZIndex="2"
                 Canvas.Left="{Binding Path=ActualCursor.PositionX, Mode=OneWay}"
                 Canvas.Top="{Binding Path=ActualCursor.PositionY, Mode=OneWay}"
                 Visibility="{Binding Path=ActualCursor.GetVisibilityType, Mode=OneWay}"
@@ -117,33 +144,20 @@
                 </Ellipse.Effect>
             </Ellipse>
 
-            <!-- Test with tap animation-->
+            <!-- Cursor tap animation-->
             <Ellipse
-                x:Name="testEllipse"
+                x:Name="cursorTapElement"
                 Width="{Binding Path=ActualCursor.GetCursorTapSize, Mode=OneWay}"
                 Height="{Binding Path=ActualCursor.GetCursorTapSize, Mode=OneWay}"
-                Fill="White"
+                Fill="#1749eb"
+                Opacity="0"
+                Panel.ZIndex="1"
                 Canvas.Left="{Binding Path=ActualCursor.TapPositionX, Mode=OneWay}"
                 Canvas.Top="{Binding Path=ActualCursor.TapPositionY, Mode=OneWay}"
             >
                 <Ellipse.Effect>
                     <BlurEffect Radius="7" KernelType="Gaussian"/>
                 </Ellipse.Effect>
-
-                <Ellipse.Triggers>
-                    <EventTrigger RoutedEvent="Ellipse.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation
-                                    Storyboard.TargetName="testEllipse" 
-                                    Storyboard.TargetProperty="Opacity"
-                                    From="0.7" To="0.0" Duration="0:0:1.3"
-                                    AutoReverse="False"
-                                />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Ellipse.Triggers>
             </Ellipse>
         </Canvas>
 

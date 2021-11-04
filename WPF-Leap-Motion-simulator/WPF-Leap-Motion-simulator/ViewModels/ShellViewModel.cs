@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
-//Caliburn Micro
+// Caliburn Micro
 using Caliburn.Micro;
-using WPF_Leap_Motion_simulator.Models;
 
 // System Diagnostics for Trace.WriteLine() function
 using System.Diagnostics;
 
-//Leap
+// Leap
 using Leap;
 
-//LeapTracker
+// Models
+using WPF_Leap_Motion_simulator.Models;
+
+// LeapTracker
 using WPF_Leap_Motion_simulator.LeapTracker;
-using System.Windows.Controls;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
@@ -42,6 +44,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private double _windowFooterSize;
         private string _FPSCounter;
         private Cursor _Cursor;
+        private string _cursorTapAnimationStatus;
 
         //-- Keyboard variables --
         private Keyboard _keyboard;
@@ -57,6 +60,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             // Setting default global options
             _isRightHandACursor = true;
+            _cursorTapAnimationStatus = "OFF";
 
             // Setting initial window variables
             _windowHeight = 720;
@@ -120,6 +124,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         delegate void LeapEventDelegate(LeapEventTypes EventType);
         public void LeapEventNotification(LeapEventTypes EventType)
         {
+            bool isCursorAnimationSetted = false;
             if (Application.Current.CheckAccess())
             {
                 switch (EventType)
@@ -177,13 +182,23 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                                 WindowWidth = WindowWidth,
                                 WindowHeight = WindowHeight
                             });
-                        }
 
-                        CheckKeyboardKeyClick();
+                            CheckKeyboardKeyClick();
+
+                            CursorTapAnimationStatus = "ON";
+                            NotifyOfPropertyChange(() => CursorTapAnimationStatus);
+                            isCursorAnimationSetted = true;
+                        }
                         break;
                     case LeapEventTypes.onNoGestureDetected:
                         
                         break;
+                }
+
+                if (!isCursorAnimationSetted && (CursorTapAnimationStatus != "OFF"))
+                {
+                    CursorTapAnimationStatus = "OFF";
+                    NotifyOfPropertyChange(() => CursorTapAnimationStatus);
                 }
             }
             else
@@ -357,6 +372,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 return _keyboard;
+            }
+        }
+
+        public string CursorTapAnimationStatus
+        {
+            get
+            {
+                return _cursorTapAnimationStatus;
+            }
+
+            set
+            {
+                _cursorTapAnimationStatus = value;
             }
         }
 
@@ -638,31 +666,28 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         private void CheckKeyboardKeyClick()
         {
-            if (_keyboard.IsVisible)
+            // Creting cursor object, that has values relative to the keyboard bar
+            Cursor relativeCursor = new Cursor
             {
-                // Creting cursor object, that has values relative to the keyboard bar
-                Cursor relativeCursor = new Cursor
-                {
-                    CursorRadius = _Cursor.CursorRadius,
-                    PositionX = _Cursor.PositionX - WindowBorderSize - ((WindowWidth - WindowBorderSize * 2) * 1.5 / 8),
-                    PositionY = _Cursor.PositionY - (WindowBorderSize + WindowHeaderSize) - (WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + _keyboard.Height))
-                };
+                CursorRadius = _Cursor.CursorRadius,
+                PositionX = _Cursor.PositionX - WindowBorderSize - ((WindowWidth - WindowBorderSize * 2) * 1.5 / 8),
+                PositionY = _Cursor.PositionY - (WindowBorderSize + WindowHeaderSize) - (WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + _keyboard.Height))
+            };
 
-                //double positionX = (WindowWidth - (WindowBorderSize * 2)) * 1.5 / 8;
-                //double positionY = WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + height);
+            //double positionX = (WindowWidth - (WindowBorderSize * 2)) * 1.5 / 8;
+            //double positionY = WindowHeight - (WindowBorderSize * 2 + WindowHeaderSize + WindowFooterSize + height);
 
-                _keyboard.Keys.ForEach(key =>
+            _keyboard.Keys.ForEach(key =>
+            {
+                if (key.IsCursorInsideTheKey(relativeCursor))
                 {
-                    if (key.IsCursorInsideTheKey(relativeCursor))
+                    _eventAggregator.PublishOnUIThread(new HandleKeyClick
                     {
-                        _eventAggregator.PublishOnUIThread(new HandleKeyClick
-                        {
-                            KeyType = key.Type,
-                            keyToAdd = key.Value
-                        });
-                    }
-                });
-            }
+                        KeyType = key.Type,
+                        keyToAdd = key.Value
+                    });
+                }
+            });
         }
 
         private void CheckKeyboardKeyHover()

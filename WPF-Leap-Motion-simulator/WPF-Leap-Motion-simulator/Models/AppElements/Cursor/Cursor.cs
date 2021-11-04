@@ -13,7 +13,7 @@ namespace WPF_Leap_Motion_simulator.Models
         private bool _isVisible;
         private double _cursorRadius = 9;
         private double _cursorSensibility = 1;
-        private double _cursorTapSizeAddition = 5;
+        private double _cursorTapSizeAddition = 14;
 
         // Properties
         public double PositionX
