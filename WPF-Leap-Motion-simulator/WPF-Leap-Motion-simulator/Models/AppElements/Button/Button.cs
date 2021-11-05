@@ -21,6 +21,7 @@ namespace WPF_Leap_Motion_simulator.Models
         private string _hoveredBackgroundColor = "#f1b938";
         private string _hoveredForegroundColor = "#4d4d4d";
         private string _hoveredBorderColor = "#f8dea0";
+        private bool _isVisible = true;
 
         // Properties
         public double PaddingLeftX {
@@ -186,6 +187,19 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public bool IsVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = value;
+            }
+        }
+
         public string GetBackgroundColor
         {
             get
@@ -228,6 +242,16 @@ namespace WPF_Leap_Motion_simulator.Models
                 {
                     return _hoveredBorderColor;
                 }
+            }
+        }
+
+        public string GetVisibilityType
+        {
+            get
+            {
+                if (IsVisible)
+                    return "Visible";
+                return "Collapsed";
             }
         }
 

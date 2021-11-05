@@ -58,7 +58,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Height = standardButtonHeight,
                     PaddingLeftX = (((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator)-standardButtonWidth)/2,
                     PaddingTopY = basicPaddingTopY + standardButtonHeight + standardButtonMarginTop,
-                    Type = ButtonTypes.VIEW_SEND_THE_PARCEL,
+                    Type = ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER,
                     Title = "Nadaj przesyłkę",
                     IsHovered = false
                 }
@@ -129,7 +129,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         {
             get
             {
-                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_SEND_THE_PARCEL);
+                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER);
             }
         }
 
@@ -144,8 +144,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
         public void LoadSendTheParcelView()
         {
-            // TO DO - use publish in event aggrgator to change window to send parcle view
-
+            _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
+            {
+                Type = MenuButtonClickTypes.SEND_THE_PARCEL
+            });
         }
 
         // Handle window width change
@@ -168,7 +170,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
             buttonReceiveTheParcel.PaddingTopY = basicPaddingTopY;
 
-            Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL);
+            Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER);
             buttonSendTheParcel.PaddingTopY = basicPaddingTopY + buttonReceiveTheParcel.Height + standardButtonMarginTop;
 
             NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
@@ -190,9 +192,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
                 // Checking if relativeCursor is inside any button in this view
                 Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
+                Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER);
                 if (buttonReceiveTheParcel.IsCursorInsideTheButton(relativeCursor))
                 {
                     LoadReceiveTheParcelView();
+                }
+                else if (buttonSendTheParcel.IsCursorInsideTheButton(relativeCursor))
+                {
+                    LoadSendTheParcelView();
                 }
 
                 // TO DO - check other buttons in this view

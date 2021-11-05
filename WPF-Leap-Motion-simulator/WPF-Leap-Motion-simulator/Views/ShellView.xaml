@@ -20,7 +20,7 @@
         <!--Animation for cursor tap-->
         <Storyboard x:Key="cursorTapElementAnimation">
             <DoubleAnimation
-                Storyboard.TargetName="cursorTapElement" 
+                Storyboard.TargetName="cursorTapElement"
                 Storyboard.TargetProperty="Opacity"
                 From="0.9" To="0.0" Duration="0:0:0.5"
                 AutoReverse="False"
@@ -853,6 +853,26 @@
                          />
                     </Grid>
                     <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyAt.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyAt.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyAt.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyAt.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyAt.GetBorderColor, Mode=OneWay}"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyAt.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKeyZ.PositionX, Mode=OneWay}"  
                         Canvas.Top="{Binding Path=ActualKeyboard.PropKeyZ.PositionY, Mode=OneWay}"
                     >
@@ -991,6 +1011,46 @@
                             FontWeight="Bold"
                             FontSize="20"
                          />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeyDot.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeyDot.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeyDot.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeyDot.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeyDot.GetBorderColor, Mode=OneWay}"
+                            StrokeThickness="1.5"
+                        />
+                        <TextBlock
+                            Text="{Binding Path=ActualKeyboard.PropKeyDot.Value, Mode=OneWay}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            FontSize="20"
+                         />
+                    </Grid>
+                    <Grid
+                        Canvas.Left="{Binding Path=ActualKeyboard.PropKeySpace.PositionX, Mode=OneWay}"  
+                        Canvas.Top="{Binding Path=ActualKeyboard.PropKeySpace.PositionY, Mode=OneWay}"
+                    >
+                        <Rectangle
+                            Width="{Binding Path=ActualKeyboard.PropKeySpace.Width, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeySpace.Height, Mode=OneWay}"
+                            Fill="White"
+                            Opacity="0.7"
+                            Stroke="{Binding Path=ActualKeyboard.PropKeySpace.GetBorderColor, Mode=OneWay}"
+                            StrokeThickness="1.5"
+                        />
+                        <Image
+                            Source="../Assets/space.png"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Width="{Binding Path=ActualKeyboard.PropKeySpace.SmallWidth, Mode=OneWay}"
+                            Height="{Binding Path=ActualKeyboard.PropKeySpace.SmallHeight, Mode=OneWay}"
+                        />
                     </Grid>
                     <Grid
                         Canvas.Left="{Binding Path=ActualKeyboard.PropKeyDelete.PositionX, Mode=OneWay}"  

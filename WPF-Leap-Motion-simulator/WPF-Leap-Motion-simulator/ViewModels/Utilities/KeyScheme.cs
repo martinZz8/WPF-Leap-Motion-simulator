@@ -192,6 +192,10 @@ namespace WPF_Leap_Motion_simulator.Models
                     new KeyScheme {
                         Type = KeyTypes.LETTER_L,
                         Value = "L"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.SPECIAL_AT,
+                        Value = "@"
                     }
                 },
                 new List<KeyScheme>
@@ -223,6 +227,14 @@ namespace WPF_Leap_Motion_simulator.Models
                     new KeyScheme {
                         Type = KeyTypes.LETTER_M,
                         Value = "M"
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.SPECIAL_DOT,
+                        Value = "."
+                    },
+                    new KeyScheme {
+                        Type = KeyTypes.SPECIAL_SPACE,
+                        Value = " "
                     },
                     new KeyScheme
                     {

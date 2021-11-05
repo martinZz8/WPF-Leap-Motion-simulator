@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              >
     <Grid>
@@ -151,14 +151,5 @@
                 />
             </Canvas>
         </Grid>
-        
-        <!--<Button
-            x:Name="LoadMenuView"
-            Height="30"
-            FontSize="15"
-            FontWeight="Bold"
-        >
-            Menu
-        </Button>-->
     </Grid>
 </UserControl>

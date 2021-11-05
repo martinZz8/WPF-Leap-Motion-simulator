@@ -43,6 +43,9 @@ namespace WPF_Leap_Motion_simulator.Models
         NUMBER_8,
         NUMBER_9,
         NUMBER_0,
+        SPECIAL_AT,
+        SPECIAL_SPACE,
+        SPECIAL_DOT,
         DELETE
     }
 }

@@ -23,7 +23,7 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
     class ShellViewModel: Caliburn.Micro.Conductor<object>,
-        ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleMenuButtonClick>, IHandle<HandleReceiveTheParcelButtonClick>, IHandle<HandleKeyboardChange>
+        ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleKeyboardChange>, IHandle<HandleMenuButtonClick>, IHandle<HandleReceiveTheParcelButtonClick>, IHandle<HandleSendTheParcelButtonClick>
     {
         //-- LeapMotion variables --
         private Controller controller;
@@ -54,6 +54,23 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- ReceiveTheParcel window variables --
         private string _receiveSMSCode = "";
         private string _receivePhoneNumber = "";
+
+        //-- SendTheParcel sender window variables --
+        private string _sendSenderFirstName = "";
+        private string _sendSenderLastName = "";
+        private string _sendSenderEmail = "";
+        private string _sendSenderPhoneNumber = "";
+
+        //-- SendTheParcel receiver window variables --
+        private string _sendReceiverFirstName = "";
+        private string _sendReceiverLastName = "";
+        private string _sendReceiverPhoneNumber = "";
+        private string _sendReceiverCity = "";
+        private string _sendReceiverPostCode = "";
+        private string _sendReceiverStreet = "";
+        private string _sendReceiverHouseNumber = "";
+        private string _sendReceiverApartmentNumber = "";
+        private string _sendReceiverHouseLetter = "";
 
         //-- Constructor --
         public ShellViewModel(IEventAggregator eventAggregator)
@@ -133,11 +150,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onConnect:
-                        connectHandler();
+                        ConnectHandler();
                         break;
                     case LeapEventTypes.onFrame:
                         if (!isClosing)
-                            newFrameHandler(controller.Frame());
+                            NewFrameHandler(controller.Frame());
                         break;
                     case LeapEventTypes.onExit:
                         
@@ -207,7 +224,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        void connectHandler()
+        void ConnectHandler()
         {
             controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
             controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f); //40.0f
@@ -217,7 +234,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             controller.Config.Save();
         }
 
-        void newFrameHandler(Leap.Frame frame)
+        void NewFrameHandler(Leap.Frame frame)
         {
             //this.displayID.Content = frame.Id.ToString();
             //this.displayTimestamp.Content = frame.Timestamp.ToString();
@@ -230,7 +247,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             FPSCounter = ((int)frame.CurrentFramesPerSecond).ToString();
 
             //Saving the position of the cursor and sending this data to other components
-            savePositionOfTheCursor(frame);
+            SavePositionOfTheCursor(frame);
 
             //Check if cursor hovers any key
             CheckKeyboardKeyHover();
@@ -402,6 +419,71 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 Console.WriteLine("ReceivePhoneNumberInput changed to: " + message.Value);
                 _receivePhoneNumber = message.Value;
             }
+            else if (message.Type == InputTypes.SEND_SENDER_FIRST_NAME)
+            {
+                Console.WriteLine("SendSenderFirstNameInput changed to: " + message.Value);
+                _sendSenderFirstName = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_SENDER_LAST_NAME)
+            {
+                Console.WriteLine("SendSenderLastNameInput changed to: " + message.Value);
+                _sendSenderLastName = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_SENDER_EMAIL)
+            {
+                Console.WriteLine("SendSenderEmailInput changed to: " + message.Value);
+                _sendSenderEmail = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_SENDER_PHONE_NUMBER)
+            {
+                Console.WriteLine("SendSenderPhoneNumberInput changed to: " + message.Value);
+                _sendSenderPhoneNumber = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_FIRST_NAME)
+            {
+                Console.WriteLine("SendReceiverFirstNameInput changed to: " + message.Value);
+                _sendReceiverFirstName = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_LAST_NAME)
+            {
+                Console.WriteLine("SendReceiverLastNameInput changed to: " + message.Value);
+                _sendReceiverLastName = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_PHONE_NUMBER)
+            {
+                Console.WriteLine("SendReceiverPhoneNumberInput changed to: " + message.Value);
+                _sendReceiverPhoneNumber = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_CITY)
+            {
+                Console.WriteLine("SendReceiverCityInput changed to: " + message.Value);
+                _sendReceiverCity = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_POST_CODE)
+            {
+                Console.WriteLine("SendReceiverPostcodeInput changed to: " + message.Value);
+                _sendReceiverPostCode = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_STREET)
+            {
+                Console.WriteLine("SendReceiverStreetInput changed to: " + message.Value);
+                _sendReceiverStreet = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_HOUSE_NUMBER)
+            {
+                Console.WriteLine("SendReceiverHouseNumberInput changed to: " + message.Value);
+                _sendReceiverHouseNumber = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_APARTMENT_NUMBER)
+            {
+                Console.WriteLine("SendReceiverApartmentNumberInput changed to: " + message.Value);
+                _sendReceiverApartmentNumber = message.Value;
+            }
+            else if (message.Type == InputTypes.SEND_RECEIVER_HOUSE_LETTER)
+            {
+                Console.WriteLine("SendReceiverHouseLetterInput changed to: " + message.Value);
+                _sendReceiverHouseLetter = message.Value;
+            }
         }
 
         //-- Handle change of button clicks --
@@ -425,15 +507,42 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     }
                 ));
             }
+            else if (message.Type == MenuButtonClickTypes.SEND_THE_PARCEL)
+            {
+                ActivateItem(new SendTheParcelSenderViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    },
+                    new TDOSendTheParcelSenderInputValues
+                    {
+                        FirstName = _sendSenderFirstName,
+                        LastName = _sendSenderLastName,
+                        Email = _sendSenderEmail,
+                        PhoneNumber = _sendSenderEmail
+                    }
+                ));
+            }
         }
 
         public void Handle(HandleReceiveTheParcelButtonClick message)
         {
             if (message.Type == ReceiveTheParcelButtonClickTypes.MENU)
             {
+                // Resetting variables of this window
                 _receiveSMSCode = "";
                 _receivePhoneNumber = "";
 
+                // Changing the view
                 ActivateItem(new MenuViewModel(
                     _eventAggregator,
                     new TDOWindowSize
@@ -468,6 +577,79 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     },
                     _receiveSMSCode
                 ));
+            }
+        }
+
+        public void Handle(HandleSendTheParcelButtonClick message)
+        {
+            if (message.Type == SendTheParcelButtonClickTypes.MENU)
+            {
+                // Resetting variables of this window
+                _sendSenderFirstName = "";
+                _sendSenderLastName = "";
+                _sendSenderEmail = "";
+                _sendSenderPhoneNumber = "";
+
+                _sendReceiverFirstName = "";
+                _sendReceiverLastName = "";
+                _sendReceiverPhoneNumber = "";
+                _sendReceiverCity = "";
+                _sendReceiverPostCode = "";
+                _sendReceiverStreet = "";
+                _sendReceiverHouseNumber = "";
+                _sendReceiverApartmentNumber = "";
+                _sendReceiverHouseLetter = "";
+
+                // Changing the view
+                ActivateItem(new MenuViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
+            }
+            else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_SENDER)
+            {
+                ActivateItem(new SendTheParcelSenderViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    },
+                    new TDOSendTheParcelSenderInputValues
+                    {
+                        FirstName = _sendSenderFirstName,
+                        LastName = _sendSenderLastName,
+                        Email = _sendSenderEmail,
+                        PhoneNumber = _sendSenderEmail
+                    }
+                ));
+            }
+            else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_RECEIVER)
+            {
+                // TO DO
+                Console.WriteLine("Here will be added the Send Parcel Receiver view");
+            }
+            else if (message.Type == SendTheParcelButtonClickTypes.SUCCESS_SEND)
+            {
+                // TO DO
             }
         }
 
@@ -515,7 +697,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         }
 
         //-- Private methods --
-        private void savePositionOfTheCursor(Leap.Frame frame)
+        private void SavePositionOfTheCursor(Leap.Frame frame)
         {
             bool trackedIndexFinger = false;
             HandList hands = frame.Hands;
@@ -531,7 +713,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                             Bone distalBone = finger.Bone(Bone.BoneType.TYPE_DISTAL);
                             Leap.Vector centerOfTheBone = distalBone.Center;
                             trackedIndexFinger = true;
-                            setCursorPosition(centerOfTheBone);
+                            SetCursorPosition(centerOfTheBone);
                             break;
                         }
                     }
@@ -541,18 +723,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             if (!trackedIndexFinger)
             {
-                hideCursor();
+                HideCursor();
             }
         }
 
-        private void setCursorPosition(Leap.Vector fingerPosition)
+        private void SetCursorPosition(Leap.Vector fingerPosition)
         {
             // -- OLD VERSION OF ACQUIRING WINDOW WIDHT AND HEIGHT
             //Window mainWindow = Application.Current.MainWindow;
             //double windowHeight = mainWindow.ActualHeight;
             //double windowWidth = mainWindow.ActualWidth;
 
-            double centerHeight = WindowHeight / 2;
+            double centerHeight = WindowHeight / 2d;
             double centerWidth = WindowWidth / 2d;
 
             double offsetX = centerWidth + fingerPosition.x * _Cursor.CursorSensibility;
@@ -582,7 +764,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             NotifyOfPropertyChange(() => ActualCursor);
         }
 
-        private void hideCursor()
+        private void HideCursor()
         {
             _Cursor.PositionX = 0f;
             _Cursor.PositionY = 0f;

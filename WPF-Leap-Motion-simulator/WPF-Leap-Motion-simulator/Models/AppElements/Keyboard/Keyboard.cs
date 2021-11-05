@@ -414,6 +414,30 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public Key PropKeyAt
+        {
+            get
+            {
+                return GetKey(KeyTypes.SPECIAL_AT);
+            }
+        }
+
+        public Key PropKeySpace
+        {
+            get
+            {
+                return GetKey(KeyTypes.SPECIAL_SPACE);
+            }
+        }
+
+        public Key PropKeyDot
+        {
+            get
+            {
+                return GetKey(KeyTypes.SPECIAL_DOT);
+            }
+        }
+
         public Key PropKeyDelete
         {
             get

@@ -42,5 +42,23 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             return convertedStr;
         }
+
+        public static string CovertToPostCodeFormat(string strToConvert)
+        {
+            string convertedStr = "";
+            int strToConvertLength = strToConvert.Length;
+
+            for (int i = 1; i <= strToConvertLength; i++)
+            {
+                convertedStr += strToConvert[i - 1];
+
+                if (i == 2)
+                {
+                    convertedStr += "-";
+                }
+            }
+
+            return convertedStr;
+        }
     }
 }

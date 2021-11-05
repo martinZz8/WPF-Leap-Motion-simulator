@@ -126,7 +126,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Type = InputTypes.RECEIVE_PHONE_NUMBER,
                     Value = "",
                     IsFocused = false
-                },
+                }
             };
 
             double buttonRowSize = standardInputWidth * 2 + standardButtonMarginLeft;
@@ -400,7 +400,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 label.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - label.Width) / 2;
             }
             NotifyOfPropertyChange(() => GetSMSCodeLabel);
+            NotifyOfPropertyChange(() => GetErrorSMSCodeLabel);
             NotifyOfPropertyChange(() => GetPhoneNumberLabel);
+            NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
 
             foreach (Input input in _inputs)
             {
@@ -583,6 +585,34 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        // Handle cursor move
+        public void Handle(HandleCrusorMove message)
+        {
+            // Creting cursor object, that has values relative to the content bar (the black box)
+            Cursor relativeCursor = new Cursor
+            {
+                CursorRadius = message.CursorRadius,
+                PositionX = message.CursorPositionX - message.PaddingLeft - ((message.WindowWidth - message.PaddingLeft - message.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
+                PositionY = message.CursorPositionY - message.PaddingTop
+            };
+
+            // Checking if relativeCursor is inside any button in this view
+            foreach (Button button in _buttons)
+            {
+                if (button.IsCursorInsideTheButton(relativeCursor))
+                {
+                    button.IsHovered = true;
+                }
+                else
+                {
+                    button.IsHovered = false;
+                }
+            }
+
+            NotifyOfPropertyChange(() => GetSuccessReceiveButton);
+            NotifyOfPropertyChange(() => GetMenuButton);
+        }
+
         private void HideKeyboard()
         {
             _focusedInput = InputTypes.NO_INPUT;
@@ -661,34 +691,6 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     });
                 }
             }
-        }
-
-        // Handle cursor move
-        public void Handle(HandleCrusorMove message)
-        {
-            // Creting cursor object, that has values relative to the content bar (the black box)
-            Cursor relativeCursor = new Cursor
-            {
-                CursorRadius = message.CursorRadius,
-                PositionX = message.CursorPositionX - message.PaddingLeft - ((message.WindowWidth - message.PaddingLeft - message.PaddingRight) * _gridColumnMultipliers[0] / GridColumnTotalDenominator),
-                PositionY = message.CursorPositionY - message.PaddingTop
-            };
-
-            // Checking if relativeCursor is inside any button in this view
-            foreach (Button button in _buttons)
-            {
-                if (button.IsCursorInsideTheButton(relativeCursor))
-                {
-                    button.IsHovered = true;
-                }
-                else
-                {
-                    button.IsHovered = false;
-                }
-            }
-
-            NotifyOfPropertyChange(() => GetSuccessReceiveButton);
-            NotifyOfPropertyChange(() => GetMenuButton);
         }
     }
 }
