@@ -1,0 +1,453 @@
+﻿<UserControl x:Class="WPF_Leap_Motion_simulator.Views.SendTheParcelReceiverView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_Leap_Motion_simulator.Views"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800"
+             >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{Binding Path=GetGridFirstColumnMultiplier, Mode=OneWay}"/>
+            <ColumnDefinition Width="{Binding Path=GetGridSecondColumnMultiplier, Mode=OneWay}"/>
+            <ColumnDefinition Width="{Binding Path=GetGridThirdColumnMultiplier, Mode=OneWay}"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Middle content -->
+        <Grid
+            Grid.Row="0"
+            Grid.Column="1"
+        >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Background -->
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="0"
+            >
+                <StackPanel.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.6"/>
+                </StackPanel.Background>
+
+                <StackPanel.Effect>
+                    <BlurEffect Radius="5" KernelType="Gaussian"/>
+                </StackPanel.Effect>
+            </StackPanel>
+
+            <!-- Elements of view -->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+            >
+                <TextBlock
+                    Text="{Binding Path=GetTitleLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetTitleLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetTitleLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetTitleLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetTitleLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetTitleLabel.TextColor, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    TextAlignment="Center"
+                    Canvas.Left="{Binding Path=GetTitleLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetTitleLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetFirstNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetFirstNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetFirstNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetFirstNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetFirstNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetFirstNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetFirstNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetFirstNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetFirstNameLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropFirstNameInput"
+                    Width="{Binding Path=GetFirstNameInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetFirstNameInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetFirstNameInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetFirstNameInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetFirstNameInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetFirstNameInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetFirstNameInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetFirstNameInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorFirstNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorFirstNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorFirstNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorFirstNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorFirstNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorFirstNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorFirstNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorFirstNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorFirstNameLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetLastNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetLastNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetLastNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetLastNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetLastNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetLastNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetLastNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetLastNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetLastNameLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropLastNameInput"
+                    Width="{Binding Path=GetLastNameInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetLastNameInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetLastNameInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetLastNameInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetLastNameInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetLastNameInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetLastNameInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetLastNameInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorLastNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorLastNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorLastNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorLastNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorLastNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorLastNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorLastNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorLastNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorLastNameLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetPhoneNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetPhoneNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPhoneNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetPhoneNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetPhoneNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetPhoneNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetPhoneNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetPhoneNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPhoneNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropPhoneNumberInput"
+                    Width="{Binding Path=GetPhoneNumberInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPhoneNumberInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetPhoneNumberInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetPhoneNumberInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetPhoneNumberInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetPhoneNumberInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetPhoneNumberInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPhoneNumberInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorPhoneNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorPhoneNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorPhoneNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorPhoneNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorPhoneNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorPhoneNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorPhoneNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorPhoneNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorPhoneNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetCityLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetCityLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetCityLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetCityLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetCityLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetCityLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetCityLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetCityLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetCityLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropCityInput"
+                    Width="{Binding Path=GetCityInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetCityInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetCityInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetCityInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetCityInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetCityInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetCityInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetCityInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorCityLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorCityLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorCityLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorCityLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorCityLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorCityLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorCityLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorCityLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorCityLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetPostCodeLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetPostCodeLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPostCodeLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetPostCodeLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetPostCodeLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetPostCodeLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetPostCodeLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetPostCodeLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPostCodeLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropPostCodeInput"
+                    Width="{Binding Path=GetPostCodeInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetPostCodeInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetPostCodeInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetPostCodeInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetPostCodeInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetPostCodeInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetPostCodeInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetPostCodeInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorPostCodeLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorPostCodeLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorPostCodeLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorPostCodeLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorPostCodeLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorPostCodeLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorPostCodeLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorPostCodeLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorPostCodeLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetStreetLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetStreetLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetStreetLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetStreetLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetStreetLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetStreetLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetStreetLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetStreetLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetStreetLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropStreetInput"
+                    Width="{Binding Path=GetStreetInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetStreetInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetStreetInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetStreetInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetStreetInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetStreetInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetStreetInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetStreetInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorStreetLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorStreetLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorStreetLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorStreetLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorStreetLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorStreetLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorStreetLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorStreetLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorStreetLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetHouseNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetHouseNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetHouseNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetHouseNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetHouseNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetHouseNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetHouseNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetHouseNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetHouseNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropHouseNumberInput"
+                    Width="{Binding Path=GetHouseNumberInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetHouseNumberInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetHouseNumberInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetHouseNumberInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetHouseNumberInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetHouseNumberInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetHouseNumberInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetHouseNumberInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorHouseNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorHouseNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorHouseNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorHouseNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorHouseNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorHouseNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorHouseNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorHouseNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorHouseNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetApartmentNumberLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetApartmentNumberLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetApartmentNumberLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetApartmentNumberLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetApartmentNumberLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetApartmentNumberLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetApartmentNumberLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetApartmentNumberLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetApartmentNumberLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropApartmentNumberInput"
+                    Width="{Binding Path=GetApartmentNumberInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetApartmentNumberInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetApartmentNumberInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetApartmentNumberInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetApartmentNumberInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetApartmentNumberInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetApartmentNumberInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetApartmentNumberInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetHouseLetterLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetHouseLetterLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetHouseLetterLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetHouseLetterLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetHouseLetterLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetHouseLetterLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetHouseLetterLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetHouseLetterLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetHouseLetterLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBox
+                    x:Name="PropHouseLetterInput"
+                    Width="{Binding Path=GetHouseLetterInput.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetHouseLetterInput.Height, Mode=OneWay}"
+                    Background="{Binding Path=GetHouseLetterInput.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetHouseLetterInput.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetHouseLetterInput.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetHouseLetterInput.GetVisibilityType, Mode=OneWay}"
+                    FontSize="13"
+                    FontWeight="Normal"
+                    TextWrapping="Wrap"
+                    Canvas.Left="{Binding Path=GetHouseLetterInput.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetHouseLetterInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorHouseLetterLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorHouseLetterLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorHouseLetterLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorHouseLetterLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorHouseLetterLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorHouseLetterLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorHouseLetterLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorHouseLetterLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorHouseLetterLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadSendTheParcelSummaryView]"
+                    Width="{Binding Path=GetSendTheParcelSummaryButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetSendTheParcelSummaryButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetSendTheParcelSummaryButton.Title, Mode=OneWay}"
+                    Background="{Binding Path=GetSendTheParcelSummaryButton.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetSendTheParcelSummaryButton.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetSendTheParcelSummaryButton.GetBorderColor, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetSendTheParcelSummaryButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetSendTheParcelSummaryButton.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadSendTheParcelSenderView]"
+                    Width="{Binding Path=GetSendTheParcelSenderButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetSendTheParcelSenderButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetSendTheParcelSenderButton.Title, Mode=OneWay}"
+                    Background="{Binding Path=GetSendTheParcelSenderButton.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetSendTheParcelSenderButton.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetSendTheParcelSenderButton.GetBorderColor, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetSendTheParcelSenderButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetSendTheParcelSenderButton.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadPreviousPage]"
+                    Width="{Binding Path=GetChangeBackwardInputPageButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetChangeBackwardInputPageButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetChangeBackwardInputPageButton.Title, Mode=OneWay}"
+                    Background="{Binding Path=GetChangeBackwardInputPageButton.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetChangeBackwardInputPageButton.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetChangeBackwardInputPageButton.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetChangeBackwardInputPageButton.GetVisibilityType, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetChangeBackwardInputPageButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetChangeBackwardInputPageButton.PaddingTopY, Mode=OneWay}"
+                />
+                <Button
+                    cal:Message.Attach="[Event Click] = [Action LoadNextPage]"
+                    Width="{Binding Path=GetChangeForwardInputPageButton.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetChangeForwardInputPageButton.Height, Mode=OneWay}"
+                    Content="{Binding Path=GetChangeForwardInputPageButton.Title, Mode=OneWay}"
+                    Background="{Binding Path=GetChangeForwardInputPageButton.GetBackgroundColor, Mode=OneWay}"
+                    Foreground="{Binding Path=GetChangeForwardInputPageButton.GetForegroundColor, Mode=OneWay}"
+                    BorderBrush="{Binding Path=GetChangeForwardInputPageButton.GetBorderColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetChangeForwardInputPageButton.GetVisibilityType, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Canvas.Left="{Binding Path=GetChangeForwardInputPageButton.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetChangeForwardInputPageButton.PaddingTopY, Mode=OneWay}"
+                />
+            </Canvas>
+        </Grid>
+    </Grid>
+</UserControl>

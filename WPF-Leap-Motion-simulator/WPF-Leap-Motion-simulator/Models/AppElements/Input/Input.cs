@@ -15,6 +15,7 @@ namespace WPF_Leap_Motion_simulator.Models
         private InputTypes _type = InputTypes.NO_INPUT;
         private string _value = "";
         private bool _isFocused = false;
+        private bool _isVisible = true;
         private string _backgroundColor = "#fdf7e7";
         private string _foregroundColor = "#000000";
         private string _borderColor = "#4d4d4d";
@@ -107,6 +108,19 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public bool IsVisible
+        {
+            get
+            {
+                return _isVisible;
+            }
+
+            set
+            {
+                _isVisible = value;
+            }
+        }
+
         public string BackgroundColor
         {
             get
@@ -188,6 +202,16 @@ namespace WPF_Leap_Motion_simulator.Models
                     return _focusedBorderColor;
                 }
                 
+            }
+        }
+
+        public string GetVisibilityType
+        {
+            get
+            {
+                if (IsVisible)
+                    return "Visible";
+                return "Collapsed";
             }
         }
 

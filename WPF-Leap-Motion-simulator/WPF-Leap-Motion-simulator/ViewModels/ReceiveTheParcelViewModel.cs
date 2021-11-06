@@ -215,7 +215,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 // Display SMSCode in 'xx xx xx' format
-                return StringFormat.CovertToCodeFormat(GetSMSCodeInput.Value);
+                return StringFormat.ConvertToCodeFormat(GetSMSCodeInput.Value);
             }
             set
             {
@@ -251,7 +251,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 // Display PhoneNumber in 'xxx-xxx-xxx' format
-                return StringFormat.CovertToPhoneFormat(GetPhoneNumberInput.Value);
+                return StringFormat.ConvertToPhoneFormat(GetPhoneNumberInput.Value);
             }
             set
             {

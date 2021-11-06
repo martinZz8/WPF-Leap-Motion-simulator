@@ -125,7 +125,9 @@
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowHeight.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowWidth.cs" />
     <Compile Include="Models\TDO\TDOPosition.cs" />
+    <Compile Include="Models\TDO\TDOSendTheParcelReceiverInputValues.cs" />
     <Compile Include="Models\TDO\TDOSendTheParcelSenderInputValues.cs" />
+    <Compile Include="ViewModels\SendTheParcelReceiverViewModel.cs" />
     <Compile Include="ViewModels\SendTheParcelSenderViewModel.cs" />
     <Compile Include="ViewModels\SuccessReceiveViewModel.cs" />
     <Compile Include="ViewModels\Utilities\KeyScheme.cs" />
@@ -141,6 +143,9 @@
     </Compile>
     <Compile Include="Views\ReceiveTheParcelView.xaml.cs">
       <DependentUpon>ReceiveTheParcelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SendTheParcelReceiverView.xaml.cs">
+      <DependentUpon>SendTheParcelReceiverView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SendTheParcelSenderView.xaml.cs">
       <DependentUpon>SendTheParcelSenderView.xaml</DependentUpon>
@@ -185,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ReceiveTheParcelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SendTheParcelReceiverView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -56,7 +56,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
                     Type = LabelTypes.SUCCESS_RECEIVE_PARCEL_CODE,
-                    Value = $"Kod paczki: {StringFormat.CovertToCodeFormat(parcelCode)}"
+                    Value = $"Kod paczki: {StringFormat.ConvertToCodeFormat(parcelCode)}"
                 },
                 new Label
                 {

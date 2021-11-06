@@ -21,7 +21,10 @@ namespace WPF_Leap_Motion_simulator.Models
         private string _hoveredBackgroundColor = "#f1b938";
         private string _hoveredForegroundColor = "#4d4d4d";
         private string _hoveredBorderColor = "#f8dea0";
+        private string _errorBackgroundColor = "#cc1306";
+        private string _errorBorderColor = "#700b03";
         private bool _isVisible = true;
+        private bool _isErrorStyle = false;
 
         // Properties
         public double PaddingLeftX {
@@ -200,13 +203,34 @@ namespace WPF_Leap_Motion_simulator.Models
             }
         }
 
+        public bool IsErrorStyle
+        {
+            get
+            {
+                return _isErrorStyle;
+            }
+
+            set
+            {
+                _isErrorStyle = value;
+            }
+        }
+
         public string GetBackgroundColor
         {
             get
             {
                 if (!_isHovered)
                 {
-                    return _backgroundColor;
+                    if (!_isErrorStyle)
+                    {
+                        return _backgroundColor;
+                    }
+                    else
+                    {
+                        return _errorBackgroundColor;
+                    }
+                    
                 }
                 else
                 {
@@ -236,7 +260,15 @@ namespace WPF_Leap_Motion_simulator.Models
             {
                 if (!_isHovered)
                 {
-                    return _borderColor;
+                    if (!_isErrorStyle)
+                    {
+                        return _borderColor;
+                    }
+                    else
+                    {
+                        return _errorBorderColor;
+                    }
+                    
                 }
                 else
                 {

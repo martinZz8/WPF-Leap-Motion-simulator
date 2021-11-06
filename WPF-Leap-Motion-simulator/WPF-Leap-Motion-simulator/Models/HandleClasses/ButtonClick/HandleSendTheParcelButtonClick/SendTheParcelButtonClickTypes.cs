@@ -10,6 +10,7 @@ namespace WPF_Leap_Motion_simulator.Models
         MENU,
         SEND_THE_PARCEL_SENDER,
         SEND_THE_PARCEL_RECEIVER,
+        SEND_THE_PARCEL_SUMMARY,
         SUCCESS_SEND
     }
 }

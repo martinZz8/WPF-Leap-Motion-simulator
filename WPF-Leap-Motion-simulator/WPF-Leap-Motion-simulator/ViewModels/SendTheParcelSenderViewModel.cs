@@ -15,7 +15,7 @@ using WPF_Leap_Motion_simulator.Models;
 
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
-    class SendTheParcelSenderViewModel : Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleKeyClick>, IHandle<HandleCrusorMove>
+    class SendTheParcelSenderViewModel: Screen, IHandle<HandleCursorHandGesture>, IHandle<HandleWindowWidth>, IHandle<HandleWindowHeight>, IHandle<HandleKeyClick>, IHandle<HandleCrusorMove>
     {
         private IEventAggregator _eventAggregator;
 
@@ -31,13 +31,13 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private bool _isLiveValidation = false;
         private string _emailInputKeyboardType = "NONE";
 
-        private readonly double titleLabelMarginTop = 15;
-        private readonly double titleLabelHeight = 25;
+        private readonly double titleLabelMarginTop = 12;
+        private readonly double titleLabelHeight = 23;
         private readonly double standardLabelHeight = 15;
         private readonly double standardLabelMarginTop = 4;
         private readonly double standardInputWidth = 200;
         private readonly double standardInputHeight = 50;
-        private readonly double standardInputMarginTop = 15;
+        private readonly double standardInputMarginTop = 13;
         private readonly double standardInputMarginLeft = 20;
         private readonly double standardButtonWidth = 200;
         private readonly double standardButtonHeight = 100;
@@ -86,6 +86,19 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
+                    PaddingLeftX = basicPaddingLeftX,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop*2 + standardInputHeight,
+                    FontSize = 11,
+                    FontWeight = "Bold",
+                    TextColor = "#f22929",
+                    Type = LabelTypes.SEND_SENDER_ERROR_FIRST_NAME,
+                    Value = "Pole nie może być puste",
+                    IsVisible = false
+                },
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
                     PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop,
                     FontSize = 13,
@@ -98,8 +111,21 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
+                    PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop*2 + standardInputHeight,
+                    FontSize = 11,
+                    FontWeight = "Bold",
+                    TextColor = "#f22929",
+                    Type = LabelTypes.SEND_SENDER_ERROR_LAST_NAME,
+                    Value = "Pole nie może być puste",
+                    IsVisible = false
+                },
+                new Label
+                {
+                    Width = standardInputWidth,
+                    Height = standardLabelHeight,
                     PaddingLeftX = basicPaddingLeftX,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     FontSize = 13,
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
@@ -111,7 +137,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
                     PaddingLeftX = basicPaddingLeftX,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight*2 + standardInputMarginTop + standardLabelHeight*2 + standardLabelMarginTop*3,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight*2 + standardInputMarginTop + standardLabelHeight*3 + standardLabelMarginTop*4,
                     FontSize = 11,
                     FontWeight = "Bold",
                     TextColor = "#f22929",
@@ -124,7 +150,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
                     PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop)*2,
                     FontSize = 13,
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
@@ -136,7 +162,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
                     PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight*2 + standardInputMarginTop + standardLabelHeight*2 + standardLabelMarginTop*3,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight*2 + standardInputMarginTop + standardLabelHeight*3 + standardLabelMarginTop*4,
                     FontSize = 11,
                     FontWeight = "Bold",
                     TextColor = "#f22929",
@@ -173,7 +199,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardInputHeight,
                     PaddingLeftX = basicPaddingLeftX,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight*2 + standardLabelMarginTop*2 + standardInputMarginTop + standardInputHeight,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*3 + standardInputMarginTop + standardInputHeight,
                     Type = InputTypes.SEND_SENDER_EMAIL,
                     Value = inputValues.Email,
                     IsFocused = false
@@ -183,7 +209,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardInputHeight,
                     PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight*2 + standardLabelMarginTop*2 + standardInputMarginTop + standardInputHeight,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*3 + standardInputMarginTop + standardInputHeight,
                     Type = InputTypes.SEND_SENDER_PHONE_NUMBER,
                     Value = inputValues.PhoneNumber,
                     IsFocused = false
@@ -192,7 +218,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             double buttonRowSize = standardInputWidth * 2 + standardButtonMarginLeft;
             double basicButtonPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - buttonRowSize) / 2;
-            double buttonPaddingTop = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardInputHeight + standardInputMarginTop) * 2 + (standardLabelHeight + standardLabelMarginTop) * 3;
+            double buttonPaddingTop = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardInputHeight + standardInputMarginTop) * 2 + (standardLabelHeight + standardLabelMarginTop) * 4;
 
             _buttons = new List<Button>
             {
@@ -298,11 +324,27 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Label GetErrorFirstNameLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.SEND_SENDER_ERROR_FIRST_NAME);
+            }
+        }
+
         public Label GetLastNameLabel
         {
             get
             {
                 return _labels.Find(label => label.Type == LabelTypes.SEND_SENDER_LAST_NAME);
+            }
+        }
+
+        public Label GetErrorLastNameLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.SEND_SENDER_ERROR_LAST_NAME);
             }
         }
 
@@ -400,9 +442,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 return GetFirstNameInput.Value;
             }
+
             set
             {
-                GetFirstNameInput.Value = value;
+                GetFirstNameInput.Value = StringFormat.ConvertToNameFormat(value);
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_SENDER_FIRST_NAME,
@@ -410,6 +453,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 });
                 NotifyOfPropertyChange(() => GetFirstNameInput);
                 NotifyOfPropertyChange(() => PropFirstNameInput);
+
+                // Live validate if validation is turned on
+                if (_isLiveValidation)
+                {
+                    if (GetFirstNameInput.Value.Length > 0)
+                    {
+                        GetErrorFirstNameLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        GetErrorFirstNameLabel.IsVisible = true;
+                    }
+                    NotifyOfPropertyChange(() => GetErrorFirstNameLabel);
+                }
             }
         }
 
@@ -419,9 +476,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             {
                 return GetLastNameInput.Value;
             }
+
             set
             {
-                GetLastNameInput.Value = value;
+                GetLastNameInput.Value = StringFormat.ConvertToNameFormat(value);
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_SENDER_LAST_NAME,
@@ -429,6 +487,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 });
                 NotifyOfPropertyChange(() => GetLastNameInput);
                 NotifyOfPropertyChange(() => PropLastNameInput);
+
+                // Live validate if validation is turned on
+                if (_isLiveValidation)
+                {
+                    if (GetLastNameInput.Value.Length > 0)
+                    {
+                        GetErrorLastNameLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        GetErrorLastNameLabel.IsVisible = true;
+                    }
+                    NotifyOfPropertyChange(() => GetErrorLastNameLabel);
+                }
             }
         }
 
@@ -440,7 +512,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                GetEmailInput.Value = value;
+                GetEmailInput.Value = value.ToLower();
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_SENDER_EMAIL,
@@ -470,7 +542,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 // Display PhoneNumber in 'xxx-xxx-xxx' format
-                return StringFormat.CovertToPhoneFormat(GetPhoneNumberInput.Value);
+                return StringFormat.ConvertToPhoneFormat(GetPhoneNumberInput.Value);
             }
             set
             {
@@ -519,6 +591,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             // Validate inputs
             bool canSubmit = true;
+            // Validate First Name
+            if (GetFirstNameInput.Value.Length == 0)
+            {
+                canSubmit = false;
+                GetErrorFirstNameLabel.IsVisible = true;
+                NotifyOfPropertyChange(() => GetErrorFirstNameLabel);
+            }
+
+            // Validate Last Name
+            if (GetLastNameInput.Value.Length == 0)
+            {
+                canSubmit = false;
+                GetErrorLastNameLabel.IsVisible = true;
+                NotifyOfPropertyChange(() => GetErrorLastNameLabel);
+            }
+
             // Validate Email
             if (!Validator.IsValidEmail(GetEmailInput.Value))
             {
@@ -558,8 +646,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             GetFirstNameLabel.PaddingLeftX = basicPaddingLeftX;
             NotifyOfPropertyChange(() => GetFirstNameLabel);
 
+            GetErrorFirstNameLabel.PaddingLeftX = basicPaddingLeftX;
+            NotifyOfPropertyChange(() => GetErrorFirstNameLabel);
+
             GetLastNameLabel.PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
             NotifyOfPropertyChange(() => GetLastNameLabel);
+
+            GetErrorLastNameLabel.PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
+            NotifyOfPropertyChange(() => GetErrorLastNameLabel);
 
             GetEmailLabel.PaddingLeftX = basicPaddingLeftX;
             NotifyOfPropertyChange(() => GetEmailLabel);
@@ -612,19 +706,25 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             GetFirstNameLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop;
             NotifyOfPropertyChange(() => GetFirstNameLabel);
 
+            GetErrorFirstNameLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop * 2 + standardInputHeight;
+            NotifyOfPropertyChange(() => GetErrorFirstNameLabel);
+
             GetLastNameLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop;
             NotifyOfPropertyChange(() => GetLastNameLabel);
 
-            GetEmailLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop;
+            GetErrorLastNameLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop * 2 + standardInputHeight;
+            NotifyOfPropertyChange(() => GetErrorLastNameLabel);
+
+            GetEmailLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2;
             NotifyOfPropertyChange(() => GetEmailLabel);
 
-            GetErrorEmailLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight * 2 + standardInputMarginTop + standardLabelHeight * 2 + standardLabelMarginTop * 3;
+            GetErrorEmailLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight * 2 + standardInputMarginTop + standardLabelHeight * 3 + standardLabelMarginTop * 4;
             NotifyOfPropertyChange(() => GetErrorEmailLabel);
 
-            GetPhoneNumberLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + standardLabelHeight + standardLabelMarginTop;
+            GetPhoneNumberLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight + standardInputMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2;
             NotifyOfPropertyChange(() => GetPhoneNumberLabel);
 
-            GetErrorPhoneNumberLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight * 2 + standardInputMarginTop + standardLabelHeight * 2 + standardLabelMarginTop * 3;
+            GetErrorPhoneNumberLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardInputHeight * 2 + standardInputMarginTop + standardLabelHeight * 3 + standardLabelMarginTop * 4;
             NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
 
             // inputs
@@ -634,14 +734,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             GetLastNameInput.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop;
             NotifyOfPropertyChange(() => GetLastNameInput);
 
-            GetEmailInput.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight * 2 + standardLabelMarginTop * 2 + standardInputMarginTop + standardInputHeight;
+            GetEmailInput.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop) * 3 + standardInputMarginTop + standardInputHeight;
             NotifyOfPropertyChange(() => GetEmailInput);
 
-            GetPhoneNumberInput.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight * 2 + standardLabelMarginTop * 2 + standardInputMarginTop + standardInputHeight;
+            GetPhoneNumberInput.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop) * 3 + standardInputMarginTop + standardInputHeight;
             NotifyOfPropertyChange(() => GetPhoneNumberInput);
 
             // buttons
-            double buttonPaddingTop = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardInputHeight + standardInputMarginTop) * 2 + (standardLabelHeight + standardLabelMarginTop) * 3;
+            double buttonPaddingTop = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardInputHeight + standardInputMarginTop) * 2 + (standardLabelHeight + standardLabelMarginTop) * 4;
             GetSendTheParcelReceiverButton.PaddingTopY = buttonPaddingTop;
             NotifyOfPropertyChange(() => GetSendTheParcelReceiverButton);
 

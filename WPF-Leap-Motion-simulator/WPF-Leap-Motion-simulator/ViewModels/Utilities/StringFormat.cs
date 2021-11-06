@@ -7,7 +7,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 {
     abstract class StringFormat
     {
-        public static string CovertToCodeFormat(string strToConvert)
+        public static string ConvertToCodeFormat(string strToConvert)
         {
             string convertedStr = "";
             int strToConvertLength = strToConvert.Length;
@@ -25,7 +25,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             return convertedStr;
         }
 
-        public static string CovertToPhoneFormat(string strToConvert)
+        public static string ConvertToPhoneFormat(string strToConvert)
         {
             string convertedStr = "";
             int strToConvertLength = strToConvert.Length;
@@ -43,7 +43,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             return convertedStr;
         }
 
-        public static string CovertToPostCodeFormat(string strToConvert)
+        public static string ConvertToPostCodeFormat(string strToConvert)
         {
             string convertedStr = "";
             int strToConvertLength = strToConvert.Length;
@@ -59,6 +59,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
 
             return convertedStr;
+        }
+
+        public static string ConvertToNameFormat(string strToConvert)
+        {
+            if (strToConvert.Length > 0)
+            {
+                return char.ToUpper(strToConvert[0]) + strToConvert.Substring(1).ToLower();
+            }
+
+            return strToConvert;
         }
     }
 }

@@ -88,6 +88,18 @@
                     Canvas.Top="{Binding Path=GetFirstNameInput.PaddingTopY, Mode=OneWay}"
                 />
                 <TextBlock
+                    Text="{Binding Path=GetErrorFirstNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorFirstNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorFirstNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorFirstNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorFirstNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorFirstNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorFirstNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorFirstNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorFirstNameLabel.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
                     Text="{Binding Path=GetLastNameLabel.Value, Mode=OneWay}"
                     Width="{Binding Path=GetLastNameLabel.Width, Mode=OneWay}"
                     Height="{Binding Path=GetLastNameLabel.Height, Mode=OneWay}"
@@ -110,6 +122,18 @@
                     TextWrapping="Wrap"
                     Canvas.Left="{Binding Path=GetLastNameInput.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetLastNameInput.PaddingTopY, Mode=OneWay}"
+                />
+                <TextBlock
+                    Text="{Binding Path=GetErrorLastNameLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetErrorLastNameLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetErrorLastNameLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetErrorLastNameLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetErrorLastNameLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetErrorLastNameLabel.TextColor, Mode=OneWay}"
+                    Visibility="{Binding Path=GetErrorLastNameLabel.GetVisibilityType, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    Canvas.Left="{Binding Path=GetErrorLastNameLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetErrorLastNameLabel.PaddingTopY, Mode=OneWay}"
                 />
                 <TextBlock
                     Text="{Binding Path=GetEmailLabel.Value, Mode=OneWay}"
