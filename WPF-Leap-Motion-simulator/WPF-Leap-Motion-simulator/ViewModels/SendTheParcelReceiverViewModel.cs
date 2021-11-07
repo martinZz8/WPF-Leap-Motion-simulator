@@ -56,7 +56,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             double titlePaddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardInputWidth) / 2;
             double basicPaddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - (standardInputWidth * 2 + standardInputMarginLeft)) / 2;
-            double smallBasicPaddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - (standardInputWidth * 3 + standardInputMarginLeft*2)) / 2;
+            double smallBasicPaddingLeftX = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - (standardInputWidth * 3 + standardInputMarginLeft * 2)) / 2;
             double basicPaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.04;
 
             double inputPagePaddingTopY = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.04 + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop + standardInputHeight + standardInputMarginTop / 2;
@@ -288,12 +288,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     Width = standardInputWidth,
                     Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
-                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*2 + standardInputHeight + standardInputMarginTop,
+                    PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight*3 + standardLabelMarginTop*4 + standardInputHeight*2 + standardInputMarginTop,
                     FontSize = 11,
                     FontWeight = "Bold",
                     TextColor = "#f22929",
                     Type = LabelTypes.SEND_RECEIVER_ERROR_HOUSE_LETTER,
-                    Value = "Niepoprawa litera domu",
+                    Value = "Niepoprawna litera domu",
                     IsVisible = false
                 },
             };
@@ -337,7 +337,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX,
+                    PaddingLeftX = smallBasicPaddingLeftX,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop,
                     Type = InputTypes.SEND_RECEIVER_CITY,
                     Value = inputValues.City,
@@ -348,7 +348,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
+                    PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop,
                     Type = InputTypes.SEND_RECEIVER_POST_CODE,
                     Value = inputValues.PostCode,
@@ -359,7 +359,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
+                    PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight + standardLabelMarginTop,
                     Type = InputTypes.SEND_RECEIVER_STREET,
                     Value = inputValues.Street,
@@ -370,7 +370,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX,
+                    PaddingLeftX = smallBasicPaddingLeftX,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*3 + standardInputHeight + standardInputMarginTop,
                     Type = InputTypes.SEND_RECEIVER_HOUSE_NUMBER,
                     Value = inputValues.HouseNumber,
@@ -381,7 +381,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
+                    PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*3 + standardInputHeight + standardInputMarginTop,
                     Type = InputTypes.SEND_RECEIVER_APARTMENT_NUMBER,
                     Value = inputValues.ApartmentNumber,
@@ -392,7 +392,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     Width = standardInputWidth,
                     Height = standardInputHeight,
-                    PaddingLeftX = basicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
+                    PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*3 + standardInputHeight + standardInputMarginTop,
                     Type = InputTypes.SEND_RECEIVER_HOUSE_LETTER,
                     Value = inputValues.HouseLetter,
@@ -1073,7 +1073,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_RECEIVER_HOUSE_LETTER,
-                    Value = GetHouseNumberInput.Value
+                    Value = GetHouseLetterInput.Value
                 });
                 NotifyOfPropertyChange(() => GetHouseLetterInput);
                 NotifyOfPropertyChange(() => PropHouseLetterInput);
@@ -1209,22 +1209,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             GetPhoneNumberInput.PaddingLeftX = basicPaddingLeftX;
             NotifyOfPropertyChange(() => GetPhoneNumberInput);
 
-            GetCityInput.PaddingLeftX = basicPaddingLeftX;
+            GetCityInput.PaddingLeftX = smallBasicPaddingLeftX;
             NotifyOfPropertyChange(() => GetCityInput);
 
-            GetPostCodeInput.PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
+            GetPostCodeInput.PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
             NotifyOfPropertyChange(() => GetPostCodeInput);
 
-            GetStreetInput.PaddingLeftX = basicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2;
+            GetStreetInput.PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2;
             NotifyOfPropertyChange(() => GetStreetInput);
 
-            GetHouseNumberInput.PaddingLeftX = basicPaddingLeftX;
+            GetHouseNumberInput.PaddingLeftX = smallBasicPaddingLeftX;
             NotifyOfPropertyChange(() => GetHouseNumberInput);
 
-            GetApartmentNumberInput.PaddingLeftX = basicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
+            GetApartmentNumberInput.PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft;
             NotifyOfPropertyChange(() => GetApartmentNumberInput);
 
-            GetHouseLetterInput.PaddingLeftX = basicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2;
+            GetHouseLetterInput.PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2;
             NotifyOfPropertyChange(() => GetHouseLetterInput);
 
             // buttons
@@ -1298,7 +1298,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             GetHouseLetterLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2 + standardInputHeight + standardInputMarginTop;
             NotifyOfPropertyChange(() => GetHouseLetterLabel);
 
-            GetErrorHouseLetterLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop) * 2 + standardInputHeight + standardInputMarginTop;
+            GetErrorHouseLetterLabel.PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + standardLabelHeight * 3 + standardLabelMarginTop * 4 + standardInputHeight * 2 + standardInputMarginTop;
             NotifyOfPropertyChange(() => GetErrorHouseLetterLabel);
 
             // inputs
@@ -1358,8 +1358,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PositionY = message.CursorPositionY - message.PaddingTop
                 };
 
-                // Checking if relativeCursor is inside any input in this view
-                foreach (Input input in _inputs)
+                // Checking if relativeCursor is inside any input in actual view
+                List<Input> inputsToCheck = GetPageInputs(_isFirstView);
+
+                foreach (Input input in inputsToCheck)
                 {
                     CheckInputClick(input, relativeCursor);
                 }
@@ -1518,31 +1520,31 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 {
                     PropPostCodeInput = newValue;
                     NotifyOfPropertyChange(() => PropPostCodeInput);
-                    Console.WriteLine("Change of city input: " + GetPostCodeInput.Value);
+                    Console.WriteLine("Change of post code input: " + GetPostCodeInput.Value);
                 }
                 else if (inputToChange.Type == InputTypes.SEND_RECEIVER_STREET)
                 {
                     PropStreetInput = newValue;
                     NotifyOfPropertyChange(() => PropStreetInput);
-                    Console.WriteLine("Change of city input: " + GetStreetInput.Value);
+                    Console.WriteLine("Change of street input: " + GetStreetInput.Value);
                 }
                 else if (inputToChange.Type == InputTypes.SEND_RECEIVER_HOUSE_NUMBER)
                 {
                     PropHouseNumberInput = newValue;
                     NotifyOfPropertyChange(() => PropHouseNumberInput);
-                    Console.WriteLine("Change of city input: " + GetHouseNumberInput.Value);
+                    Console.WriteLine("Change of house number input: " + GetHouseNumberInput.Value);
                 }
                 else if (inputToChange.Type == InputTypes.SEND_RECEIVER_APARTMENT_NUMBER)
                 {
                     PropApartmentNumberInput = newValue;
                     NotifyOfPropertyChange(() => PropApartmentNumberInput);
-                    Console.WriteLine("Change of city input: " + GetApartmentNumberInput.Value);
+                    Console.WriteLine("Change of apartment number input: " + GetApartmentNumberInput.Value);
                 }
                 else if (inputToChange.Type == InputTypes.SEND_RECEIVER_HOUSE_LETTER)
                 {
                     PropHouseLetterInput = newValue;
                     NotifyOfPropertyChange(() => PropHouseLetterInput);
-                    Console.WriteLine("Change of city input: " + GetHouseLetterInput.Value);
+                    Console.WriteLine("Change of house letter input: " + GetHouseLetterInput.Value);
                 }
             }
         }
@@ -1845,11 +1847,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
 
             // Validate House Letter
-            if (GetApartmentNumberInput.Value.Length > 1)
+            if (GetHouseLetterInput.Value.Length > 1)
             {
                 canSubmit = false;
                 GetChangeForwardInputPageButton.IsErrorStyle = true;
-                AddUniqueInputTypeToList(_listOfSecondPageErrorInputsTypes, GetApartmentNumberInput.Type);
+                AddUniqueInputTypeToList(_listOfSecondPageErrorInputsTypes, GetHouseLetterInput.Type);
                 if (!_isFirstView)
                 {
                     GetErrorHouseLetterLabel.IsVisible = true;
@@ -1857,7 +1859,72 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
             }
 
-            if (_isFirstView)
+            return canSubmit;
+        }
+
+        private void LoadPage(bool isNextPage)
+        {
+            // Changing the page view flag
+            _isFirstView = !_isFirstView;
+
+            // Changing the visibility of the inputs navigation buttons
+            bool backwardButtonVisibility = false;
+            bool forwardButtonVisibility = true;
+            if (isNextPage)
+            {
+                backwardButtonVisibility = true;
+                forwardButtonVisibility = false;
+            }
+            GetChangeBackwardInputPageButton.IsVisible = backwardButtonVisibility;
+            GetChangeForwardInputPageButton.IsVisible = forwardButtonVisibility;
+
+            // Validating the inputs if the live validation is enabled
+            if (_isLiveValidation)
+            {
+                ValidateInputs();
+            }
+
+            // Changing the focus property of the previous focused input
+            if (_focusedInput != InputTypes.NO_INPUT)
+            {
+                Input prevFocusedInput = _inputs.Find(fInput => fInput.Type == _focusedInput);
+                prevFocusedInput.IsFocused = !prevFocusedInput.IsFocused;
+                HideKeyboard();
+            }
+
+            // Changing visibility of inputs
+            foreach (Input input in _inputs)
+            {
+                input.IsVisible = !input.IsVisible;
+            }
+            NotifyOfPropertyChange(() => GetFirstNameInput);
+            NotifyOfPropertyChange(() => GetLastNameInput);
+            NotifyOfPropertyChange(() => GetPhoneNumberInput);
+            NotifyOfPropertyChange(() => GetCityInput);
+            NotifyOfPropertyChange(() => GetPostCodeInput);
+            NotifyOfPropertyChange(() => GetStreetInput);
+            NotifyOfPropertyChange(() => GetHouseNumberInput);
+            NotifyOfPropertyChange(() => GetApartmentNumberInput);
+            NotifyOfPropertyChange(() => GetHouseLetterInput);
+
+            // Changing visibility of labels (without title and error labels)
+            List<Label> labelsToChange = _labels.FindAll(label => (label.Type != LabelTypes.SEND_RECEIVER_TITLE) && (!label.Type.ToString().Contains("ERROR")));
+            foreach(Label label in labelsToChange)
+            {
+                label.IsVisible = !label.IsVisible;
+            }
+            NotifyOfPropertyChange(() => GetFirstNameLabel);
+            NotifyOfPropertyChange(() => GetLastNameLabel);
+            NotifyOfPropertyChange(() => GetPhoneNumberLabel);
+            NotifyOfPropertyChange(() => GetCityLabel);
+            NotifyOfPropertyChange(() => GetPostCodeLabel);
+            NotifyOfPropertyChange(() => GetStreetLabel);
+            NotifyOfPropertyChange(() => GetHouseNumberLabel);
+            NotifyOfPropertyChange(() => GetApartmentNumberLabel);
+            NotifyOfPropertyChange(() => GetHouseLetterLabel);
+
+            // Changing visibility of error labels
+            if (!isNextPage)
             {
                 GetErrorCityLabel.IsVisible = false;
                 GetErrorPostCodeLabel.IsVisible = false;
@@ -1881,51 +1948,31 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 NotifyOfPropertyChange(() => GetErrorLastNameLabel);
                 NotifyOfPropertyChange(() => GetErrorPhoneNumberLabel);
             }
-
-            return canSubmit;
         }
 
-        private void LoadPage(bool isNextPage)
+        private List<Input> GetPageInputs(bool isFirstView)
         {
-            // Changing the page view flag
-            _isFirstView = !_isFirstView;
-
-            // Changing the visibility of the inputs navigation buttons
-            bool backwardButtonVisibility = false;
-            bool forwardButtonVisibility = true;
-            if (isNextPage)
+            if (isFirstView)
             {
-                backwardButtonVisibility = true;
-                forwardButtonVisibility = false;
+                return new List<Input>
+                {
+                    GetFirstNameInput,
+                    GetLastNameInput,
+                    GetPhoneNumberInput
+                };
             }
-            GetChangeBackwardInputPageButton.IsVisible = backwardButtonVisibility;
-            GetChangeForwardInputPageButton.IsVisible = forwardButtonVisibility;
-
-            // Validating the inputs
-            ValidateInputs();
-
-            // Changing the focus property of the previous focused input
-            if (_focusedInput != InputTypes.NO_INPUT)
+            else
             {
-                Input prevFocusedInput = _inputs.Find(fInput => fInput.Type == _focusedInput);
-                prevFocusedInput.IsFocused = !prevFocusedInput.IsFocused;
-                HideKeyboard();
+                return new List<Input>
+                {
+                    GetCityInput,
+                    GetPostCodeInput,
+                    GetStreetInput,
+                    GetHouseNumberInput,
+                    GetApartmentNumberInput,
+                    GetHouseLetterInput
+                };
             }
-
-            // Changing visibility of the inputs
-            foreach (Input input in _inputs)
-            {
-                input.IsVisible = !input.IsVisible;
-            }
-
-            NotifyOfPropertyChange(() => GetFirstNameInput);
-            NotifyOfPropertyChange(() => GetLastNameInput);
-            NotifyOfPropertyChange(() => GetPhoneNumberInput);
-            NotifyOfPropertyChange(() => GetCityInput);
-            NotifyOfPropertyChange(() => GetPostCodeInput);
-            NotifyOfPropertyChange(() => GetStreetInput);
-            NotifyOfPropertyChange(() => GetApartmentNumberInput);
-            NotifyOfPropertyChange(() => GetHouseLetterInput);
         }
     }
 }

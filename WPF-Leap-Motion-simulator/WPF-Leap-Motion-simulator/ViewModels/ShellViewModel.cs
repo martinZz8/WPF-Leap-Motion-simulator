@@ -674,13 +674,58 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_SUMMARY)
             {
-                // TO DO
-                Console.WriteLine("Here will be SEND_THE_PARCEL_SUMMARY view");
+                ActivateItem(new SendTheParcelSummaryViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    },
+                    new TDOSendTheParcelSenderInputValues
+                    {
+                        FirstName = _sendSenderFirstName,
+                        LastName = _sendSenderLastName,
+                        Email = _sendSenderEmail,
+                        PhoneNumber = _sendSenderPhoneNumber
+                    },
+                    new TDOSendTheParcelReceiverInputValues
+                    {
+                        FirstName = _sendReceiverFirstName,
+                        LastName = _sendReceiverLastName,
+                        PhoneNumber = _sendReceiverPhoneNumber,
+                        City = _sendReceiverCity,
+                        PostCode = _sendReceiverPostCode,
+                        Street = _sendReceiverStreet,
+                        HouseNumber = _sendReceiverHouseNumber,
+                        ApartmentNumber = _sendReceiverApartmentNumber,
+                        HouseLetter = _sendReceiverHouseLetter
+                    }
+                ));
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SUCCESS_SEND)
             {
-                // TO DO
-                Console.WriteLine("Here will be SUCCESS_SEND view");
+                ActivateItem(new SuccessSendViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
             }
         }
 

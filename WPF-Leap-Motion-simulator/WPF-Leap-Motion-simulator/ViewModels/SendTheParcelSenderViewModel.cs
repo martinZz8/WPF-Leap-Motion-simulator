@@ -635,6 +635,30 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public void ToggleKeyboardType()
+        {
+            // Change the visible keyboard type
+            if (_emailInputKeyboardType != "NONE")
+            {
+                KeyboardTypes keyboardType = KeyboardTypes.LETTER;
+                if (_emailInputKeyboardType == "LETTER")
+                {
+                    _emailInputKeyboardType = "NUMERIC";
+                    keyboardType = KeyboardTypes.NUMERIC;
+                }
+                else
+                {
+                    _emailInputKeyboardType = "LETTER";
+                }
+
+                _eventAggregator.PublishOnUIThread(new HandleKeyboardChange
+                {
+                    Type = keyboardType,
+                    IsInputChange = true
+                });
+            }
+        }
+
         // Handle window width change
         public void Handle(HandleWindowWidth message)
         {
@@ -782,26 +806,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 }
                 else if (GetChangeKeyboardTypeButton.IsVisible && GetChangeKeyboardTypeButton.IsCursorInsideTheButton(relativeCursor))
                 {
-                    // Change the visible keyboard type
-                    if (_emailInputKeyboardType != "NONE")
-                    {
-                        KeyboardTypes keyboardType = KeyboardTypes.LETTER;
-                        if (_emailInputKeyboardType == "LETTER")
-                        {
-                            _emailInputKeyboardType = "NUMERIC";
-                            keyboardType = KeyboardTypes.NUMERIC;
-                        }
-                        else
-                        {
-                            _emailInputKeyboardType = "LETTER";
-                        }
-
-                        _eventAggregator.PublishOnUIThread(new HandleKeyboardChange
-                        {
-                            Type = keyboardType,
-                            IsInputChange = true
-                        });
-                    }
+                    ToggleKeyboardType();
                 }
             }
         }
