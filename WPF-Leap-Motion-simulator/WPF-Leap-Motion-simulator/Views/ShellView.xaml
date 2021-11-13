@@ -95,21 +95,6 @@
     
     <!--Main layout-->
     <Grid>
-        <!--OLD VERSION-->
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10px"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10px"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10px"/>
-            <RowDefinition Height="19px"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="13px"/>
-            <RowDefinition Height="10px"/>
-        </Grid.RowDefinitions>-->
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="{Binding Path=WindowBorderSize, Mode=OneWay}"/> <!--10px-->
             <ColumnDefinition Width="*"/>
@@ -197,7 +182,7 @@
                 Grid.Column="1"
                 FontSize="14"
                 FontWeight="Bold"
-                HorizontalAlignment="Center"
+                TextAlignment="Center"
             />
         </Grid>
 
@@ -1073,6 +1058,62 @@
                         />
                     </Grid>
                 </Canvas>
+            </Canvas>
+            
+            <!--Render key tap icon-->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+                Visibility="{Binding Path=GetIconKeyTap.GetVisibilityType, Mode=OneWay}"
+            >
+                <Image
+                    Canvas.Left="{Binding Path=GetIconKeyTap.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetIconKeyTap.PaddingTopY, Mode=OneWay}"
+                    Width="{Binding Path=GetIconKeyTap.IconWidth, Mode=OneWay}"
+                    Height="{Binding Path=GetIconKeyTap.IconHeight, Mode=OneWay}"
+                    Source="../Assets/key-tap.png"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                />
+                <TextBlock
+                    Canvas.Left="{Binding Path=GetIconKeyTap.LabelPaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetIconKeyTap.LabelPaddingTopY, Mode=OneWay}"
+                    Width="{Binding Path=GetIconKeyTap.LabelWidth, Mode=OneWay}"
+                    Height="{Binding Path=GetIconKeyTap.LabelHeight, Mode=OneWay}"
+                    Text="{Binding Path=GetIconKeyTap.Label, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    Foreground="Black"
+                />
+            </Canvas>
+            
+            <!--Render hand swipe icon-->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+                Visibility="{Binding Path=GetIconHandSwipe.GetVisibilityType, Mode=OneWay}"
+            >
+                <Image
+                    Canvas.Left="{Binding Path=GetIconHandSwipe.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetIconHandSwipe.PaddingTopY, Mode=OneWay}"
+                    Width="{Binding Path=GetIconHandSwipe.IconWidth, Mode=OneWay}"
+                    Height="{Binding Path=GetIconHandSwipe.IconHeight, Mode=OneWay}"
+                    Source="../Assets/hand-swipe.png"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                />
+                <TextBlock
+                    Canvas.Left="{Binding Path=GetIconHandSwipe.LabelPaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetIconHandSwipe.LabelPaddingTopY, Mode=OneWay}"
+                    Width="{Binding Path=GetIconHandSwipe.LabelWidth, Mode=OneWay}"
+                    Height="{Binding Path=GetIconHandSwipe.LabelHeight, Mode=OneWay}"
+                    Text="{Binding Path=GetIconHandSwipe.Label, Mode=OneWay}"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    Foreground="Black"
+                />
             </Canvas>
         </Grid>
 

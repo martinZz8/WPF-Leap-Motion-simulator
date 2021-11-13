@@ -31,6 +31,11 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private readonly double standardButtonHeight = 100;
         private readonly double standardButtonMarginTop = 20;
 
+        private readonly double optionsButtonWidth = 60;
+        private readonly double optionsButtonHeight = 60;
+        private readonly double optionsButtonMarginTop = 20;
+        private readonly double optionsButtonMarginRight = 20;
+
         public MenuViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding)
         {
             _eventAggregator = eventAggregator;
@@ -60,6 +65,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingTopY = basicPaddingTopY + standardButtonHeight + standardButtonMarginTop,
                     Type = ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER,
                     Title = "Nadaj przesyłkę",
+                    IsHovered = false
+                },
+                new Button
+                {
+                    Width = optionsButtonWidth,
+                    Height = optionsButtonHeight,
+                    PaddingLeftX = ((windowSize.WindowWidth-windowPadding.PaddingLeft-windowPadding.PaddingRight)*_gridColumnMultipliers[1]/GridColumnTotalDenominator) - optionsButtonWidth - optionsButtonMarginRight,
+                    PaddingTopY = optionsButtonMarginTop,
+                    Type = ButtonTypes.VIEW_OPTIONS,
+                    Title = "",
                     IsHovered = false
                 }
             };
@@ -133,6 +148,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Button GetOptionsButton
+        {
+            get
+            {
+                return Button.SearchButtonByType(_buttons, ButtonTypes.VIEW_OPTIONS);
+            }
+        }
+
         // -- Methods --
         public void LoadReceiveTheParcelView()
         {
@@ -150,16 +173,30 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             });
         }
 
+        public void LoadOptionsView()
+        {
+            _eventAggregator.PublishOnUIThread(new HandleMenuButtonClick
+            {
+                Type = MenuButtonClickTypes.OPTIONS
+            });
+        }
+
         // Handle window width change
         public void Handle(HandleWindowWidth message)
         {
             foreach (Button button in _buttons)
             {
-                button.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+                if (button.Type != ButtonTypes.VIEW_OPTIONS)
+                {
+                    button.PaddingLeftX = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - button.Width) / 2;
+                }
             }
 
             NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
             NotifyOfPropertyChange(() => GetSendTheParcelButton);
+
+            GetOptionsButton.PaddingLeftX = ((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - optionsButtonWidth - optionsButtonMarginRight;
+            NotifyOfPropertyChange(() => GetOptionsButton);
         }
 
         // Handle window height change
@@ -169,18 +206,20 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
             buttonReceiveTheParcel.PaddingTopY = basicPaddingTopY;
+            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
 
             Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER);
             buttonSendTheParcel.PaddingTopY = basicPaddingTopY + buttonReceiveTheParcel.Height + standardButtonMarginTop;
-
-            NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
             NotifyOfPropertyChange(() => GetSendTheParcelButton);
+
+            GetOptionsButton.PaddingTopY = optionsButtonMarginTop;
+            NotifyOfPropertyChange(() => GetOptionsButton);
         }
 
         // Handle cursor hand gesture
         public void Handle(HandleCursorHandGesture message)
         {
-            if(message.GestrueType == LeapGestureTypes.KeyTap)
+            if (message.GestrueType == LeapGestureTypes.KeyTap)
             {
                 // Creting cursor object, that has values relative to the content bar (the black box)
                 Cursor relativeCursor = new Cursor
@@ -191,19 +230,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 };
 
                 // Checking if relativeCursor is inside any button in this view
-                Button buttonReceiveTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_RECEIVE_THE_PARCEL);
-                Button buttonSendTheParcel = _buttons.Find(button => button.Type == ButtonTypes.VIEW_SEND_THE_PARCEL_SENDER);
-                if (buttonReceiveTheParcel.IsCursorInsideTheButton(relativeCursor))
+                if (GetReceiveTheParcelButton.IsCursorInsideTheButton(relativeCursor))
                 {
                     LoadReceiveTheParcelView();
                 }
-                else if (buttonSendTheParcel.IsCursorInsideTheButton(relativeCursor))
+                else if (GetSendTheParcelButton.IsCursorInsideTheButton(relativeCursor))
                 {
                     LoadSendTheParcelView();
                 }
-
-                // TO DO - check other buttons in this view
-                
+                else if (GetOptionsButton.IsCursorInsideTheButton(relativeCursor))
+                {
+                    LoadOptionsView();
+                }
             }
         }
 
@@ -233,6 +271,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             NotifyOfPropertyChange(() => GetReceiveTheParcelButton);
             NotifyOfPropertyChange(() => GetSendTheParcelButton);
+            NotifyOfPropertyChange(() => GetOptionsButton);
         }
     }
 }

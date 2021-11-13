@@ -101,6 +101,8 @@
     <Compile Include="Models\AppElements\Button\Button.cs" />
     <Compile Include="Models\AppElements\Cursor\Cursor.cs" />
     <Compile Include="Models\AppElements\Button\ButtonTypes.cs" />
+    <Compile Include="Models\AppElements\Icon\Icon.cs" />
+    <Compile Include="Models\AppElements\Icon\IconTypes.cs" />
     <Compile Include="Models\AppElements\Input\Input.cs" />
     <Compile Include="Models\AppElements\Input\InputTypes.cs" />
     <Compile Include="Models\AppElements\Keyboard\Keyboard.cs" />
@@ -112,6 +114,8 @@
     <Compile Include="Models\AppElements\Label\Label.cs" />
     <Compile Include="Models\AppElements\Label\LabelTypes.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\MenuButtonClickTypes.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleOptionsButtonClick\HandleOptionsButtonClick.cs" />
+    <Compile Include="Models\HandleClasses\ButtonClick\HandleOptionsButtonClick\HandleOptionsButtonClickTypes.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\HandleReceiveTheParcelButtonClick.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleReceiveTheParcelButtonClick\ReceiveTheParcleButtonClickTypes.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleSendTheParcelButtonClick\HandleSendTheParcelButtonClick.cs" />
@@ -122,11 +126,15 @@
     <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\HandleMenuButtonClick.cs" />
     <Compile Include="Models\HandleClasses\Keyboard\HandleKeyboardChange.cs" />
     <Compile Include="Models\HandleClasses\KeyClick\HandleKeyClick.cs" />
+    <Compile Include="Models\HandleClasses\OptionChange\HandleOptionChange.cs" />
+    <Compile Include="Models\HandleClasses\OptionChange\OptionTypes.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowHeight.cs" />
     <Compile Include="Models\HandleClasses\WindowSize\HandleWindowWidth.cs" />
+    <Compile Include="Models\TDO\TDOActualOptions.cs" />
     <Compile Include="Models\TDO\TDOPosition.cs" />
     <Compile Include="Models\TDO\TDOSendTheParcelReceiverInputValues.cs" />
     <Compile Include="Models\TDO\TDOSendTheParcelSenderInputValues.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModels\SendTheParcelReceiverViewModel.cs" />
     <Compile Include="ViewModels\SendTheParcelSenderViewModel.cs" />
     <Compile Include="ViewModels\SendTheParcelSummaryViewModel.cs" />
@@ -142,6 +150,9 @@
     <Compile Include="ViewModels\Utilities\Validator.cs" />
     <Compile Include="Views\MenuView.xaml.cs">
       <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsView.xaml.cs">
+      <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ReceiveTheParcelView.xaml.cs">
       <DependentUpon>ReceiveTheParcelView.xaml</DependentUpon>
@@ -197,6 +208,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ReceiveTheParcelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +249,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\swap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\hand-swipe.png" />
+    <Resource Include="Assets\key-tap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\gear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

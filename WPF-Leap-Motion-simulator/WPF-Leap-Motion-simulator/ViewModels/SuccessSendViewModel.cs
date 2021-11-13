@@ -56,7 +56,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     FontWeight = "Bold",
                     TextColor = "#f1b938",
                     Type = LabelTypes.SUCCESS_SEND_MESSAGE,
-                    Value = "Włóż paczkę do otworzonej skrytki i potwierdź nadanie."
+                    Value = "Włóż paczkę do otworzonej skrytki, zapłać i potwierdź nadanie."
                 }
             };
 

@@ -23,7 +23,7 @@ using WPF_Leap_Motion_simulator.LeapTracker;
 namespace WPF_Leap_Motion_simulator.ViewModels
 {
     class ShellViewModel: Caliburn.Micro.Conductor<object>,
-        ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleKeyboardChange>, IHandle<HandleMenuButtonClick>, IHandle<HandleReceiveTheParcelButtonClick>, IHandle<HandleSendTheParcelButtonClick>
+        ILeapEventDelegate, IHandle<HandleInputField>, IHandle<HandleKeyboardChange>, IHandle<HandleMenuButtonClick>, IHandle<HandleReceiveTheParcelButtonClick>, IHandle<HandleSendTheParcelButtonClick>, IHandle<HandleOptionsButtonClick>
     {
         //-- LeapMotion variables --
         private Controller controller;
@@ -45,6 +45,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private string _FPSCounter;
         private Cursor _Cursor;
         private string _cursorTapAnimationStatus;
+        private List<Icon> _icons;
+
+        private double _standardIconWidth = 80;
+        private double _standardIconHeight = 120;
+        private double _standardIconPaddingRight = 80;
+        private double _standardIconPaddingTop = 20;
 
         //-- Keyboard variables --
         private Keyboard _keyboard;
@@ -98,9 +104,38 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             };
             NotifyOfPropertyChange(() => ActualCursor);
 
-            //Setting default value for the keyboard
+            // Setting default value for the keyboard
             _keyboard = GetNewKeyboard(KeyboardTypes.NUMERIC);
             NotifyOfPropertyChange(() => ActualKeyboard);
+
+            // Setting icons
+            double basicIconPaddingLeft = _windowWidth - _windowBorderSize*2 - _standardIconWidth - _standardIconPaddingRight;
+            double basicIconPaddingTop = (_windowHeight - (_windowBorderSize * 2 + _windowHeaderSize + _windowFooterSize + _standardIconHeight*2 + _standardIconPaddingTop)) / 2;
+            _icons = new List<Icon>
+            {
+                new Icon
+                {
+                    Width = _standardIconWidth,
+                    Height = _standardIconHeight,
+                    IsVisible = true,
+                    Label = "Klik",
+                    Type = IconTypes.GESTURE_KEY_TAP,
+                    PaddingLeftX = basicIconPaddingLeft,
+                    PaddingTopY = basicIconPaddingTop
+                },
+                new Icon
+                {
+                    Width = _standardIconWidth,
+                    Height = _standardIconHeight,
+                    IsVisible = false,
+                    Label = "Machnięcie",
+                    Type = IconTypes.GESTURE_HAND_SWIPE,
+                    PaddingLeftX = basicIconPaddingLeft,
+                    PaddingTopY = basicIconPaddingTop + _standardIconHeight + _standardIconPaddingTop
+                }
+            };
+            NotifyOfPropertyChange(() => GetIconKeyTap);
+            NotifyOfPropertyChange(() => GetIconHandSwipe);
 
             // Setting Event Aggregator
             _eventAggregator = eventAggregator;
@@ -283,6 +318,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 _keyboard = GetNewKeyboard(_keyboard.Type, _keyboard.IsVisible);
                 NotifyOfPropertyChange(() => ActualKeyboard);
 
+                // Change position of icons
+                double basicIconPaddingLeft = _windowWidth - _windowBorderSize * 2 - _standardIconWidth - _standardIconPaddingRight;
+                foreach (Icon icon in _icons)
+                {
+                    icon.PaddingLeftX = basicIconPaddingLeft;
+                }
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
+
+                // Notify window width change
                 _eventAggregator.PublishOnUIThread(new HandleWindowWidth
                 {
                     WindowWidth = WindowWidth
@@ -305,6 +350,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 _keyboard = GetNewKeyboard(_keyboard.Type, _keyboard.IsVisible);
                 NotifyOfPropertyChange(() => ActualKeyboard);
 
+                double basicIconPaddingTop = (_windowHeight - (_windowBorderSize * 2 + _windowHeaderSize + _windowFooterSize + _standardIconHeight*2 + _standardIconPaddingTop)) / 2;
+                // Change position of icons
+                GetIconKeyTap.PaddingTopY = basicIconPaddingTop;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.PaddingTopY = basicIconPaddingTop + _standardIconHeight + _standardIconPaddingTop;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
+
+                // Notify window height change
                 _eventAggregator.PublishOnUIThread(new HandleWindowHeight
                 {
                     WindowHeight = WindowHeight
@@ -405,6 +459,22 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
+        public Icon GetIconKeyTap
+        {
+            get
+            {
+                return _icons.Find(icon => icon.Type == IconTypes.GESTURE_KEY_TAP);
+            }
+        }
+
+        public Icon GetIconHandSwipe
+        {
+            get
+            {
+                return _icons.Find(icon => icon.Type == IconTypes.GESTURE_HAND_SWIPE);
+            }
+        }
+
         //-- Handle change of inputs --
         public void Handle(HandleInputField message)
         {
@@ -489,9 +559,9 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         //-- Handle change of button clicks --
         public void Handle(HandleMenuButtonClick message)
         {
-            // TO DO
             if (message.Type == MenuButtonClickTypes.RECEIVE_THE_PARCEL)
             {
+                // Changing the view
                 ActivateItem(new ReceiveTheParcelViewModel(
                     _eventAggregator,
                     new TDOWindowSize {
@@ -506,9 +576,16 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == MenuButtonClickTypes.SEND_THE_PARCEL)
             {
+                // Changing the view
                 ActivateItem(new SendTheParcelSenderViewModel(
                     _eventAggregator,
                     new TDOWindowSize
@@ -531,6 +608,41 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PhoneNumber = _sendSenderEmail
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
+            }
+            else if (message.Type == MenuButtonClickTypes.OPTIONS)
+            {
+                // Changing the view
+                ActivateItem(new OptionsViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    },
+                    new TDOActualOptions
+                    {
+                        IsRightHandSelected = _isRightHandACursor
+                    }
+                ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
         }
 
@@ -558,6 +670,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == ReceiveTheParcelButtonClickTypes.SUCCESS_RECEIVE)
             {
@@ -577,6 +695,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     },
                     _receiveSMSCode
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
         }
 
@@ -616,6 +740,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_SENDER)
             {
@@ -641,6 +771,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PhoneNumber = _sendSenderPhoneNumber
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_RECEIVER)
             {
@@ -671,6 +807,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         HouseLetter = _sendReceiverHouseLetter
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SEND_THE_PARCEL_SUMMARY)
             {
@@ -708,6 +850,12 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         HouseLetter = _sendReceiverHouseLetter
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
             else if (message.Type == SendTheParcelButtonClickTypes.SUCCESS_SEND)
             {
@@ -726,6 +874,53 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         PaddingLeft = WindowBorderSize
                     }
                 ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
+            }
+        }
+
+        public void Handle(HandleOptionsButtonClick message)
+        {
+            if (message.Type == OptionsButtonClickTypes.CHANGE_HAND)
+            {
+                // Changing the hand
+                _isRightHandACursor = !_isRightHandACursor;
+
+                _eventAggregator.PublishOnUIThread(new HandleOptionChange
+                {
+                    Type = OptionTypes.SELECTED_HAND,
+                    BoolValue = _isRightHandACursor
+                });
+
+            }
+            else if (message.Type == OptionsButtonClickTypes.MENU)
+            {
+                // Changing the view
+                ActivateItem(new MenuViewModel(
+                    _eventAggregator,
+                    new TDOWindowSize
+                    {
+                        WindowWidth = WindowWidth,
+                        WindowHeight = WindowHeight
+                    },
+                    new TDOWindowPadding
+                    {
+                        PaddingTop = WindowBorderSize + WindowHeaderSize,
+                        PaddingRight = WindowBorderSize,
+                        PaddingBottom = WindowBorderSize + WindowFooterSize,
+                        PaddingLeft = WindowBorderSize
+                    }
+                ));
+
+                GetIconKeyTap.IsVisible = true;
+                NotifyOfPropertyChange(() => GetIconKeyTap);
+
+                GetIconHandSwipe.IsVisible = false;
+                NotifyOfPropertyChange(() => GetIconHandSwipe);
             }
         }
 

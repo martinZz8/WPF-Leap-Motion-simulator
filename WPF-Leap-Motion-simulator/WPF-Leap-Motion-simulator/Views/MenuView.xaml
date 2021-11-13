@@ -78,6 +78,26 @@
                     Canvas.Left="{Binding Path=GetSendTheParcelButton.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetSendTheParcelButton.PaddingTopY, Mode=OneWay}"
                 />
+                <Grid
+                    Canvas.Left="{Binding Path=GetOptionsButton.PaddingLeftX, Mode=OneWay}"  
+                    Canvas.Top="{Binding Path=GetOptionsButton.PaddingTopY, Mode=OneWay}"
+                    Visibility="{Binding Path=GetOptionsButton.GetVisibilityType, Mode=OneWay}"
+                >
+                    <Rectangle
+                        Width="{Binding Path=GetOptionsButton.Width, Mode=OneWay}"
+                        Height="{Binding Path=GetOptionsButton.Height, Mode=OneWay}"
+                        Fill="{Binding Path=GetOptionsButton.GetBackgroundColor, Mode=OneWay}"
+                        Stroke="{Binding Path=GetOptionsButton.GetBorderColor, Mode=OneWay}"
+                        StrokeThickness="3"
+                    />
+                    <Image
+                        Source="../Assets/gear.png"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Width="30"
+                        Height="30"
+                    />
+                </Grid>
             </Canvas>
         </Grid>
     </Grid>
