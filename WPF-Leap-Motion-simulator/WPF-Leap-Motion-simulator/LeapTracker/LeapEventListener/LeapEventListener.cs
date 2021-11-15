@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Leap;
 using System.Threading;
+
+// Leap
+using Leap;
 
 namespace WPF_Leap_Motion_simulator.LeapTracker
 {
