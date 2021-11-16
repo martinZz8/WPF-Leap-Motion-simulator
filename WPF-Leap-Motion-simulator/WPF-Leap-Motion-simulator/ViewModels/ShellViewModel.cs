@@ -100,7 +100,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 PositionX = 0,
                 PositionY = 0,
                 CursorRadius = 9,
-                CursorSensibility = 2.5
+                CursorSensibility = 2.6
             };
             NotifyOfPropertyChange(() => ActualCursor);
 
@@ -185,7 +185,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                         
                         break;
                     case LeapEventTypes.onConnect:
-                        ConnectHandler();
+                        //ConnectHandler();
                         break;
                     case LeapEventTypes.onFrame:
                         if (!isClosing)
@@ -259,15 +259,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
         }
 
-        void ConnectHandler()
-        {
-            controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
-            controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f); //40.0f
-            controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE, true);
-            controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP, true);
-            controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP, true);
-            controller.Config.Save();
-        }
+        //void ConnectHandler()
+        //{
+        //    controller.EnableGesture(Gesture.GestureType.TYPE_CIRCLE, true);
+        //    controller.Config.SetFloat("Gesture.Circle.MinRadius", 40.0f); //40.0f
+        //    controller.EnableGesture(Gesture.GestureType.TYPE_SWIPE, true);
+        //    controller.EnableGesture(Gesture.GestureType.TYPE_SCREEN_TAP, true);
+        //    controller.EnableGesture(Gesture.GestureType.TYPE_KEY_TAP, true);
+        //    controller.Config.Save();
+        //}
 
         void NewFrameHandler(Leap.Frame frame)
         {
