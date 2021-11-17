@@ -100,6 +100,18 @@
                     Canvas.Left="{Binding Path=GetMenuButton.PaddingLeftX, Mode=OneWay}"
                     Canvas.Top="{Binding Path=GetMenuButton.PaddingTopY, Mode=OneWay}"
                 />
+                <TextBlock
+                    Text="{Binding Path=GetAuthorLabel.Value, Mode=OneWay}"
+                    Width="{Binding Path=GetAuthorLabel.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetAuthorLabel.Height, Mode=OneWay}"
+                    FontSize="{Binding Path=GetAuthorLabel.FontSize, Mode=OneWay}"
+                    FontWeight="{Binding Path=GetAuthorLabel.FontWeight, Mode=OneWay}"
+                    Foreground="{Binding Path=GetAuthorLabel.TextColor, Mode=OneWay}"
+                    TextWrapping="NoWrap"
+                    TextAlignment="Right"
+                    Canvas.Left="{Binding Path=GetAuthorLabel.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetAuthorLabel.PaddingTopY, Mode=OneWay}"
+                />
             </Canvas>
         </Grid>
     </Grid>

@@ -35,6 +35,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private readonly double standardButtonHeight = 100;
         private readonly double standardButtonMarginLeft = 20;
 
+        private readonly double authorLabelWidth = 120;
+        private readonly double additionnalAuthorLabelMarginRight = 18;
+        private readonly double additionnalAuthorLabelMarginBottom = 35;
+
         public OptionsViewModel(IEventAggregator eventAggregator, TDOWindowSize windowSize, TDOWindowPadding windowPadding, TDOActualOptions actualOptions)
         {
             _eventAggregator = eventAggregator;
@@ -46,6 +50,8 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             double basicPaddingTop = (windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom) * 0.12;
             double titleLabelPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardLabelWidth) / 2;
             double extendedLabelPaddingLeft = (((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - extendedLabelWidth - standardButtonWidth - standardButtonMarginLeft) / 2;
+            double authorLabelPaddingLeft = ((windowSize.WindowWidth - windowPadding.PaddingLeft - windowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - authorLabelWidth - additionnalAuthorLabelMarginRight;
+            double authorLabelPaddingTop = windowSize.WindowHeight - windowPadding.PaddingTop - windowPadding.PaddingBottom - standardLabelHeight - additionnalAuthorLabelMarginBottom;
 
             _labels = new List<Label>
             {
@@ -72,6 +78,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     TextColor = "#f1b938",
                     Type = LabelTypes.OPTIONS_SELECTED_HAND,
                     Value = $"Wybrana ręka: {GetHandName(actualOptions.IsRightHandSelected)}"
+                },
+                new Label
+                {
+                    Width = authorLabelWidth,
+                    Height = standardLabelHeight,
+                    PaddingLeftX = authorLabelPaddingLeft,
+                    PaddingTopY = authorLabelPaddingTop,
+                    FontSize = 12,
+                    FontWeight = "Bold",
+                    TextColor = "#f1b938",
+                    Type = LabelTypes.OPTIONS_AUTHOR,
+                    Value = "Autor: Maciej Harbuz"
                 }
             };
 
@@ -168,6 +186,15 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 return _labels.Find(label => label.Type == LabelTypes.OPTIONS_SELECTED_HAND);
             }
         }
+
+        public Label GetAuthorLabel
+        {
+            get
+            {
+                return _labels.Find(label => label.Type == LabelTypes.OPTIONS_AUTHOR);
+            }
+        }
+
         public Button GetChangeHandButton
         {
             get
@@ -218,6 +245,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             double menuButtonPaddingLeft = (((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - standardButtonWidth) / 2;
             GetMenuButton.PaddingLeftX = menuButtonPaddingLeft;
             NotifyOfPropertyChange(() => GetMenuButton);
+
+            double authorLabelPaddingLeft = ((message.WindowWidth - mainWindowPadding.PaddingLeft - mainWindowPadding.PaddingRight) * _gridColumnMultipliers[1] / GridColumnTotalDenominator) - authorLabelWidth - additionnalAuthorLabelMarginRight;
+            GetAuthorLabel.PaddingLeftX = authorLabelPaddingLeft;
+            NotifyOfPropertyChange(() => GetAuthorLabel);
         }
 
         // Handle window height change
@@ -236,6 +267,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             GetMenuButton.PaddingTopY = basicPaddingTop + standardLabelHeight +  standardButtonHeight + standardLabelMarginTop * 2;
             NotifyOfPropertyChange(() => GetMenuButton);
+
+            double authorLabelPaddingTop = message.WindowHeight - mainWindowPadding.PaddingTop - mainWindowPadding.PaddingBottom - standardLabelHeight - additionnalAuthorLabelMarginBottom;
+            GetAuthorLabel.PaddingTopY = authorLabelPaddingTop;
+            NotifyOfPropertyChange(() => GetAuthorLabel);
         }
 
         // Handle cursor hand gesture

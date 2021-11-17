@@ -58,6 +58,7 @@ namespace WPF_Leap_Motion_simulator.Models
         SEND_SUMMARY_RECEIVER_HOUSE_LETTER,
         SUCCESS_SEND_MESSAGE,
         OPTIONS_TITLE,
-        OPTIONS_SELECTED_HAND
+        OPTIONS_SELECTED_HAND,
+        OPTIONS_AUTHOR
     }
 }
