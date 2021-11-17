@@ -70,5 +70,30 @@ namespace WPF_Leap_Motion_simulator.ViewModels
 
             return strToConvert;
         }
+
+        public static string ConvertToFirstUpperCaseNameFormat(string strToConvert)
+        {
+            if (strToConvert.Length > 0)
+            {
+                string[] splittedStrings = strToConvert.Split(new char[] { Convert.ToChar(" ") });
+
+                if (splittedStrings.Length > 1)
+                {
+                    string[] upperCaseSplittedStrings = new string[splittedStrings.Length];
+                    for (int i = 0; i < splittedStrings.Length; i++)
+                    {
+                        upperCaseSplittedStrings[i] = ConvertToNameFormat(splittedStrings[i]);
+                    }
+
+                    return String.Join(" ", upperCaseSplittedStrings);
+                }
+                else
+                {
+                    return ConvertToNameFormat(strToConvert);
+                }
+            }
+
+            return strToConvert;
+        }
     }
 }

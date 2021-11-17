@@ -34,7 +34,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private List<InputTypes> _listOfSecondPageErrorInputsTypes = new List<InputTypes>();
 
         private readonly double titleLabelMarginTop = 12;
-        private readonly double titleLabelHeight = 23;
+        private readonly double titleLabelHeight = 26;
         private readonly double standardLabelHeight = 15;
         private readonly double standardLabelMarginTop = 4;
         private readonly double standardInputWidth = 200;
@@ -156,7 +156,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop,
                     FontSize = 13,
@@ -182,7 +182,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop,
                     FontSize = 13,
@@ -208,7 +208,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop,
                     FontSize = 13,
@@ -234,7 +234,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*2 + standardInputHeight + standardInputMarginTop,
                     FontSize = 13,
@@ -260,7 +260,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX + standardInputWidth + standardInputMarginLeft,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*2 + standardInputHeight + standardInputMarginTop,
                     FontSize = 13,
@@ -273,7 +273,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 new Label
                 {
                     Width = standardInputWidth,
-                    Height = titleLabelHeight,
+                    Height = standardLabelHeight,
                     PaddingLeftX = smallBasicPaddingLeftX + (standardInputWidth + standardInputMarginLeft)*2,
                     PaddingTopY = basicPaddingTopY + titleLabelHeight + titleLabelMarginTop + (standardLabelHeight + standardLabelMarginTop)*2 + standardInputHeight + standardInputMarginTop,
                     FontSize = 13,
@@ -887,7 +887,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                GetCityInput.Value = StringFormat.ConvertToNameFormat(value);
+                GetCityInput.Value = StringFormat.ConvertToFirstUpperCaseNameFormat(value);
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_RECEIVER_CITY,
@@ -970,7 +970,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             }
             set
             {
-                GetStreetInput.Value = StringFormat.ConvertToNameFormat(value);
+                GetStreetInput.Value = StringFormat.ConvertToFirstUpperCaseNameFormat(value);
                 _eventAggregator.PublishOnUIThread(new HandleInputField
                 {
                     Type = InputTypes.SEND_RECEIVER_STREET,

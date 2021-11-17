@@ -32,7 +32,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private string _emailInputKeyboardType = "NONE";
 
         private readonly double titleLabelMarginTop = 12;
-        private readonly double titleLabelHeight = 23;
+        private readonly double titleLabelHeight = 26;
         private readonly double standardLabelHeight = 15;
         private readonly double standardLabelMarginTop = 4;
         private readonly double standardInputWidth = 200;
