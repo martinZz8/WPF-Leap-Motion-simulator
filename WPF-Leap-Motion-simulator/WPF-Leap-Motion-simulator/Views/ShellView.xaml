@@ -1059,7 +1059,25 @@
                     </Grid>
                 </Canvas>
             </Canvas>
-            
+
+            <!--Render icon's background-->
+            <Canvas
+                Grid.Row="0"
+                Grid.Column="0"
+                Visibility="Visible"
+            >
+                <Rectangle
+                    Canvas.Left="{Binding Path=GetIconsBackground.PaddingLeftX, Mode=OneWay}"
+                    Canvas.Top="{Binding Path=GetIconsBackground.PaddingTopY, Mode=OneWay}"
+                    Width="{Binding Path=GetIconsBackground.Width, Mode=OneWay}"
+                    Height="{Binding Path=GetIconsBackground.Height, Mode=OneWay}"
+                    Fill="{Binding Path=GetIconsBackground.BackgroudColor, Mode=OneWay}"
+                    RadiusX="{Binding Path=GetIconsBackground.Radius, Mode=OneWay}"
+                    RadiusY="{Binding Path=GetIconsBackground.Radius, Mode=OneWay}"
+                    Opacity="{Binding Path=GetIconsBackground.Opacity, Mode=OneWay}"
+                />
+            </Canvas>
+
             <!--Render key tap icon-->
             <Canvas
                 Grid.Row="0"

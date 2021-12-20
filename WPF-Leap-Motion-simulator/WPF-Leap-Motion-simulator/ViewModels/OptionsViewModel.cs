@@ -113,7 +113,7 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                     PaddingLeftX = menuButtonPaddingLeft,
                     PaddingTopY = basicPaddingTop + standardLabelHeight + standardButtonHeight + standardLabelMarginTop*2,
                     Type = ButtonTypes.VIEW_MENU,
-                    Title = "Menu",
+                    Title = "Wróć",
                     IsHovered = false
                 }
             };

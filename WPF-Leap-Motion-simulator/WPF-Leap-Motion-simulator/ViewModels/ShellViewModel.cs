@@ -46,11 +46,13 @@ namespace WPF_Leap_Motion_simulator.ViewModels
         private Cursor _Cursor;
         private string _cursorTapAnimationStatus;
         private List<Icon> _icons;
+        private Rectangle _iconsBackground;
 
         private double _standardIconWidth = 80;
         private double _standardIconHeight = 120;
         private double _standardIconPaddingRight = 80;
         private double _standardIconPaddingTop = 20;
+        private double _iconsBackgroundPadding = 10;
 
         //-- Keyboard variables --
         private Keyboard _keyboard;
@@ -136,6 +138,18 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             };
             NotifyOfPropertyChange(() => GetIconKeyTap);
             NotifyOfPropertyChange(() => GetIconHandSwipe);
+
+            // Setting icon's background
+            _iconsBackground = new Rectangle
+            {
+                PaddingLeftX = basicIconPaddingLeft - _iconsBackgroundPadding,
+                PaddingTopY = basicIconPaddingTop - _iconsBackgroundPadding,
+                Width = _standardIconWidth + _iconsBackgroundPadding*2,
+                Height = _standardIconHeight*2 + _standardIconPaddingTop + _iconsBackgroundPadding*2,
+                BackgroudColor = "#ffffff",
+                Radius = 10,
+                Opacity = 0.7
+            };
 
             // Setting Event Aggregator
             _eventAggregator = eventAggregator;
@@ -327,6 +341,10 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 NotifyOfPropertyChange(() => GetIconKeyTap);
                 NotifyOfPropertyChange(() => GetIconHandSwipe);
 
+                // Change position of the icon's background
+                GetIconsBackground.PaddingLeftX = basicIconPaddingLeft - _iconsBackgroundPadding;
+                NotifyOfPropertyChange(() => GetIconsBackground);
+
                 // Notify window width change
                 _eventAggregator.PublishOnUIThread(new HandleWindowWidth
                 {
@@ -351,12 +369,17 @@ namespace WPF_Leap_Motion_simulator.ViewModels
                 NotifyOfPropertyChange(() => ActualKeyboard);
 
                 double basicIconPaddingTop = (_windowHeight - (_windowBorderSize * 2 + _windowHeaderSize + _windowFooterSize + _standardIconHeight*2 + _standardIconPaddingTop)) / 2;
+                
                 // Change position of icons
                 GetIconKeyTap.PaddingTopY = basicIconPaddingTop;
                 NotifyOfPropertyChange(() => GetIconKeyTap);
 
                 GetIconHandSwipe.PaddingTopY = basicIconPaddingTop + _standardIconHeight + _standardIconPaddingTop;
                 NotifyOfPropertyChange(() => GetIconHandSwipe);
+
+                // Change position of the icon's background
+                GetIconsBackground.PaddingTopY = basicIconPaddingTop - _iconsBackgroundPadding;
+                NotifyOfPropertyChange(() => GetIconsBackground);
 
                 // Notify window height change
                 _eventAggregator.PublishOnUIThread(new HandleWindowHeight
@@ -472,6 +495,14 @@ namespace WPF_Leap_Motion_simulator.ViewModels
             get
             {
                 return _icons.Find(icon => icon.Type == IconTypes.GESTURE_HAND_SWIPE);
+            }
+        }
+
+        public Rectangle GetIconsBackground
+        {
+            get
+            {
+                return _iconsBackground;
             }
         }
 

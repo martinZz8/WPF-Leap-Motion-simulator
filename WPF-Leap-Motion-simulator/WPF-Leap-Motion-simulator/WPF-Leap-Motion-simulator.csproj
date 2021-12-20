@@ -113,6 +113,7 @@
     <Compile Include="Models\AppElements\Keyboard\NumericKeyboard.cs" />
     <Compile Include="Models\AppElements\Label\Label.cs" />
     <Compile Include="Models\AppElements\Label\LabelTypes.cs" />
+    <Compile Include="Models\AppElements\Rectangle\Rectangle.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleMenuButtonClick\MenuButtonClickTypes.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleOptionsButtonClick\HandleOptionsButtonClick.cs" />
     <Compile Include="Models\HandleClasses\ButtonClick\HandleOptionsButtonClick\HandleOptionsButtonClickTypes.cs" />
