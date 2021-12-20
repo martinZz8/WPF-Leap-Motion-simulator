@@ -252,10 +252,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\hand-swipe.png" />
-    <Resource Include="Assets\key-tap.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\key-tap.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
